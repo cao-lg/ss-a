@@ -3,6 +3,9 @@
 import { get, set, del } from 'idb-keyval'
 import { isConsented } from './consent'
 
+// 行为事件日志的读取入口（实现位于 behavior.js），在此再导出便于画像统一读取。
+export { getBehaviors } from './behavior'
+
 // 未同意前不持久化任何用户数据（微信规范 2.11）
 async function guardedSet(key, val) {
   if (!isConsented()) return
@@ -15,6 +18,7 @@ const CP_KEY = 'lp:checkpoint:v4' // { [`${unitId}:${itemId}`]: { kind, correct,
 const PROGRESS_KEY = 'lp:progress:v4'
 const TIME_KEY = 'lp:time:v4' // { units: { [unitId]: ms }, days: { [YYYY-MM-DD]: ms } }
 const EXAM_KEY = 'lp:exam:v4' // { [chapterId]: { attempts, bestScore, passed, lastTaken } }
+const BEHAVIOR_KEY = 'lp:behavior:v4' // 行为事件日志 [{ ts, type, ...payload }]
 
 export async function getOrCreateUser() {
   let u = await get(USER_KEY)
@@ -158,18 +162,19 @@ export async function getAllExams() {
 
 // 管理后台：导出 / 清空全部学习者数据（不含课程内容静态资源）
 export async function exportLearnerData() {
-  const [user, assess, checkpoints, progress, time, exams] = await Promise.all([
+  const [user, assess, checkpoints, progress, time, exams, behaviors] = await Promise.all([
     get(USER_KEY),
     get(ASSESS_KEY),
     get(CP_KEY),
     get(PROGRESS_KEY),
     get(TIME_KEY),
-    get(EXAM_KEY)
+    get(EXAM_KEY),
+    get(BEHAVIOR_KEY)
   ])
-  return { exportedAt: Date.now(), user, assess, checkpoints, progress, time, exams }
+  return { exportedAt: Date.now(), user, assess, checkpoints, progress, time, exams, behaviors }
 }
 
-const ALL_KEYS = [USER_KEY, ASSESS_KEY, CP_KEY, PROGRESS_KEY, TIME_KEY, EXAM_KEY]
+const ALL_KEYS = [USER_KEY, ASSESS_KEY, CP_KEY, PROGRESS_KEY, TIME_KEY, EXAM_KEY, BEHAVIOR_KEY]
 export async function clearAllLearnerData() {
   for (const k of ALL_KEYS) await del(k)
 }

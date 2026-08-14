@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { judgeAnswer } from '../lib/judge'
 import { saveCheckpoint } from '../lib/storage'
 import { runPython } from '../lib/codeRunner'
+import { logBehavior } from '../lib/behavior'
 
 // 进阶挑战：更难、可选；编程课可用 type="output" 代码题（可插拔 Pyodide 执行）。对应需求 C。
 export default function Challenge({ unitId, id, type = 'fill', title = '进阶挑战', scenario, instruction, options, answer, hints = [], feedback, unlock }) {
@@ -35,15 +36,17 @@ export default function Challenge({ unitId, id, type = 'fill', title = '进阶�
       if (!ok && usableHints.length > 0 && hintIndex + 1 < usableHints.length) {
         setHintIndex(Math.min(hintIndex + 1, usableHints.length - 1))
       }
-      saveCheckpoint(unitId, id, 'challenge', ok, attempts + 1)
-      return
-    }
+    saveCheckpoint(unitId, id, 'challenge', ok, attempts + 1)
+    logBehavior('challenge_attempt', { unitId, id, correct: ok, attempts: attempts + 1 })
+    return
+  }
     const ok = isChoice ? judgeAnswer(type, options, answer, val) : judgeAnswer('fill', null, answer, val)
     setState(ok ? 'correct' : 'wrong')
     if (!ok && usableHints.length > 0 && hintIndex + 1 < usableHints.length) {
       setHintIndex(Math.min(hintIndex + 1, usableHints.length - 1))
     }
     saveCheckpoint(unitId, id, 'challenge', ok, attempts + 1)
+    logBehavior('challenge_attempt', { unitId, id, correct: ok, attempts: attempts + 1 })
   }
 
   function retry() {
@@ -56,6 +59,7 @@ export default function Challenge({ unitId, id, type = 'fill', title = '进阶�
   function reveal() {
     setRevealed(true)
     setHintIndex(usableHints.length - 1)
+    logBehavior('hint_used', { unitId, id })
   }
 
   const currentHint = hintIndex >= 0 ? usableHints[hintIndex] : null

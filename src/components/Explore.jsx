@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { saveCheckpoint } from '../lib/storage'
+import { logBehavior } from '../lib/behavior'
 
 // 探索分支：可选、引发兴趣、有即时反馈。
 // 支持两种模式：
@@ -15,6 +16,7 @@ export default function Explore({ unitId, title = '动手想一想', scenario, b
     setSelected(i)
     setDone(true)
     saveCheckpoint(unitId, title, 'explore', true, 1)
+    logBehavior('explore_choice', { unitId, choiceIndex: i, insight: choices[i]?.insight || null })
   }
 
   return (

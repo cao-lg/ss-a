@@ -1,4 +1,6 @@
+import { useEffect } from 'react'
 import { motion } from './motion'
+import { logBehavior } from '../lib/behavior'
 
 const reduce =
   typeof window !== 'undefined' &&
@@ -28,6 +30,7 @@ const ease = [0.16, 1, 0.3, 1]
  *       duration 每幕时长 / trigger 触发线
  */
 export default function Scene({
+  unitId,
   setup,
   speaker = 'mentor',
   line,
@@ -39,6 +42,10 @@ export default function Scene({
   duration = DEFAULTS.duration,
   trigger = DEFAULTS.trigger,
 }) {
+  useEffect(() => {
+    if (unitId) logBehavior('scene_open', { unitId })
+  }, [unitId])
+
   if (reduce) {
     return (
       <div className="scene">

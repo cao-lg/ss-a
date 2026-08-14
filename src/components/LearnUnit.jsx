@@ -6,6 +6,7 @@ import rehypeHighlight from 'rehype-highlight'
 import { getCourse, getUnitContent, getAssessment, getAssessmentStatus, submitAssessment } from '../lib/api'
 import { parseDirectives } from '../lib/mdParser'
 import { updateProgress, getStoredAssessment, saveTime } from '../lib/storage'
+import { logBehavior } from '../lib/behavior'
 import Checkpoint from './Checkpoint'
 import Explore from './Explore'
 import Challenge from './Challenge'
@@ -35,6 +36,12 @@ export default function LearnUnit() {
   const [showPre, setShowPre] = useState(false)
   const [showPost, setShowPost] = useState(false)
   const [summary, setSummary] = useState(null)
+
+  // 行为埋点所需的引用
+  const blockRefs = useRef({})
+  const dwellRef = useRef({})
+  const maxDepthRef = useRef(0)
+  const sessionStartRef = useRef(Date.now())
 
   useEffect(() => {
     ;(async () => {
@@ -82,6 +89,58 @@ export default function LearnUnit() {
       flush()
     }
   }, [ready, unitId])
+
+  // 行为埋点：会话 / 滚动深度 / 段落停留（阅读轨迹）
+  useEffect(() => {
+    if (!ready || !unitId) return
+    sessionStartRef.current = Date.now()
+    let raf = 0
+    const onScroll = () => {
+      if (raf) return
+      raf = requestAnimationFrame(() => {
+        raf = 0
+        const max = document.documentElement.scrollHeight - window.innerHeight
+        const pct = max > 0 ? window.scrollY / max : 0
+        if (pct > maxDepthRef.current) maxDepthRef.current = pct
+      })
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          const idx = e.target.dataset.idx
+          if (e.isIntersecting && e.intersectionRatio >= 0.5) {
+            dwellRef.current[idx] = Date.now()
+          } else if (dwellRef.current[idx]) {
+            const dwell = Date.now() - dwellRef.current[idx]
+            delete dwellRef.current[idx]
+            if (dwell > 800) logBehavior('section_view', { unitId, idx: Number(idx), kind: e.target.dataset.kind, dwellMs: dwell })
+          }
+        }
+      },
+      { threshold: [0, 0.5, 1] }
+    )
+    Object.values(blockRefs.current).forEach((el) => el && io.observe(el))
+
+    logBehavior('session_start', { unitId })
+
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      if (raf) cancelAnimationFrame(raf)
+      io.disconnect()
+      const now = Date.now()
+      for (const [idx, enter] of Object.entries(dwellRef.current)) {
+        const dwell = now - enter
+        if (dwell > 800) logBehavior('section_view', { unitId, idx: Number(idx), kind: 'md', dwellMs: dwell })
+      }
+      dwellRef.current = {}
+      const durMs = now - sessionStartRef.current
+      logBehavior('session_end', { unitId, durMs })
+      if (maxDepthRef.current > 0) logBehavior('scroll_depth', { unitId, maxPct: Number(maxDepthRef.current.toFixed(3)) })
+      maxDepthRef.current = 0
+    }
+  }, [ready, unitId, blocks])
 
   async function refresh() {
     setStatus(await getAssessmentStatus(unitId))
@@ -157,19 +216,30 @@ export default function LearnUnit() {
 
       <div className="learn-body">
         {blocks.map((b, idx) => {
+          const wrap = (node) => (
+            <div
+              key={idx}
+              ref={(el) => { if (el) blockRefs.current[idx] = el }}
+              data-idx={idx}
+              data-kind={b.kind || 'md'}
+              className="lb-block"
+            >
+              {node}
+            </div>
+          )
           if (b.type === 'md') {
-            return (
-              <Reveal key={idx} delay={0.02}>
+            return wrap(
+              <Reveal delay={0.02}>
                 <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
                   {b.content}
                 </ReactMarkdown>
               </Reveal>
             )
           }
-          if (b.kind === 'checkpoint') return <Reveal key={idx}><Checkpoint unitId={unitId} {...b.attrs} /></Reveal>
-          if (b.kind === 'explore') return <Reveal key={idx}><Explore {...b.attrs} /></Reveal>
-          if (b.kind === 'challenge') return <Reveal key={idx}><Challenge key={idx} unitId={unitId} {...b.attrs} /></Reveal>
-          if (b.kind === 'scene') return <Scene key={idx} {...b.attrs} />
+          if (b.kind === 'checkpoint') return wrap(<Reveal><Checkpoint unitId={unitId} {...b.attrs} /></Reveal>)
+          if (b.kind === 'explore') return wrap(<Reveal><Explore unitId={unitId} {...b.attrs} /></Reveal>)
+          if (b.kind === 'challenge') return wrap(<Reveal><Challenge unitId={unitId} {...b.attrs} /></Reveal>)
+          if (b.kind === 'scene') return wrap(<Scene unitId={unitId} {...b.attrs} />)
           return null
         })}
       </div>

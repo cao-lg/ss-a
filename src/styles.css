@@ -919,4 +919,35 @@ p { margin: 8px 0; }
 .consent-actions .btn { flex: 1; min-width: 140px; justify-content: center; }
 .consent-note { font-size: 12.5px; color: var(--text-faint); margin: 14px 0 0; text-align: center; }
 
+/* ---------- 学习画像（多维立体）：新增区块 ---------- */
+/* 行为埋点：每个学习块作为阅读轨迹观测单元（不影响视觉） */
+.lb-block { margin: 0; }
+
+/* 学习风格 / 人格 */
+.persona { display: flex; flex-direction: column; gap: 12px; }
+.persona-main {
+  font-size: 22px; font-weight: 800; letter-spacing: -.3px; color: var(--text);
+  background: linear-gradient(120deg, var(--accent), var(--mint));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+}
+.persona-traits { display: flex; flex-wrap: wrap; gap: 0; }
+
+/* 各项目能力分布 legend */
+.proj-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: 12px; }
+.proj-legend-item { font-size: 12px; color: var(--text-faint); }
+
+/* 学习曲线 legend */
+.lc-legend { display: flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 12.5px; color: var(--text-dim); }
+.lc-legend .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; margin-left: 8px; }
+.lc-legend .dot:first-child { margin-left: 0; }
+.lc-legend .dot.coral { background: var(--accent); }
+.lc-legend .dot.mint { background: var(--mint); }
+
+/* 两列版画像网格（雷达/行为、风格/就绪） */
+.portrait-grid.two { grid-template-columns: 1fr 1fr; }
+
+@media (max-width: 760px) {
+  .portrait-grid.two { grid-template-columns: 1fr; }
+}
+
 

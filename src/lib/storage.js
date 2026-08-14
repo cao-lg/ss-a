@@ -1,6 +1,13 @@
 // 本地持久化层：用 idb-keyval（IndexedDB）模拟后端 D1 存储。
 // 对应《需求补充规格 v0.2》新增表：assessment_records / checkpoint_records / progress
 import { get, set, del } from 'idb-keyval'
+import { isConsented } from './consent'
+
+// 未同意前不持久化任何用户数据（微信规范 2.11）
+async function guardedSet(key, val) {
+  if (!isConsented()) return
+  return set(key, val)
+}
 
 const USER_KEY = 'lp:user:v4'
 const ASSESS_KEY = 'lp:assess:v4' // { [unitId]: { pre, post, preHistory, postHistory } }
@@ -13,7 +20,7 @@ export async function getOrCreateUser() {
   let u = await get(USER_KEY)
   if (!u) {
     u = { id: 'u_' + Math.random().toString(36).slice(2, 10), name: '体验学员', createdAt: Date.now() }
-    await set(USER_KEY, u)
+    await guardedSet(USER_KEY, u)
   }
   return u
 }
@@ -21,7 +28,7 @@ export async function getOrCreateUser() {
 export async function setUserName(name) {
   const u = await getOrCreateUser()
   u.name = name || u.name
-  await set(USER_KEY, u)
+  await guardedSet(USER_KEY, u)
   return u
 }
 
@@ -38,7 +45,7 @@ export async function saveAssessment(unitId, phase, record) {
   u[phase] = record
   u[histKey] = [...(u[histKey] || []), record].slice(-10)
   all[unitId] = u
-  await set(ASSESS_KEY, all)
+  await guardedSet(ASSESS_KEY, all)
 }
 
 export async function getStoredAssessment(unitId) {
@@ -61,7 +68,7 @@ export async function saveCheckpoint(unitId, itemId, kind, correct, attempts) {
     attempts: (prev?.attempts || 0) + (attempts || 1),
     last_at: Date.now()
   }
-  await set(CP_KEY, all)
+  await guardedSet(CP_KEY, all)
 }
 
 export async function getCheckpoints() {
@@ -83,7 +90,7 @@ export async function updateProgress(fn) {
   const p = await getProgress()
   const np = fn(p)
   np.updated_at = Date.now()
-  await set(PROGRESS_KEY, np)
+  await guardedSet(PROGRESS_KEY, np)
   return np
 }
 
@@ -100,7 +107,7 @@ export async function saveTime(unitId, ms) {
   all.units[unitId] = (all.units[unitId] || 0) + ms
   const k = todayKey()
   all.days[k] = (all.days[k] || 0) + ms
-  await set(TIME_KEY, all)
+  await guardedSet(TIME_KEY, all)
 }
 
 export async function getTimes() {
@@ -137,7 +144,7 @@ export async function saveExam(chapterId, record) {
   u.passed = u.passed || record.passed
   u.lastTaken = record.taken_at
   all[chapterId] = u
-  await set(EXAM_KEY, all)
+  await guardedSet(EXAM_KEY, all)
 }
 
 export async function getExamRecord(chapterId) {

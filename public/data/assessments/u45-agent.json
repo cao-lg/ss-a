@@ -1,0 +1,44 @@
+{
+  "unitId": "u45-agent",
+  "pre": {
+    "items": [
+      {
+        "id": "u45-agent_p1",
+        "type": "multiple_choice",
+        "question": "课前小测：智能体综合预测",
+        "options": [
+          "先分类序列，再选模型",
+          "直接给一个大数",
+          "只做数据清洗",
+          "随机预测"
+        ],
+        "answer": "先分类序列，再选模型",
+        "points": 10
+      }
+    ]
+  },
+  "post": {
+    "items": [
+      {
+        "id": "u45-agent_q1",
+        "type": "fill",
+        "question": "课后测：核心概念",
+        "answer": "水平",
+        "points": 10
+      },
+      {
+        "id": "u45-agent_q2",
+        "type": "multiple_choice",
+        "question": "课后测：备货公式",
+        "options": [
+          "日均需求 × 提前期 + 安全库存",
+          "仅看历史销售额",
+          "仅看趋势线",
+          "随机拍板"
+        ],
+        "answer": "日均需求 × 提前期 + 安全库存",
+        "points": 10
+      }
+    ]
+  }
+}

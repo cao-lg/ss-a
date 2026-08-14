@@ -1,0 +1,44 @@
+{
+  "unitId": "u43-compare",
+  "pre": {
+    "items": [
+      {
+        "id": "u43-compare_p1",
+        "type": "multiple_choice",
+        "question": "课前小测：对比分析",
+        "options": [
+          "时间维度（同比）",
+          "空间维度",
+          "类别维度",
+          "竞争维度"
+        ],
+        "answer": "时间维度（同比）",
+        "points": 10
+      }
+    ]
+  },
+  "post": {
+    "items": [
+      {
+        "id": "u43-compare_q1",
+        "type": "fill",
+        "question": "课后测：核心概念",
+        "answer": "时间",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_q2",
+        "type": "multiple_choice",
+        "question": "课后测：图表选择",
+        "options": [
+          "柱状图（比大小最直观）",
+          "折线图（看趋势）",
+          "饼图（看占比）",
+          "雷达图（看多维）"
+        ],
+        "answer": "柱状图（比大小最直观）",
+        "points": 10
+      }
+    ]
+  }
+}

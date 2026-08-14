@@ -1,0 +1,145 @@
+{
+  "chapterId": "ch45",
+  "courseId": "sales-project4",
+  "title": "任务4.5 搭建智能体预测销售趋势 · 阶段考试",
+  "description": "覆盖按序列特征自动匹配多模型并输出决策建议。完成后解锁本章通关徽章。",
+  "passScore": 60,
+  "pick": 8,
+  "pool": [
+    {
+      "id": "ch45-q1",
+      "type": "multiple_choice",
+      "unitId": "u45-agent",
+      "concept": "智能体优势",
+      "question": "智能体（Agent）预测相较于单一模型的核心优势是？",
+      "options": [
+        "按序列特征自动匹配多模型",
+        "只能用一个固定模型",
+        "完全不需要数据",
+        "仅做人工判断"
+      ],
+      "answer": "按序列特征自动匹配多模型",
+      "points": 10
+    },
+    {
+      "id": "ch45-q2",
+      "type": "multiple_choice",
+      "unitId": "u45-agent",
+      "concept": "水平匹配",
+      "question": "面对水平型序列，智能体应优先匹配？",
+      "options": [
+        "移动平均或指数平滑",
+        "季节指数法",
+        "长期趋势线",
+        "竞争对比"
+      ],
+      "answer": "移动平均或指数平滑",
+      "points": 10
+    },
+    {
+      "id": "ch45-q3",
+      "type": "multiple_choice",
+      "unitId": "u45-agent",
+      "concept": "季节匹配",
+      "question": "面对有明显季节波动的序列，应优先匹配？",
+      "options": [
+        "季节指数法",
+        "移动平均法",
+        "水平预测",
+        "散点图"
+      ],
+      "answer": "季节指数法",
+      "points": 10
+    },
+    {
+      "id": "ch45-q4",
+      "type": "multiple_choice",
+      "unitId": "u45-agent",
+      "concept": "趋势匹配",
+      "question": "面对持续上升的序列，应优先匹配？",
+      "options": [
+        "趋势线拟合法",
+        "季节指数法",
+        "水平平均",
+        "随机猜测"
+      ],
+      "answer": "趋势线拟合法",
+      "points": 10
+    },
+    {
+      "id": "ch45-q5",
+      "type": "multiple_choice",
+      "unitId": "u45-agent",
+      "concept": "预测输出",
+      "question": "智能体综合预测的输出通常应包含？",
+      "options": [
+        "备货与渠道决策建议",
+        "仅一个数值",
+        "无关图表",
+        "员工名单"
+      ],
+      "answer": "备货与渠道决策建议",
+      "points": 10
+    },
+    {
+      "id": "ch45-q6",
+      "type": "multiple_choice",
+      "unitId": "u45-agent",
+      "concept": "匹配依据",
+      "question": "智能体选择预测模型的依据是？",
+      "options": [
+        "序列的统计特征",
+        "随机抽签",
+        "用户喜好",
+        "文件大小"
+      ],
+      "answer": "序列的统计特征",
+      "points": 10
+    },
+    {
+      "id": "ch45-q7",
+      "type": "multiple_choice",
+      "unitId": "u45-agent",
+      "concept": "综合决策",
+      "question": "智能体不同于单一模型的关键在于？",
+      "options": [
+        "综合多模型给出决策建议",
+        "只用一种算法",
+        "不输出结论",
+        "需要人工全程操作"
+      ],
+      "answer": "综合多模型给出决策建议",
+      "points": 10
+    },
+    {
+      "id": "ch45-q8",
+      "type": "multiple_choice",
+      "unitId": "u45-agent",
+      "concept": "结果用途",
+      "question": "销售趋势预测结果最终用于？",
+      "options": [
+        "支撑业务决策",
+        "填充数据库",
+        "仅供展示",
+        "替代所有人员"
+      ],
+      "answer": "支撑业务决策",
+      "points": 10
+    },
+    {
+      "id": "ch45-q9",
+      "type": "multiple_choice",
+      "unitId": "u45-agent",
+      "concept": "智能体本质",
+      "question": "预测型智能体本质上是？",
+      "options": [
+        "可自动执行预测流程的 AI 代理",
+        "静态报表",
+        "数据库表",
+        "人工表格"
+      ],
+      "answer": "可自动执行预测流程的 AI 代理",
+      "points": 10
+    }
+  ]
+}

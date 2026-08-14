@@ -1,0 +1,44 @@
+{
+  "unitId": "u42-clean",
+  "pre": {
+    "items": [
+      {
+        "id": "u42-clean_p1",
+        "type": "multiple_choice",
+        "question": "课前小测：逻辑错误数据清洗",
+        "options": [
+          "矛盾（销量与销售额互相打架）",
+          "只是显示格式问题，无需处理",
+          "完全正常，订单本就这样",
+          "一定是重复单"
+        ],
+        "answer": "矛盾（销量与销售额互相打架）",
+        "points": 10
+      }
+    ]
+  },
+  "post": {
+    "items": [
+      {
+        "id": "u42-clean_q1",
+        "type": "fill",
+        "question": "课后测：核心概念",
+        "answer": "矛盾",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_q2",
+        "type": "multiple_choice",
+        "question": "课后测：清洗顺序",
+        "options": [
+          "先去重，再查不合理，最后查矛盾/违规",
+          "直接外推预测",
+          "删除所有带负值的行",
+          "只改列名"
+        ],
+        "answer": "先去重，再查不合理，最后查矛盾/违规",
+        "points": 10
+      }
+    ]
+  }
+}

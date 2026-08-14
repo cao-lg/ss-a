@@ -1,0 +1,49 @@
+{
+  "id": "sales-project4",
+  "title": "项目四：销售交易数据分析",
+  "description": "覆盖销售指标认知、数据清洗、分析方法与可视化、趋势预测、智能体预测的完整学习闭环（通用模板，依《需求补充规格 v0.2》拆解）",
+  "chapters": [
+    {
+      "id": "ch41", "title": "任务4.1 销售交易分析基本认知", "order": 1,
+      "units": [
+        { "id": "u41-indicators", "title": "任务：销售交易核心指标体系", "path": "u41-indicators.md", "duration": "15分钟",
+          "objectives": ["理解销售交易数据分析的意义", "掌握五层指标体系及各指标含义", "能区分规模/盈利/效率/库存/客户层指标"],
+          "preAssessment": "u41-indicators", "postAssessment": "u41-indicators" }
+      ]
+    },
+    { "id": "ch42", "title": "任务4.2 逻辑错误数据清洗", "order": 2,
+      "units": [
+        { "id": "u42-clean", "title": "任务：逻辑错误数据清洗", "path": "u42-clean.md", "duration": "20分钟",
+          "objectives": ["识别三类逻辑错误（不合理/矛盾/违规）", "掌握错误标注与清洗方法"],
+          "preAssessment": "u42-clean", "postAssessment": "u42-clean" }
+      ]
+    },
+    { "id": "ch43", "title": "任务4.3 分析方法与可视化", "order": 3,
+      "units": [
+        { "id": "u43-compare", "title": "任务：对比分析", "path": "u43-compare.md", "duration": "15分钟",
+          "objectives": ["掌握对比分析五维度（时间/空间/类别/目标/竞争）", "能为场景选对图表"],
+          "preAssessment": "u43-compare", "postAssessment": "u43-compare" },
+        { "id": "u43-cross", "title": "任务：交叉分析", "path": "u43-cross.md", "duration": "15分钟",
+          "objectives": ["理解交叉分析（多维组合）", "能选透视表/热力图/堆叠柱图"],
+          "preAssessment": "u43-cross", "postAssessment": "u43-cross" }
+      ]
+    },
+    { "id": "ch44", "title": "任务4.4 销售交易趋势预测", "order": 4,
+      "units": [
+        { "id": "u44-level", "title": "任务：水平序列预测", "path": "u44-level.md", "duration": "20分钟",
+          "objectives": ["移动平均法", "指数平滑法（α）"], "preAssessment": "u44-level", "postAssessment": "u44-level" },
+        { "id": "u44-season", "title": "任务：季节波动预测", "path": "u44-season.md", "duration": "15分钟",
+          "objectives": ["季节指数法"], "preAssessment": "u44-season", "postAssessment": "u44-season" },
+        { "id": "u44-trend", "title": "任务：趋势预测（图表法）", "path": "u44-trend.md", "duration": "15分钟",
+          "objectives": ["趋势线拟合与 R² 判断"], "preAssessment": "u44-trend", "postAssessment": "u44-trend" }
+      ]
+    },
+    { "id": "ch45", "title": "任务4.5 搭建智能体预测销售趋势", "order": 5,
+      "units": [
+        { "id": "u45-agent", "title": "任务：智能体综合预测案例", "path": "u45-agent.md", "duration": "25分钟",
+          "objectives": ["多模型匹配（水平/季节/趋势）", "产出备货与渠道决策建议"],
+          "preAssessment": "u45-agent", "postAssessment": "u45-agent" }
+      ]
+    }
+  ]
+}

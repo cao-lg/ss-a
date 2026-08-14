@@ -1,0 +1,160 @@
+{
+  "chapterId": "ch43",
+  "courseId": "sales-project4",
+  "title": "任务4.3 分析方法与可视化 · 阶段考试",
+  "description": "覆盖对比分析五维度与交叉分析的多维组合及图表选择。完成后解锁本章通关徽章。",
+  "passScore": 60,
+  "pick": 8,
+  "pool": [
+    {
+      "id": "ch43-q1",
+      "type": "multiple_choice",
+      "unitId": "u43-compare",
+      "concept": "对比维度",
+      "question": "对比分析的五个常用维度不包括？",
+      "options": [
+        "颜色",
+        "时间",
+        "空间",
+        "类别"
+      ],
+      "answer": "颜色",
+      "points": 10
+    },
+    {
+      "id": "ch43-q2",
+      "type": "multiple_choice",
+      "unitId": "u43-compare",
+      "concept": "时间对比",
+      "question": "要比较“本月”与“去年同期”的销售额，应使用哪个对比维度？",
+      "options": [
+        "时间",
+        "空间",
+        "竞争",
+        "目标"
+      ],
+      "answer": "时间",
+      "points": 10
+    },
+    {
+      "id": "ch43-q3",
+      "type": "multiple_choice",
+      "unitId": "u43-compare",
+      "concept": "空间对比",
+      "question": "比较各区域（华东/华北/华南）的销售表现，属于？",
+      "options": [
+        "空间对比",
+        "时间对比",
+        "目标对比",
+        "竞争对比"
+      ],
+      "answer": "空间对比",
+      "points": 10
+    },
+    {
+      "id": "ch43-q4",
+      "type": "multiple_choice",
+      "unitId": "u43-compare",
+      "concept": "目标对比",
+      "question": "将实际销售额与预算目标对照，属于哪种对比？",
+      "options": [
+        "目标对比",
+        "空间对比",
+        "时间对比",
+        "类别对比"
+      ],
+      "answer": "目标对比",
+      "points": 10
+    },
+    {
+      "id": "ch43-q5",
+      "type": "multiple_choice",
+      "unitId": "u43-compare",
+      "concept": "竞争对比",
+      "question": "把本公司销售表现与主要竞品对照，属于？",
+      "options": [
+        "竞争对比",
+        "类别对比",
+        "空间对比",
+        "时间对比"
+      ],
+      "answer": "竞争对比",
+      "points": 10
+    },
+    {
+      "id": "ch43-q6",
+      "type": "multiple_choice",
+      "unitId": "u43-compare",
+      "concept": "图表选择",
+      "question": "展示不同类别销售额的高低，最适合的图表是？",
+      "options": [
+        "柱状图",
+        "饼图",
+        "散点图",
+        "雷达图"
+      ],
+      "answer": "柱状图",
+      "points": 10
+    },
+    {
+      "id": "ch43-q7",
+      "type": "multiple_choice",
+      "unitId": "u43-cross",
+      "concept": "交叉核心",
+      "question": "交叉分析的核心思想是？",
+      "options": [
+        "考察多个维度的组合效应",
+        "只看单一指标",
+        "忽略分类",
+        "仅做时间排序"
+      ],
+      "answer": "考察多个维度的组合效应",
+      "points": 10
+    },
+    {
+      "id": "ch43-q8",
+      "type": "multiple_choice",
+      "unitId": "u43-cross",
+      "concept": "联合分布",
+      "question": "展示两个分类变量联合分布，常用下列哪种工具？",
+      "options": [
+        "透视表或热力图",
+        "单一折线图",
+        "饼图",
+        "漏斗图"
+      ],
+      "answer": "透视表或热力图",
+      "points": 10
+    },
+    {
+      "id": "ch43-q9",
+      "type": "multiple_choice",
+      "unitId": "u43-cross",
+      "concept": "交互效应",
+      "question": "交叉分析最擅长发现的是？",
+      "options": [
+        "变量之间的交互效应",
+        "单一变量趋势",
+        "数据缺失",
+        "文件大小"
+      ],
+      "answer": "变量之间的交互效应",
+      "points": 10
+    },
+    {
+      "id": "ch43-q10",
+      "type": "multiple_choice",
+      "unitId": "u43-cross",
+      "concept": "堆叠柱图",
+      "question": "堆叠柱状图最适合表达？",
+      "options": [
+        "类别内部的构成占比",
+        "单一数值排序",
+        "时间走势",
+        "地理分布"
+      ],
+      "answer": "类别内部的构成占比",
+      "points": 10
+    }
+  ]
+}

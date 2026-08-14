@@ -1,0 +1,160 @@
+{
+  "chapterId": "ch44",
+  "courseId": "sales-project4",
+  "title": "任务4.4 销售交易趋势预测 · 阶段考试",
+  "description": "覆盖水平、季节、趋势三类序列的预测方法匹配。完成后解锁本章通关徽章。",
+  "passScore": 60,
+  "pick": 8,
+  "pool": [
+    {
+      "id": "ch44-q1",
+      "type": "multiple_choice",
+      "unitId": "u44-level",
+      "concept": "移动平均",
+      "question": "移动平均法最适合预测哪类序列？",
+      "options": [
+        "平稳无趋势的序列",
+        "剧烈上升序列",
+        "强季节序列",
+        "随机游走序列"
+      ],
+      "answer": "平稳无趋势的序列",
+      "points": 10
+    },
+    {
+      "id": "ch44-q2",
+      "type": "multiple_choice",
+      "unitId": "u44-level",
+      "concept": "指数平滑",
+      "question": "指数平滑法中，平滑系数 α 越大表示？",
+      "options": [
+        "越重视近期数据",
+        "越重视远期数据",
+        "完全忽略近期",
+        "与近期无关"
+      ],
+      "answer": "越重视近期数据",
+      "points": 10
+    },
+    {
+      "id": "ch44-q3",
+      "type": "multiple_choice",
+      "unitId": "u44-level",
+      "concept": "水平序列",
+      "question": "水平型序列的主要特征是？",
+      "options": [
+        "均值在一段时间内基本稳定",
+        "持续单调上升",
+        "周期性剧烈波动",
+        "长期下降"
+      ],
+      "answer": "均值在一段时间内基本稳定",
+      "points": 10
+    },
+    {
+      "id": "ch44-q4",
+      "type": "multiple_choice",
+      "unitId": "u44-season",
+      "concept": "季节指数",
+      "question": "某期季节指数大于 1，说明该期销量？",
+      "options": [
+        "高于平均水平",
+        "低于平均水平",
+        "等于平均水平",
+        "与季节无关"
+      ],
+      "answer": "高于平均水平",
+      "points": 10
+    },
+    {
+      "id": "ch44-q5",
+      "type": "multiple_choice",
+      "unitId": "u44-season",
+      "concept": "季节法适用",
+      "question": "季节指数法主要用于哪类序列的预测？",
+      "options": [
+        "具有季节波动的序列",
+        "纯随机序列",
+        "单一水平序列",
+        "无规律序列"
+      ],
+      "answer": "具有季节波动的序列",
+      "points": 10
+    },
+    {
+      "id": "ch44-q6",
+      "type": "multiple_choice",
+      "unitId": "u44-season",
+      "concept": "去趋势",
+      "question": "计算季节指数前，通常先要做什么？",
+      "options": [
+        "剔除长期趋势影响",
+        "直接求平均",
+        "删除异常值",
+        "做对数变换"
+      ],
+      "answer": "剔除长期趋势影响",
+      "points": 10
+    },
+    {
+      "id": "ch44-q7",
+      "type": "multiple_choice",
+      "unitId": "u44-trend",
+      "concept": "趋势线",
+      "question": "用趋势线拟合序列通常借助？",
+      "options": [
+        "回归分析",
+        "随机抽样",
+        "分类汇总",
+        "文本匹配"
+      ],
+      "answer": "回归分析",
+      "points": 10
+    },
+    {
+      "id": "ch44-q8",
+      "type": "multiple_choice",
+      "unitId": "u44-trend",
+      "concept": "R²",
+      "question": "决定系数 R² 越大，说明？",
+      "options": [
+        "趋势线对数据的拟合越好",
+        "数据越杂乱",
+        "模型越差",
+        "与拟合无关"
+      ],
+      "answer": "趋势线对数据的拟合越好",
+      "points": 10
+    },
+    {
+      "id": "ch44-q9",
+      "type": "multiple_choice",
+      "unitId": "u44-trend",
+      "concept": "趋势预测",
+      "question": "趋势预测方法最适合哪类序列？",
+      "options": [
+        "存在明显上升/下降趋势的序列",
+        "水平波动序列",
+        "纯季节序列",
+        "随机序列"
+      ],
+      "answer": "存在明显上升/下降趋势的序列",
+      "points": 10
+    },
+    {
+      "id": "ch44-q10",
+      "type": "multiple_choice",
+      "unitId": "u44-level",
+      "concept": "方法匹配",
+      "question": "面对均值稳定的水平序列，优先选择？",
+      "options": [
+        "移动平均或指数平滑",
+        "季节指数法",
+        "年度对比法",
+        "结构方程"
+      ],
+      "answer": "移动平均或指数平滑",
+      "points": 10
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "unitId": "u44-level",
+  "pre": {
+    "items": [
+      {
+        "id": "u44_p1",
+        "type": "multiple_choice",
+        "question": "课前小测：水平序列最适合哪种预测思路？",
+        "options": [
+          "长期趋势外推",
+          "围绕稳定均值平滑",
+          "季节指数调整"
+        ],
+        "answer": "围绕稳定均值平滑",
+        "points": 10
+      }
+    ]
+  },
+  "post": {
+    "items": [
+      {
+        "id": "u44_q1",
+        "type": "fill",
+        "question": "课后测：移动平均取最近几期？",
+        "answer": "N",
+        "points": 10
+      },
+      {
+        "id": "u44_q2",
+        "type": "multiple_choice",
+        "question": "课后测：α 越大说明？",
+        "options": [
+          "越看重近期",
+          "越平滑滞后",
+          "越接近均值"
+        ],
+        "answer": "越看重近期",
+        "points": 10
+      }
+    ]
+  }
+}

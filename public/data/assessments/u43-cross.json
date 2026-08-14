@@ -1,0 +1,44 @@
+{
+  "unitId": "u43-cross",
+  "pre": {
+    "items": [
+      {
+        "id": "u43-cross_p1",
+        "type": "multiple_choice",
+        "question": "课前小测：交叉分析",
+        "options": [
+          "交叉分析（叠维度看真相）",
+          "对比分析（单维度）",
+          "趋势分析",
+          "数据清洗"
+        ],
+        "answer": "交叉分析（叠维度看真相）",
+        "points": 10
+      }
+    ]
+  },
+  "post": {
+    "items": [
+      {
+        "id": "u43-cross_q1",
+        "type": "fill",
+        "question": "课后测：核心概念",
+        "answer": "交叉",
+        "points": 10
+      },
+      {
+        "id": "u43-cross_q2",
+        "type": "multiple_choice",
+        "question": "课后测：图表选择",
+        "options": [
+          "热力图（看矩阵冷热）",
+          "散点图（看两变量散布）",
+          "漏斗图（看转化）",
+          "饼图（看占比）"
+        ],
+        "answer": "热力图（看矩阵冷热）",
+        "points": 10
+      }
+    ]
+  }
+}

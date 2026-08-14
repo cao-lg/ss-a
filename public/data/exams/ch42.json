@@ -1,0 +1,160 @@
+{
+  "chapterId": "ch42",
+  "courseId": "sales-project4",
+  "title": "任务4.2 逻辑错误数据清洗 · 阶段考试",
+  "description": "覆盖不合理、矛盾、违规三类逻辑错误的识别与清洗原则。完成后解锁本章通关徽章。",
+  "passScore": 60,
+  "pick": 8,
+  "pool": [
+    {
+      "id": "ch42-q1",
+      "type": "multiple_choice",
+      "unitId": "u42-clean",
+      "concept": "错误分类",
+      "question": "逻辑错误数据一般不包括以下哪一类？",
+      "options": [
+        "缺失值（完整性问题）",
+        "不合理数据",
+        "相互矛盾数据",
+        "违反业务规则数据"
+      ],
+      "answer": "缺失值（完整性问题）",
+      "points": 10
+    },
+    {
+      "id": "ch42-q2",
+      "type": "multiple_choice",
+      "unitId": "u42-clean",
+      "concept": "不合理",
+      "question": "某订单“销售单价”出现负数，这属于？",
+      "options": [
+        "不合理数据",
+        "逻辑矛盾",
+        "业务违规",
+        "正常波动"
+      ],
+      "answer": "不合理数据",
+      "points": 10
+    },
+    {
+      "id": "ch42-q3",
+      "type": "multiple_choice",
+      "unitId": "u42-clean",
+      "concept": "矛盾",
+      "question": "数量×单价得出的金额与记录金额明显不符，这属于？",
+      "options": [
+        "相互矛盾数据",
+        "不合理数据",
+        "业务违规",
+        "缺失数据"
+      ],
+      "answer": "相互矛盾数据",
+      "points": 10
+    },
+    {
+      "id": "ch42-q4",
+      "type": "multiple_choice",
+      "unitId": "u42-clean",
+      "concept": "违规",
+      "question": "一笔订单的“退货数量”大于“销售数量”，这最可能属于？",
+      "options": [
+        "违反业务规则",
+        "不合理范围",
+        "缺失值",
+        "正常退货"
+      ],
+      "answer": "违反业务规则",
+      "points": 10
+    },
+    {
+      "id": "ch42-q5",
+      "type": "multiple_choice",
+      "unitId": "u42-clean",
+      "concept": "清洗步骤",
+      "question": "数据清洗工作的第一步通常是？",
+      "options": [
+        "识别并标注错误",
+        "直接删除整行",
+        "随机填充",
+        "忽略不管"
+      ],
+      "answer": "识别并标注错误",
+      "points": 10
+    },
+    {
+      "id": "ch42-q6",
+      "type": "multiple_choice",
+      "unitId": "u42-clean",
+      "concept": "错误标注",
+      "question": "对错误数据进行标注的主要价值是？",
+      "options": [
+        "便于追溯与复核",
+        "增加数据量",
+        "掩盖问题",
+        "加快删除"
+      ],
+      "answer": "便于追溯与复核",
+      "points": 10
+    },
+    {
+      "id": "ch42-q7",
+      "type": "multiple_choice",
+      "unitId": "u42-clean",
+      "concept": "矛盾识别",
+      "question": "下列哪种情形最可能是逻辑矛盾？",
+      "options": [
+        "订单显示“已付清”但金额大于付款额且无退款记录",
+        "客户姓名含生僻字",
+        "地址较长",
+        "备注为空"
+      ],
+      "answer": "订单显示“已付清”但金额大于付款额且无退款记录",
+      "points": 10
+    },
+    {
+      "id": "ch42-q8",
+      "type": "multiple_choice",
+      "unitId": "u42-clean",
+      "concept": "清洗原则",
+      "question": "数据清洗应当避免的做法是？",
+      "options": [
+        "不加说明地随意删除",
+        "保留清洗记录",
+        "按规则统一修正",
+        "复核后修正"
+      ],
+      "answer": "不加说明地随意删除",
+      "points": 10
+    },
+    {
+      "id": "ch42-q9",
+      "type": "multiple_choice",
+      "unitId": "u42-clean",
+      "concept": "不合理表现",
+      "question": "不合理数据最常见的表现是？",
+      "options": [
+        "取值超出业务合理范围",
+        "记录完整",
+        "格式规范",
+        "与历史一致"
+      ],
+      "answer": "取值超出业务合理范围",
+      "points": 10
+    },
+    {
+      "id": "ch42-q10",
+      "type": "multiple_choice",
+      "unitId": "u42-clean",
+      "concept": "清洗后",
+      "question": "完成清洗后，最恰当的做法是？",
+      "options": [
+        "保留清洗过程与依据记录",
+        "彻底删除原始数据",
+        "不记录任何修改",
+        "仅口头告知"
+      ],
+      "answer": "保留清洗过程与依据记录",
+      "points": 10
+    }
+  ]
+}

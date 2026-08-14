@@ -1,0 +1,160 @@
+{
+  "chapterId": "ch41",
+  "courseId": "sales-project4",
+  "title": "任务4.1 销售交易分析基本认知 · 阶段考试",
+  "description": "覆盖销售交易五层指标体系（规模/盈利/效率/库存/客户）的识别与归类。完成后解锁本章通关徽章。",
+  "passScore": 60,
+  "pick": 8,
+  "pool": [
+    {
+      "id": "ch41-q1",
+      "type": "multiple_choice",
+      "unitId": "u41-indicators",
+      "concept": "分析目标",
+      "question": "销售交易数据分析的最终目标是？",
+      "options": [
+        "提升经营决策质量",
+        "单纯美化报表",
+        "尽可能增加数据量",
+        "减少分析人员"
+      ],
+      "answer": "提升经营决策质量",
+      "points": 10
+    },
+    {
+      "id": "ch41-q2",
+      "type": "multiple_choice",
+      "unitId": "u41-indicators",
+      "concept": "指标体系结构",
+      "question": "以下哪一项不属于销售交易“五层指标体系”？",
+      "options": [
+        "物流层",
+        "规模层",
+        "盈利层",
+        "客户层"
+      ],
+      "answer": "物流层",
+      "points": 10
+    },
+    {
+      "id": "ch41-q3",
+      "type": "multiple_choice",
+      "unitId": "u41-indicators",
+      "concept": "规模层",
+      "question": "衡量“这段时间卖了多少”最贴近下列哪一层指标？",
+      "options": [
+        "规模层",
+        "盈利层",
+        "库存层",
+        "客户层"
+      ],
+      "answer": "规模层",
+      "points": 10
+    },
+    {
+      "id": "ch41-q4",
+      "type": "multiple_choice",
+      "unitId": "u41-indicators",
+      "concept": "盈利层",
+      "question": "毛利率、净利率属于指标体系中的哪一层？",
+      "options": [
+        "盈利层",
+        "规模层",
+        "效率层",
+        "客户层"
+      ],
+      "answer": "盈利层",
+      "points": 10
+    },
+    {
+      "id": "ch41-q5",
+      "type": "multiple_choice",
+      "unitId": "u41-indicators",
+      "concept": "库存层",
+      "question": "库存周转率、缺货率主要刻画哪一层指标？",
+      "options": [
+        "库存层",
+        "盈利层",
+        "客户层",
+        "规模层"
+      ],
+      "answer": "库存层",
+      "points": 10
+    },
+    {
+      "id": "ch41-q6",
+      "type": "multiple_choice",
+      "unitId": "u41-indicators",
+      "concept": "客户层",
+      "question": "复购率、客单价主要用于衡量哪一层指标？",
+      "options": [
+        "客户层",
+        "库存层",
+        "规模层",
+        "盈利层"
+      ],
+      "answer": "客户层",
+      "points": 10
+    },
+    {
+      "id": "ch41-q7",
+      "type": "multiple_choice",
+      "unitId": "u41-indicators",
+      "concept": "效率层",
+      "question": "坪效、转化率最贴近指标体系中的哪一层？",
+      "options": [
+        "效率层",
+        "客户层",
+        "库存层",
+        "盈利层"
+      ],
+      "answer": "效率层",
+      "points": 10
+    },
+    {
+      "id": "ch41-q8",
+      "type": "multiple_choice",
+      "unitId": "u41-indicators",
+      "concept": "指标作用",
+      "question": "建立指标体系的主要作用不包括？",
+      "options": [
+        "用随机猜测替代分析",
+        "统一口径便于比较",
+        "定位业务问题",
+        "支撑目标拆解"
+      ],
+      "answer": "用随机猜测替代分析",
+      "points": 10
+    },
+    {
+      "id": "ch41-q9",
+      "type": "multiple_choice",
+      "unitId": "u41-indicators",
+      "concept": "客户层关注",
+      "question": "客户层指标主要关注的是？",
+      "options": [
+        "客户行为与终身价值",
+        "仓库面积",
+        "税率高低",
+        "员工人数"
+      ],
+      "answer": "客户行为与终身价值",
+      "points": 10
+    },
+    {
+      "id": "ch41-q10",
+      "type": "multiple_choice",
+      "unitId": "u41-indicators",
+      "concept": "五层内容",
+      "question": "销售交易五层指标体系通常包括？",
+      "options": [
+        "规模/盈利/效率/库存/客户",
+        "采购/生产/物流/销售/售后",
+        "计划/执行/检查/处理/改进",
+        "线上/线下/批发/零售/出口"
+      ],
+      "answer": "规模/盈利/效率/库存/客户",
+      "points": 10
+    }
+  ]
+}

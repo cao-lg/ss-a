@@ -1,0 +1,44 @@
+{
+  "unitId": "u44-season",
+  "pre": {
+    "items": [
+      {
+        "id": "u44-season_p1",
+        "type": "multiple_choice",
+        "question": "课前小测：季节波动预测",
+        "options": [
+          "季节波动（周期性起伏）",
+          "水平波动（绕均值）",
+          "趋势波动（单调）",
+          "随机波动"
+        ],
+        "answer": "季节波动（周期性起伏）",
+        "points": 10
+      }
+    ]
+  },
+  "post": {
+    "items": [
+      {
+        "id": "u44-season_q1",
+        "type": "fill",
+        "question": "课后测：核心概念",
+        "answer": "总",
+        "points": 10
+      },
+      {
+        "id": "u44-season_q2",
+        "type": "multiple_choice",
+        "question": "课后测：指数含义",
+        "options": [
+          "旺季（高于常年）",
+          "淡季（低于常年）",
+          "异常值",
+          "平稳期"
+        ],
+        "answer": "旺季（高于常年）",
+        "points": 10
+      }
+    ]
+  }
+}

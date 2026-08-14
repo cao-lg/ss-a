@@ -1,0 +1,44 @@
+{
+  "unitId": "u44-trend",
+  "pre": {
+    "items": [
+      {
+        "id": "u44-trend_p1",
+        "type": "multiple_choice",
+        "question": "课前小测：趋势预测",
+        "options": [
+          "趋势预测（长期方向外推）",
+          "季节预测（周期）",
+          "水平预测（绕均值）",
+          "数据清洗"
+        ],
+        "answer": "趋势预测（长期方向外推）",
+        "points": 10
+      }
+    ]
+  },
+  "post": {
+    "items": [
+      {
+        "id": "u44-trend_q1",
+        "type": "fill",
+        "question": "课后测：核心概念",
+        "answer": "1",
+        "points": 10
+      },
+      {
+        "id": "u44-trend_q2",
+        "type": "multiple_choice",
+        "question": "课后测：外推风险",
+        "options": [
+          "风险大（不可信）",
+          "风险小",
+          "毫无影响",
+          "反而更准"
+        ],
+        "answer": "风险大（不可信）",
+        "points": 10
+      }
+    ]
+  }
+}

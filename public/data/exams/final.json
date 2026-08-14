@@ -1,0 +1,490 @@
+{
+  "chapterId": "final",
+  "courseId": "sales-project4",
+  "title": "课程结业大考",
+  "description": "跨全部五个任务的综合性最终考核，覆盖指标体系、数据清洗、分析方法、趋势预测与智能体应用。通关后获得结业认证。",
+  "passScore": 60,
+  "pick": 22,
+  "pool": [
+    {
+      "id": "final-ch41-q1",
+      "type": "multiple_choice",
+      "unitId": "u41-indicators",
+      "chapter": "ch41",
+      "concept": "分析目标",
+      "question": "销售交易数据分析的最终目标是？",
+      "options": [
+        "提升经营决策质量",
+        "单纯美化报表",
+        "尽可能增加数据量",
+        "减少分析人员"
+      ],
+      "answer": "提升经营决策质量",
+      "points": 10
+    },
+    {
+      "id": "final-ch41-q2",
+      "type": "multiple_choice",
+      "unitId": "u41-indicators",
+      "chapter": "ch41",
+      "concept": "指标体系结构",
+      "question": "以下哪一项不属于销售交易“五层指标体系”？",
+      "options": [
+        "物流层",
+        "规模层",
+        "盈利层",
+        "客户层"
+      ],
+      "answer": "物流层",
+      "points": 10
+    },
+    {
+      "id": "final-ch41-q3",
+      "type": "multiple_choice",
+      "unitId": "u41-indicators",
+      "chapter": "ch41",
+      "concept": "规模层",
+      "question": "衡量“这段时间卖了多少”最贴近下列哪一层指标？",
+      "options": [
+        "规模层",
+        "盈利层",
+        "库存层",
+        "客户层"
+      ],
+      "answer": "规模层",
+      "points": 10
+    },
+    {
+      "id": "final-ch41-q4",
+      "type": "multiple_choice",
+      "unitId": "u41-indicators",
+      "chapter": "ch41",
+      "concept": "盈利层",
+      "question": "毛利率、净利率属于指标体系中的哪一层？",
+      "options": [
+        "盈利层",
+        "规模层",
+        "效率层",
+        "客户层"
+      ],
+      "answer": "盈利层",
+      "points": 10
+    },
+    {
+      "id": "final-ch41-q5",
+      "type": "multiple_choice",
+      "unitId": "u41-indicators",
+      "chapter": "ch41",
+      "concept": "库存层",
+      "question": "库存周转率、缺货率主要刻画哪一层指标？",
+      "options": [
+        "库存层",
+        "盈利层",
+        "客户层",
+        "规模层"
+      ],
+      "answer": "库存层",
+      "points": 10
+    },
+    {
+      "id": "final-ch41-q6",
+      "type": "multiple_choice",
+      "unitId": "u41-indicators",
+      "chapter": "ch41",
+      "concept": "客户层",
+      "question": "复购率、客单价主要用于衡量哪一层指标？",
+      "options": [
+        "客户层",
+        "库存层",
+        "规模层",
+        "盈利层"
+      ],
+      "answer": "客户层",
+      "points": 10
+    },
+    {
+      "id": "final-ch42-q7",
+      "type": "multiple_choice",
+      "unitId": "u42-clean",
+      "chapter": "ch42",
+      "concept": "错误分类",
+      "question": "逻辑错误数据一般不包括以下哪一类？",
+      "options": [
+        "缺失值（完整性问题）",
+        "不合理数据",
+        "相互矛盾数据",
+        "违反业务规则数据"
+      ],
+      "answer": "缺失值（完整性问题）",
+      "points": 10
+    },
+    {
+      "id": "final-ch42-q8",
+      "type": "multiple_choice",
+      "unitId": "u42-clean",
+      "chapter": "ch42",
+      "concept": "不合理",
+      "question": "某订单“销售单价”出现负数，这属于？",
+      "options": [
+        "不合理数据",
+        "逻辑矛盾",
+        "业务违规",
+        "正常波动"
+      ],
+      "answer": "不合理数据",
+      "points": 10
+    },
+    {
+      "id": "final-ch42-q9",
+      "type": "multiple_choice",
+      "unitId": "u42-clean",
+      "chapter": "ch42",
+      "concept": "矛盾",
+      "question": "数量×单价得出的金额与记录金额明显不符，这属于？",
+      "options": [
+        "相互矛盾数据",
+        "不合理数据",
+        "业务违规",
+        "缺失数据"
+      ],
+      "answer": "相互矛盾数据",
+      "points": 10
+    },
+    {
+      "id": "final-ch42-q10",
+      "type": "multiple_choice",
+      "unitId": "u42-clean",
+      "chapter": "ch42",
+      "concept": "违规",
+      "question": "一笔订单的“退货数量”大于“销售数量”，这最可能属于？",
+      "options": [
+        "违反业务规则",
+        "不合理范围",
+        "缺失值",
+        "正常退货"
+      ],
+      "answer": "违反业务规则",
+      "points": 10
+    },
+    {
+      "id": "final-ch42-q11",
+      "type": "multiple_choice",
+      "unitId": "u42-clean",
+      "chapter": "ch42",
+      "concept": "清洗步骤",
+      "question": "数据清洗工作的第一步通常是？",
+      "options": [
+        "识别并标注错误",
+        "直接删除整行",
+        "随机填充",
+        "忽略不管"
+      ],
+      "answer": "识别并标注错误",
+      "points": 10
+    },
+    {
+      "id": "final-ch42-q12",
+      "type": "multiple_choice",
+      "unitId": "u42-clean",
+      "chapter": "ch42",
+      "concept": "错误标注",
+      "question": "对错误数据进行标注的主要价值是？",
+      "options": [
+        "便于追溯与复核",
+        "增加数据量",
+        "掩盖问题",
+        "加快删除"
+      ],
+      "answer": "便于追溯与复核",
+      "points": 10
+    },
+    {
+      "id": "final-ch43-q13",
+      "type": "multiple_choice",
+      "unitId": "u43-compare",
+      "chapter": "ch43",
+      "concept": "对比维度",
+      "question": "对比分析的五个常用维度不包括？",
+      "options": [
+        "颜色",
+        "时间",
+        "空间",
+        "类别"
+      ],
+      "answer": "颜色",
+      "points": 10
+    },
+    {
+      "id": "final-ch43-q14",
+      "type": "multiple_choice",
+      "unitId": "u43-compare",
+      "chapter": "ch43",
+      "concept": "时间对比",
+      "question": "要比较“本月”与“去年同期”的销售额，应使用哪个对比维度？",
+      "options": [
+        "时间",
+        "空间",
+        "竞争",
+        "目标"
+      ],
+      "answer": "时间",
+      "points": 10
+    },
+    {
+      "id": "final-ch43-q15",
+      "type": "multiple_choice",
+      "unitId": "u43-compare",
+      "chapter": "ch43",
+      "concept": "空间对比",
+      "question": "比较各区域（华东/华北/华南）的销售表现，属于？",
+      "options": [
+        "空间对比",
+        "时间对比",
+        "目标对比",
+        "竞争对比"
+      ],
+      "answer": "空间对比",
+      "points": 10
+    },
+    {
+      "id": "final-ch43-q16",
+      "type": "multiple_choice",
+      "unitId": "u43-compare",
+      "chapter": "ch43",
+      "concept": "目标对比",
+      "question": "将实际销售额与预算目标对照，属于哪种对比？",
+      "options": [
+        "目标对比",
+        "空间对比",
+        "时间对比",
+        "类别对比"
+      ],
+      "answer": "目标对比",
+      "points": 10
+    },
+    {
+      "id": "final-ch43-q17",
+      "type": "multiple_choice",
+      "unitId": "u43-compare",
+      "chapter": "ch43",
+      "concept": "竞争对比",
+      "question": "把本公司销售表现与主要竞品对照，属于？",
+      "options": [
+        "竞争对比",
+        "类别对比",
+        "空间对比",
+        "时间对比"
+      ],
+      "answer": "竞争对比",
+      "points": 10
+    },
+    {
+      "id": "final-ch43-q18",
+      "type": "multiple_choice",
+      "unitId": "u43-compare",
+      "chapter": "ch43",
+      "concept": "图表选择",
+      "question": "展示不同类别销售额的高低，最适合的图表是？",
+      "options": [
+        "柱状图",
+        "饼图",
+        "散点图",
+        "雷达图"
+      ],
+      "answer": "柱状图",
+      "points": 10
+    },
+    {
+      "id": "final-ch44-q19",
+      "type": "multiple_choice",
+      "unitId": "u44-level",
+      "chapter": "ch44",
+      "concept": "移动平均",
+      "question": "移动平均法最适合预测哪类序列？",
+      "options": [
+        "平稳无趋势的序列",
+        "剧烈上升序列",
+        "强季节序列",
+        "随机游走序列"
+      ],
+      "answer": "平稳无趋势的序列",
+      "points": 10
+    },
+    {
+      "id": "final-ch44-q20",
+      "type": "multiple_choice",
+      "unitId": "u44-level",
+      "chapter": "ch44",
+      "concept": "指数平滑",
+      "question": "指数平滑法中，平滑系数 α 越大表示？",
+      "options": [
+        "越重视近期数据",
+        "越重视远期数据",
+        "完全忽略近期",
+        "与近期无关"
+      ],
+      "answer": "越重视近期数据",
+      "points": 10
+    },
+    {
+      "id": "final-ch44-q21",
+      "type": "multiple_choice",
+      "unitId": "u44-level",
+      "chapter": "ch44",
+      "concept": "水平序列",
+      "question": "水平型序列的主要特征是？",
+      "options": [
+        "均值在一段时间内基本稳定",
+        "持续单调上升",
+        "周期性剧烈波动",
+        "长期下降"
+      ],
+      "answer": "均值在一段时间内基本稳定",
+      "points": 10
+    },
+    {
+      "id": "final-ch44-q22",
+      "type": "multiple_choice",
+      "unitId": "u44-season",
+      "chapter": "ch44",
+      "concept": "季节指数",
+      "question": "某期季节指数大于 1，说明该期销量？",
+      "options": [
+        "高于平均水平",
+        "低于平均水平",
+        "等于平均水平",
+        "与季节无关"
+      ],
+      "answer": "高于平均水平",
+      "points": 10
+    },
+    {
+      "id": "final-ch44-q23",
+      "type": "multiple_choice",
+      "unitId": "u44-season",
+      "chapter": "ch44",
+      "concept": "季节法适用",
+      "question": "季节指数法主要用于哪类序列的预测？",
+      "options": [
+        "具有季节波动的序列",
+        "纯随机序列",
+        "单一水平序列",
+        "无规律序列"
+      ],
+      "answer": "具有季节波动的序列",
+      "points": 10
+    },
+    {
+      "id": "final-ch44-q24",
+      "type": "multiple_choice",
+      "unitId": "u44-season",
+      "chapter": "ch44",
+      "concept": "去趋势",
+      "question": "计算季节指数前，通常先要做什么？",
+      "options": [
+        "剔除长期趋势影响",
+        "直接求平均",
+        "删除异常值",
+        "做对数变换"
+      ],
+      "answer": "剔除长期趋势影响",
+      "points": 10
+    },
+    {
+      "id": "final-ch45-q25",
+      "type": "multiple_choice",
+      "unitId": "u45-agent",
+      "chapter": "ch45",
+      "concept": "智能体优势",
+      "question": "智能体（Agent）预测相较于单一模型的核心优势是？",
+      "options": [
+        "按序列特征自动匹配多模型",
+        "只能用一个固定模型",
+        "完全不需要数据",
+        "仅做人工判断"
+      ],
+      "answer": "按序列特征自动匹配多模型",
+      "points": 10
+    },
+    {
+      "id": "final-ch45-q26",
+      "type": "multiple_choice",
+      "unitId": "u45-agent",
+      "chapter": "ch45",
+      "concept": "水平匹配",
+      "question": "面对水平型序列，智能体应优先匹配？",
+      "options": [
+        "移动平均或指数平滑",
+        "季节指数法",
+        "长期趋势线",
+        "竞争对比"
+      ],
+      "answer": "移动平均或指数平滑",
+      "points": 10
+    },
+    {
+      "id": "final-ch45-q27",
+      "type": "multiple_choice",
+      "unitId": "u45-agent",
+      "chapter": "ch45",
+      "concept": "季节匹配",
+      "question": "面对有明显季节波动的序列，应优先匹配？",
+      "options": [
+        "季节指数法",
+        "移动平均法",
+        "水平预测",
+        "散点图"
+      ],
+      "answer": "季节指数法",
+      "points": 10
+    },
+    {
+      "id": "final-ch45-q28",
+      "type": "multiple_choice",
+      "unitId": "u45-agent",
+      "chapter": "ch45",
+      "concept": "趋势匹配",
+      "question": "面对持续上升的序列，应优先匹配？",
+      "options": [
+        "趋势线拟合法",
+        "季节指数法",
+        "水平平均",
+        "随机猜测"
+      ],
+      "answer": "趋势线拟合法",
+      "points": 10
+    },
+    {
+      "id": "final-ch45-q29",
+      "type": "multiple_choice",
+      "unitId": "u45-agent",
+      "chapter": "ch45",
+      "concept": "预测输出",
+      "question": "智能体综合预测的输出通常应包含？",
+      "options": [
+        "备货与渠道决策建议",
+        "仅一个数值",
+        "无关图表",
+        "员工名单"
+      ],
+      "answer": "备货与渠道决策建议",
+      "points": 10
+    },
+    {
+      "id": "final-ch45-q30",
+      "type": "multiple_choice",
+      "unitId": "u45-agent",
+      "chapter": "ch45",
+      "concept": "匹配依据",
+      "question": "智能体选择预测模型的依据是？",
+      "options": [
+        "序列的统计特征",
+        "随机抽签",
+        "用户喜好",
+        "文件大小"
+      ],
+      "answer": "序列的统计特征",
+      "points": 10
+    }
+  ]
+}

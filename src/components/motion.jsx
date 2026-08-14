@@ -6,16 +6,16 @@ const reduce =
   window.matchMedia &&
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-/* 滚动入场：淡入 + 上滑 */
-export function Reveal({ children, delay = 0, y = 36, className }) {
+/* 滚动入场：淡入 + 上滑。margin 控制触发线（越负，需滚得越深才浮现） */
+export function Reveal({ children, delay = 0, y = 36, className, margin = '-60px' }) {
   if (reduce) return <div className={className}>{children}</div>
   return (
     <motion.div
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-60px' }}
-      transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1], delay }}
+      viewport={{ once: true, margin }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay }}
     >
       {children}
     </motion.div>
@@ -24,11 +24,11 @@ export function Reveal({ children, delay = 0, y = 36, className }) {
 
 /* 错开列表：子项依次浮现（带轻微模糊）
    mount=true 时随加载自动触发，否则滚动到视口触发 */
-export function Stagger({ children, className, gap = 0.08, delay = 0.05, mount = false }) {
+export function Stagger({ children, className, gap = 0.08, delay = 0.05, mount = false, margin = '-40px' }) {
   if (reduce) return <div className={className}>{children}</div>
   const motionProps = mount
     ? { initial: 'hidden', animate: 'visible' }
-    : { initial: 'hidden', whileInView: 'visible', viewport: { once: true, margin: '-40px' } }
+    : { initial: 'hidden', whileInView: 'visible', viewport: { once: true, margin } }
   return (
     <motion.div
       className={className}

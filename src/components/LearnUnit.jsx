@@ -15,6 +15,34 @@ import Scene from './Scene'
 import CourseShell from './CourseShell'
 import { Reveal, Magnetic, motion, AnimatePresence } from './motion'
 
+// 正文逐元素逐步浮现：把每个顶层块级元素各自包成独立 Reveal（滚深才浮现），
+// 不切分字符串，因此代码块 / 表格等不会被切断。
+const revealTag = (Tag) =>
+  function RevealTag({ node, ...rest }) {
+    return (
+      <Reveal margin="-18%">
+        <Tag {...rest} />
+      </Reveal>
+    )
+  }
+
+const mdComponents = {
+  p: revealTag('p'),
+  h1: revealTag('h1'),
+  h2: revealTag('h2'),
+  h3: revealTag('h3'),
+  h4: revealTag('h4'),
+  h5: revealTag('h5'),
+  h6: revealTag('h6'),
+  ul: revealTag('ul'),
+  ol: revealTag('ol'),
+  blockquote: revealTag('blockquote'),
+  pre: revealTag('pre'),
+  table: revealTag('table'),
+  img: revealTag('img'),
+  hr: revealTag('hr'),
+}
+
 // 兼容两种测验数据结构：{ items: [...] }（u41）或直接 [... ]（u42~u45）
 function extractItems(block) {
   if (!block) return []
@@ -229,16 +257,18 @@ export default function LearnUnit() {
           )
           if (b.type === 'md') {
             return wrap(
-              <Reveal delay={0.02}>
-                <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeHighlight]}>
-                  {b.content}
-                </ReactMarkdown>
-              </Reveal>
+              <ReactMarkdown
+                remarkPlugins={[remarkGfm]}
+                rehypePlugins={[rehypeHighlight]}
+                components={mdComponents}
+              >
+                {b.content}
+              </ReactMarkdown>
             )
           }
-          if (b.kind === 'checkpoint') return wrap(<Reveal><Checkpoint unitId={unitId} {...b.attrs} /></Reveal>)
-          if (b.kind === 'explore') return wrap(<Reveal><Explore unitId={unitId} {...b.attrs} /></Reveal>)
-          if (b.kind === 'challenge') return wrap(<Reveal><Challenge unitId={unitId} {...b.attrs} /></Reveal>)
+          if (b.kind === 'checkpoint') return wrap(<Checkpoint unitId={unitId} {...b.attrs} />)
+          if (b.kind === 'explore') return wrap(<Explore unitId={unitId} {...b.attrs} />)
+          if (b.kind === 'challenge') return wrap(<Challenge unitId={unitId} {...b.attrs} />)
           if (b.kind === 'scene') return wrap(<Scene unitId={unitId} {...b.attrs} />)
           return null
         })}

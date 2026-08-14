@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { saveCheckpoint } from '../lib/storage'
 import { logBehavior } from '../lib/behavior'
+import { Stagger, StaggerItem } from './motion'
 
 // 探索分支：可选、引发兴趣、有即时反馈。
 // 支持两种模式：
@@ -20,46 +21,54 @@ export default function Explore({ unitId, title = '动手想一想', scenario, b
   }
 
   return (
-    <div className="block explore">
+    <Stagger className="block explore" gap={0.12} margin="-12%">
       <div className="block-tag">探索</div>
-      <h4>{title}</h4>
+      <StaggerItem><h4>{title}</h4></StaggerItem>
 
       {scenario && (
-        <div className="cp-scenario">
-          <span className="cp-scenario-icon">情境</span>
-          <p>{scenario}</p>
-        </div>
+        <StaggerItem>
+          <div className="cp-scenario">
+            <span className="cp-scenario-icon">情境</span>
+            <p>{scenario}</p>
+          </div>
+        </StaggerItem>
       )}
 
-      {body && <p className="q-text">{body}</p>}
+      {body && <StaggerItem><p className="q-text">{body}</p></StaggerItem>}
 
       {hasChoices ? (
-        <div className="opts">
-          {choices.map((c, i) => (
-            <button
-              key={i}
-              className={`opt ${selected === i ? 'sel' : ''}`}
-              onClick={() => pick(i)}
-              disabled={done && selected !== i}
-            >
-              <span className="opt-idx">{String.fromCharCode(65 + i)}</span>
-              <span>{c.text}</span>
-            </button>
-          ))}
-        </div>
+        <StaggerItem>
+          <div className="opts">
+            {choices.map((c, i) => (
+              <button
+                key={i}
+                className={`opt ${selected === i ? 'sel' : ''}`}
+                onClick={() => pick(i)}
+                disabled={done && selected !== i}
+              >
+                <span className="opt-idx">{String.fromCharCode(65 + i)}</span>
+                <span>{c.text}</span>
+              </button>
+            ))}
+          </div>
+        </StaggerItem>
       ) : reflect ? (
-        <textarea
-          className="reflect"
-          placeholder="写下你的猜想（不会评分，但会帮你梳理思路）"
-          value={reflection}
-          onChange={(e) => setReflection(e.target.value)}
-        />
+        <StaggerItem>
+          <textarea
+            className="reflect"
+            placeholder="写下你的猜想（不会评分，但会帮你梳理思路）"
+            value={reflection}
+            onChange={(e) => setReflection(e.target.value)}
+          />
+        </StaggerItem>
       ) : null}
 
       {!hasChoices && reflect && (
-        <button className="btn small" onClick={() => setDone(true)}>
-          {done ? '已记录 ✓' : '记录想法'}
-        </button>
+        <StaggerItem>
+          <button className="btn small" onClick={() => setDone(true)}>
+            {done ? '已记录 ✓' : '记录想法'}
+          </button>
+        </StaggerItem>
       )}
 
       {done && selected !== null && choices[selected] && (
@@ -73,6 +82,6 @@ export default function Explore({ unitId, title = '动手想一想', scenario, b
           )}
         </div>
       )}
-    </div>
+    </Stagger>
   )
 }

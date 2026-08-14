@@ -3,6 +3,7 @@ import { judgeAnswer } from '../lib/judge'
 import { saveCheckpoint } from '../lib/storage'
 import { runPython } from '../lib/codeRunner'
 import { logBehavior } from '../lib/behavior'
+import { Stagger, StaggerItem } from './motion'
 
 // 进阶挑战：更难、可选；编程课可用 type="output" 代码题（可插拔 Pyodide 执行）。对应需求 C。
 export default function Challenge({ unitId, id, type = 'fill', title = '进阶挑战', scenario, instruction, options, answer, hints = [], feedback, unlock }) {
@@ -65,52 +66,62 @@ export default function Challenge({ unitId, id, type = 'fill', title = '进阶�
   const currentHint = hintIndex >= 0 ? usableHints[hintIndex] : null
 
   return (
-    <div className={`block challenge ${state}`}>
+    <Stagger className={`block challenge ${state}`} gap={0.12} margin="-12%">
       <div className="block-tag">挑战</div>
-      <h4>{title}</h4>
+      <StaggerItem><h4>{title}</h4></StaggerItem>
 
       {scenario && (
-        <div className="cp-scenario">
-          <span className="cp-scenario-icon">情境</span>
-          <p>{scenario}</p>
-        </div>
+        <StaggerItem>
+          <div className="cp-scenario">
+            <span className="cp-scenario-icon">情境</span>
+            <p>{scenario}</p>
+          </div>
+        </StaggerItem>
       )}
 
-      {instruction && <p className="q-text">{instruction}</p>}
+      {instruction && <StaggerItem><p className="q-text">{instruction}</p></StaggerItem>}
 
       {isCode ? (
-        <textarea
-          className="code"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          placeholder={'# 用 Python 写出答案，print 出结果\nprint(...)'}
-        />
+        <StaggerItem>
+          <textarea
+            className="code"
+            value={code}
+            onChange={(e) => setCode(e.target.value)}
+            placeholder={'# 用 Python 写出答案，print 出结果\nprint(...)'}
+          />
+        </StaggerItem>
       ) : isChoice ? (
-        <div className="opts">
-          {options.map((o, i) => (
-            <button key={i} className={`opt ${val === i ? 'sel' : ''}`} onClick={() => setVal(i)} disabled={state === 'correct'}>
-              <span className="opt-idx">{String.fromCharCode(65 + i)}</span>
-              <span>{o}</span>
-            </button>
-          ))}
-        </div>
+        <StaggerItem>
+          <div className="opts">
+            {options.map((o, i) => (
+              <button key={i} className={`opt ${val === i ? 'sel' : ''}`} onClick={() => setVal(i)} disabled={state === 'correct'}>
+                <span className="opt-idx">{String.fromCharCode(65 + i)}</span>
+                <span>{o}</span>
+              </button>
+            ))}
+          </div>
+        </StaggerItem>
       ) : (
-        <input className="inp" value={val} onChange={(e) => setVal(e.target.value)} placeholder="输入答案" disabled={state === 'correct'} onKeyDown={(e) => e.key === 'Enter' && check()} />
+        <StaggerItem>
+          <input className="inp" value={val} onChange={(e) => setVal(e.target.value)} placeholder="输入答案" disabled={state === 'correct'} onKeyDown={(e) => e.key === 'Enter' && check()} />
+        </StaggerItem>
       )}
 
-      <div className="cp-actions">
-        {state !== 'correct' && (
-          <button className="btn small" onClick={check} disabled={running || (!isCode && (val === null || val === ''))}>
-            {running ? '运行中…' : isCode ? '运行' : attempts === 0 ? '接受挑战' : '再试一次'}
-          </button>
-        )}
-        {state === 'correct' && (
-          <div className="cp-ok">
-            <span className="cp-ok-icon">✓</span>
-            <span>挑战成功 +XP</span>
-          </div>
-        )}
-      </div>
+      <StaggerItem>
+        <div className="cp-actions">
+          {state !== 'correct' && (
+            <button className="btn small" onClick={check} disabled={running || (!isCode && (val === null || val === ''))}>
+              {running ? '运行中…' : isCode ? '运行' : attempts === 0 ? '接受挑战' : '再试一次'}
+            </button>
+          )}
+          {state === 'correct' && (
+            <div className="cp-ok">
+              <span className="cp-ok-icon">✓</span>
+              <span>挑战成功 +XP</span>
+            </div>
+          )}
+        </div>
+      </StaggerItem>
 
       {isCode && runOut && (
         <div className={`cp-feedback ${runOut.ok ? 'ok' : 'wrong'}`}>
@@ -174,6 +185,6 @@ export default function Challenge({ unitId, id, type = 'fill', title = '进阶�
           )}
         </div>
       )}
-    </div>
+    </Stagger>
   )
 }

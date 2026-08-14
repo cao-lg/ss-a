@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { judgeAnswer } from '../lib/judge'
 import { saveCheckpoint } from '../lib/storage'
+import { Stagger, StaggerItem } from './motion'
 
 // 阅读中检查点：情境 → 预测/尝试 → 线索反馈 → 解锁拓学。
 // 支持：scenario(情境)、hints(渐进提示数组)、feedback(最终解释)、unlock(答对后拓展)。
@@ -47,56 +48,64 @@ export default function Checkpoint({ unitId, type = 'multiple_choice', question,
   const currentHint = hintIndex >= 0 ? usableHints[hintIndex] : null
 
   return (
-    <div className={`block checkpoint ${state}`}>
+    <Stagger className={`block checkpoint ${state}`} gap={0.12} margin="-12%">
       <div className="block-tag">检查点</div>
 
       {scenario && (
-        <div className="cp-scenario">
-          <span className="cp-scenario-icon">情境</span>
-          <p>{scenario}</p>
-        </div>
+        <StaggerItem>
+          <div className="cp-scenario">
+            <span className="cp-scenario-icon">情境</span>
+            <p>{scenario}</p>
+          </div>
+        </StaggerItem>
       )}
 
-      <p className="q-text">{question}</p>
+      <StaggerItem><p className="q-text">{question}</p></StaggerItem>
 
       {isChoice ? (
-        <div className="opts">
-          {options.map((o, i) => (
-            <button
-              key={i}
-              className={`opt ${val === i ? 'sel' : ''} ${state === 'correct' && i === options.indexOf(answer) ? 'correct-opt' : ''}`}
-              onClick={() => setVal(i)}
-              disabled={state === 'correct'}
-            >
-              <span className="opt-idx">{String.fromCharCode(65 + i)}</span>
-              <span>{o}</span>
-            </button>
-          ))}
-        </div>
+        <StaggerItem>
+          <div className="opts">
+            {options.map((o, i) => (
+              <button
+                key={i}
+                className={`opt ${val === i ? 'sel' : ''} ${state === 'correct' && i === options.indexOf(answer) ? 'correct-opt' : ''}`}
+                onClick={() => setVal(i)}
+                disabled={state === 'correct'}
+              >
+                <span className="opt-idx">{String.fromCharCode(65 + i)}</span>
+                <span>{o}</span>
+              </button>
+            ))}
+          </div>
+        </StaggerItem>
       ) : (
-        <input
-          className="inp"
-          value={val}
-          onChange={(e) => setVal(e.target.value)}
-          placeholder="输入你的答案"
-          disabled={state === 'correct'}
-          onKeyDown={(e) => e.key === 'Enter' && check()}
-        />
+        <StaggerItem>
+          <input
+            className="inp"
+            value={val}
+            onChange={(e) => setVal(e.target.value)}
+            placeholder="输入你的答案"
+            disabled={state === 'correct'}
+            onKeyDown={(e) => e.key === 'Enter' && check()}
+          />
+        </StaggerItem>
       )}
 
-      <div className="cp-actions">
-        {state !== 'correct' && (
-          <button className="btn small" onClick={check} disabled={val === null || val === ''}>
-            {attempts === 0 ? '先猜一下' : '再试一次'}
-          </button>
-        )}
-        {state === 'correct' && (
-          <div className="cp-ok">
-            <span className="cp-ok-icon">✓</span>
-            <span>答对了！解锁一个小发现</span>
-          </div>
-        )}
-      </div>
+      <StaggerItem>
+        <div className="cp-actions">
+          {state !== 'correct' && (
+            <button className="btn small" onClick={check} disabled={val === null || val === ''}>
+              {attempts === 0 ? '先猜一下' : '再试一次'}
+            </button>
+          )}
+          {state === 'correct' && (
+            <div className="cp-ok">
+              <span className="cp-ok-icon">✓</span>
+              <span>答对了！解锁一个小发现</span>
+            </div>
+          )}
+        </div>
+      </StaggerItem>
 
       {state === 'wrong' && !revealed && (
         <div className="cp-hint-bar">
@@ -147,6 +156,6 @@ export default function Checkpoint({ unitId, type = 'multiple_choice', question,
           )}
         </div>
       )}
-    </div>
+    </Stagger>
   )
 }

@@ -1,0 +1,188 @@
+{
+  "id": "sales-project2",
+  "title": "项目二：商品选品数据分析",
+  "description": "跟随新人「小北」在「焕新家电」电商部的成长，完成《项目二：商品选品数据分析》的全部任务：从真实业务问题出发，把数据变成能落地的决策。",
+  "chapters": [
+    {
+      "id": "ch21",
+      "title": "任务2.1 评估市场容量与竞争态势",
+      "order": 1,
+      "units": [
+        {
+          "id": "u21-1",
+          "title": "评估市场容量与竞争态势",
+          "path": "u21-1.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "评估市场容量与竞争态势"
+          ],
+          "preAssessment": "u21-1",
+          "postAssessment": "u21-1"
+        },
+        {
+          "id": "u21-2",
+          "title": "市场、商品核心指标体系搭建",
+          "path": "u21-2.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "市场、商品核心指标体系搭建"
+          ],
+          "preAssessment": "u21-2",
+          "postAssessment": "u21-2"
+        }
+      ]
+    },
+    {
+      "id": "ch22",
+      "title": "任务2.2 数据获取与商品初筛",
+      "order": 2,
+      "units": [
+        {
+          "id": "u22-1",
+          "title": "数据采集：市场与竞品数据",
+          "path": "u22-1.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "数据采集：市场与竞品数据"
+          ],
+          "preAssessment": "u22-1",
+          "postAssessment": "u22-1"
+        },
+        {
+          "id": "u22-2",
+          "title": "数据清洗：缺失值处理",
+          "path": "u22-2.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "缺失值处理方法"
+          ],
+          "preAssessment": "u22-2",
+          "postAssessment": "u22-2"
+        },
+        {
+          "id": "u22-3",
+          "title": "缺失值清洗实例",
+          "path": "u22-3.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "缺失值清洗实例"
+          ],
+          "preAssessment": "u22-3",
+          "postAssessment": "u22-3"
+        }
+      ]
+    },
+    {
+      "id": "ch23",
+      "title": "任务2.3 分析商品潜力与价值-商品热度分析",
+      "order": 3,
+      "units": [
+        {
+          "id": "u23-1",
+          "title": "分析商品潜力与价值-商品热度分析",
+          "path": "u23-1.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "分析商品潜力与价值-商品热度分析"
+          ],
+          "preAssessment": "u23-1",
+          "postAssessment": "u23-1"
+        },
+        {
+          "id": "u23-2",
+          "title": "平均分析",
+          "path": "u23-2.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "平均分析"
+          ],
+          "preAssessment": "u23-2",
+          "postAssessment": "u23-2"
+        },
+        {
+          "id": "u23-3",
+          "title": "结构分析",
+          "path": "u23-3.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "用户群体结构分析"
+          ],
+          "preAssessment": "u23-3",
+          "postAssessment": "u23-3"
+        }
+      ]
+    },
+    {
+      "id": "ch24",
+      "title": "任务2.4 选品组合与可视化",
+      "order": 4,
+      "units": [
+        {
+          "id": "u24-1",
+          "title": "选品组合与可视化",
+          "path": "u24-1.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "选品组合与可视化"
+          ],
+          "preAssessment": "u24-1",
+          "postAssessment": "u24-1"
+        },
+        {
+          "id": "u24-2",
+          "title": "选品组合确定：波士顿矩阵应用",
+          "path": "u24-2.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "实战应用：“智享生活”选品组合搭建"
+          ],
+          "preAssessment": "u24-2",
+          "postAssessment": "u24-2"
+        },
+        {
+          "id": "u24-3",
+          "title": "选品组合可视化：矩阵图（气泡图）制作",
+          "path": "u24-3.md",
+          "duration": "约 14 分钟",
+          "objectives": [
+            "数据准备",
+            "冷门数据挖亿级爆品"
+          ],
+          "preAssessment": "u24-3",
+          "postAssessment": "u24-3"
+        }
+      ]
+    },
+    {
+      "id": "ch25",
+      "title": "任务2.5 影刀RPA采集市场数据",
+      "order": 5,
+      "units": [
+        {
+          "id": "u25-1",
+          "title": "案例需求",
+          "path": "u25-1.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "案例需求"
+          ],
+          "preAssessment": "u25-1",
+          "postAssessment": "u25-1"
+        },
+        {
+          "id": "u25-2",
+          "title": "操作步骤",
+          "path": "u25-2.md",
+          "duration": "约 17 分钟",
+          "objectives": [
+            "需求集中度指标",
+            "竞争稀缺度指标",
+            "盈利潜力指标"
+          ],
+          "preAssessment": "u25-2",
+          "postAssessment": "u25-2"
+        }
+      ]
+    }
+  ]
+}

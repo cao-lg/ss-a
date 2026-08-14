@@ -1,0 +1,98 @@
+{
+  "id": "sales-project6",
+  "title": "项目六：物流履约数据分析",
+  "description": "跟随新人「小北」在「焕新家电」电商部的成长，完成《项目六：物流履约数据分析》的全部任务：从真实业务问题出发，把数据变成能落地的决策。",
+  "chapters": [
+    {
+      "id": "ch61",
+      "title": "任务6.1 认识物流核心指标",
+      "order": 1,
+      "units": [
+        {
+          "id": "u61-1",
+          "title": "认识物流核心指标",
+          "path": "u61-1.md",
+          "duration": "约 17 分钟",
+          "objectives": [
+            "送货速度指标",
+            "服务质量指标",
+            "物流成本指标"
+          ],
+          "preAssessment": "u61-1",
+          "postAssessment": "u61-1"
+        }
+      ]
+    },
+    {
+      "id": "ch62",
+      "title": "任务6.2 数据规约",
+      "order": 2,
+      "units": [
+        {
+          "id": "u62-1",
+          "title": "数据规约",
+          "path": "u62-1.md",
+          "duration": "约 23 分钟",
+          "objectives": [
+            "数据规约的核心意义",
+            "物流履约数据的常用规约方法",
+            "维度规约",
+            "数量规约",
+            "物流数据规约的实操要点"
+          ],
+          "preAssessment": "u62-1",
+          "postAssessment": "u62-1"
+        }
+      ]
+    },
+    {
+      "id": "ch63",
+      "title": "任务6.3 物流效率分析",
+      "order": 3,
+      "units": [
+        {
+          "id": "u63-1",
+          "title": "物流效率分析",
+          "path": "u63-1.md",
+          "duration": "约 14 分钟",
+          "objectives": [
+            "物流时效分析",
+            "物流成本分析"
+          ],
+          "preAssessment": "u63-1",
+          "postAssessment": "u63-1"
+        },
+        {
+          "id": "u63-2",
+          "title": "物流成本结构拆解。物流总成本可拆解为仓储成本、运输成本、包装成本、人工成本和管理成本五大类。以“智享科技”双十一期间数据为例，物流总成本为186万元，各成本构成如表6-4所示。",
+          "path": "u63-2.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "物流质量分析"
+          ],
+          "preAssessment": "u63-2",
+          "postAssessment": "u63-2"
+        }
+      ]
+    },
+    {
+      "id": "ch64",
+      "title": "任务6.4 Power BI实现数据可视化与智能报告生成",
+      "order": 4,
+      "units": [
+        {
+          "id": "u64-1",
+          "title": "Power BI实现数据可视化与智能报告生成",
+          "path": "u64-1.md",
+          "duration": "约 14 分钟",
+          "objectives": [
+            "Power BI数据建模与导入",
+            "物流数据看板搭建"
+          ],
+          "preAssessment": "u64-1",
+          "postAssessment": "u64-1"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,208 @@
+{
+  "id": "sales-project5",
+  "title": "项目五：客户服务数据分析",
+  "description": "跟随新人「小北」在「焕新家电」电商部的成长，完成《项目五：客户服务数据分析》的全部任务：从真实业务问题出发，把数据变成能落地的决策。",
+  "chapters": [
+    {
+      "id": "ch51",
+      "title": "任务5.1 客户服务数据分析基本认知",
+      "order": 1,
+      "units": [
+        {
+          "id": "u51-1",
+          "title": "客户服务数据分析的意义",
+          "path": "u51-1.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "客户服务数据分析的意义"
+          ],
+          "preAssessment": "u51-1",
+          "postAssessment": "u51-1"
+        },
+        {
+          "id": "u51-2",
+          "title": "客户服务数据核心指标体系搭建",
+          "path": "u51-2.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "客户服务数据核心指标体系搭建"
+          ],
+          "preAssessment": "u51-2",
+          "postAssessment": "u51-2"
+        }
+      ]
+    },
+    {
+      "id": "ch52",
+      "title": "任务5.2 异常数据清洗",
+      "order": 2,
+      "units": [
+        {
+          "id": "u52-1",
+          "title": "客户服务数据中常见的异常数据类型",
+          "path": "u52-1.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "客户服务数据中常见的异常数据类型"
+          ],
+          "preAssessment": "u52-1",
+          "postAssessment": "u52-1"
+        },
+        {
+          "id": "u52-2",
+          "title": "异常数据清洗的意义",
+          "path": "u52-2.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "异常数据清洗的意义"
+          ],
+          "preAssessment": "u52-2",
+          "postAssessment": "u52-2"
+        },
+        {
+          "id": "u52-3",
+          "title": "无效数据清洗",
+          "path": "u52-3.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "无效数据清洗"
+          ],
+          "preAssessment": "u52-3",
+          "postAssessment": "u52-3"
+        }
+      ]
+    },
+    {
+      "id": "ch53",
+      "title": "任务5.3 客户满意度分析",
+      "order": 3,
+      "units": [
+        {
+          "id": "u53-1",
+          "title": "基于问题类型的频数分布分析的必要性",
+          "path": "u53-1.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "基于问题类型的频数分布分析的必要性"
+          ],
+          "preAssessment": "u53-1",
+          "postAssessment": "u53-1"
+        },
+        {
+          "id": "u53-2",
+          "title": "基于问题类型的频数分布分析",
+          "path": "u53-2.md",
+          "duration": "约 14 分钟",
+          "objectives": [
+            "客户满意度频数分析",
+            "投诉率分组分析"
+          ],
+          "preAssessment": "u53-2",
+          "postAssessment": "u53-2"
+        }
+      ]
+    },
+    {
+      "id": "ch54",
+      "title": "任务5.4 客户服务策略优化",
+      "order": 4,
+      "units": [
+        {
+          "id": "u54-1",
+          "title": "客户服务数据分析的必要性",
+          "path": "u54-1.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "客户服务数据分析的必要性"
+          ],
+          "preAssessment": "u54-1",
+          "postAssessment": "u54-1"
+        },
+        {
+          "id": "u54-2",
+          "title": "基于客户服务数据分析的客户服务策略优化分析",
+          "path": "u54-2.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "客户特征分析"
+          ],
+          "preAssessment": "u54-2",
+          "postAssessment": "u54-2"
+        }
+      ]
+    },
+    {
+      "id": "ch55",
+      "title": "任务5.5 飞书多维表格AI管理客户关系",
+      "order": 5,
+      "units": [
+        {
+          "id": "u55-1",
+          "title": "飞书多维表格AI管理客户关系",
+          "path": "u55-1.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "飞书多维表格AI管理客户关系"
+          ],
+          "preAssessment": "u55-1",
+          "postAssessment": "u55-1"
+        },
+        {
+          "id": "u55-2",
+          "title": "数据底座搭建",
+          "path": "u55-2.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "数据底座搭建"
+          ],
+          "preAssessment": "u55-2",
+          "postAssessment": "u55-2"
+        },
+        {
+          "id": "u55-3",
+          "title": "AI自动打标签配置",
+          "path": "u55-3.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "AI自动打标签配置"
+          ],
+          "preAssessment": "u55-3",
+          "postAssessment": "u55-3"
+        },
+        {
+          "id": "u55-4",
+          "title": "创建仪表盘",
+          "path": "u55-4.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "创建仪表盘"
+          ],
+          "preAssessment": "u55-4",
+          "postAssessment": "u55-4"
+        },
+        {
+          "id": "u55-5",
+          "title": "AI分析-根据订单数据构建RFM模型",
+          "path": "u55-5.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "AI分析-根据订单数据构建RFM模型"
+          ],
+          "preAssessment": "u55-5",
+          "postAssessment": "u55-5"
+        },
+        {
+          "id": "u55-6",
+          "title": "AI分析-使用扣子完成RFM模型分析",
+          "path": "u55-6.md",
+          "duration": "约 11 分钟",
+          "objectives": [
+            "AI分析-使用扣子完成RFM模型分析"
+          ],
+          "preAssessment": "u55-6",
+          "postAssessment": "u55-6"
+        }
+      ]
+    }
+  ]
+}

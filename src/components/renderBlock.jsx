@@ -1,6 +1,7 @@
 import ReactMarkdown from 'react-markdown'
 import remarkGfm from 'remark-gfm'
 import rehypeHighlight from 'rehype-highlight'
+import { parseDirectives } from '../lib/mdParser'
 import { Reveal } from './motion'
 import Checkpoint from './Checkpoint'
 import Explore from './Explore'
@@ -103,12 +104,18 @@ export function renderBlockContent(b, unitId, bodyRenderer, extra = {}) {
           bodyRenderer={bodyRenderer}
         />
       )
-    case 'reveal':
+    case 'reveal': {
+      // reveal 是容器：body 是 Markdown 字符串，需先解析再逐子块渲染。
+      // 注意：不能把 reveal 块 b 本身再传回 bodyRenderer（会无限递归）。
+      const inner = b.body ? parseDirectives(b.body) : []
       return (
         <Explain title={b.attrs.title} onOpen={extra.onRevealOpen}>
-          {bodyRenderer(b, unitId, bodyRenderer, extra)}
+          {inner.map((ib, i) => (
+            <div key={i}>{bodyRenderer(ib, unitId, bodyRenderer, extra)}</div>
+          ))}
         </Explain>
       )
+    }
     default:
       return null
   }

@@ -10,6 +10,10 @@ import { logBehavior } from '../lib/behavior'
 import Checkpoint from './Checkpoint'
 import Explore from './Explore'
 import Challenge from './Challenge'
+import Kpi from './Kpi'
+import Funnel from './Funnel'
+import Flow from './Flow'
+import Formula from './Formula'
 import AssessmentModal from './AssessmentModal'
 import Scene from './Scene'
 import CourseShell from './CourseShell'
@@ -270,6 +274,10 @@ export default function LearnUnit() {
           if (b.kind === 'explore') return wrap(<Explore unitId={unitId} {...b.attrs} />)
           if (b.kind === 'challenge') return wrap(<Challenge unitId={unitId} {...b.attrs} />)
           if (b.kind === 'scene') return wrap(<Scene unitId={unitId} {...b.attrs} />)
+          if (b.kind === 'kpi') return wrap(<Kpi unitId={unitId} {...b.attrs} />)
+          if (b.kind === 'funnel') return wrap(<Funnel unitId={unitId} {...b.attrs} />)
+          if (b.kind === 'flow') return wrap(<Flow unitId={unitId} {...b.attrs} />)
+          if (b.kind === 'formula') return wrap(<Formula unitId={unitId} {...b.attrs} />)
           return null
         })}
       </div>

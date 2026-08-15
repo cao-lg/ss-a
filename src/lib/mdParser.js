@@ -147,7 +147,8 @@ export function parseDirectives(md) {
     }
   }
 
-  // 从 attrStr 起始位置（已在左括号 { 之后）找到外层闭合的 }，返回包含该 } 的索引（相对 attrStr）
+  // 从 attrStr 起始位置（已在左括号 { 之后）找到外层闭合的 }。
+  // 找到时返回 } 的位置索引；未找到（跨行）时返回 -1。
   function findClosingBrace(s) {
     let depth = 1
     let k = 0
@@ -172,8 +173,33 @@ export function parseDirectives(md) {
       if (ch === '}') depth--
       k++
     }
-    return k
+    return depth === 0 ? k - 1 : -1
   }
+
+  // 容器指令（含 body）的体终止行：独立 `:::` 行闭合。
+  // 只有「容器类指令」(qchain/question/q) 的 opener 才计入深度；
+  // 属性式指令(compare/cards/steps…) 不带 body、无独立 `:::` 闭合，不计入深度，
+  // 这样 qchain 的体内可以并排多个 :::question 兄弟节点而不被提前截断。
+  // 返回终止行索引；若无终止行返回 -1（当作属性式指令，无 body）。
+  function findBodyEnd(startLine) {
+    let depth = 0
+    let m = startLine
+    while (m < lines.length) {
+      const ln = lines[m]
+      if (/^\s*:::\s*$/.test(ln)) {
+        if (depth === 0) return m
+        depth--
+      } else if (/^:::(qchain|question|q)\{/.test(ln)) {
+        depth++
+      }
+      m++
+    }
+    return -1
+  }
+
+  // 容器类指令：既接受属性，也接受「体」（直到独立 ::: 前的内容）。
+  // 这些指令的体内可含任意 Markdown 与其它可视化块，由对应组件递归渲染。
+  const CONTAINER_KINDS = new Set(['qchain', 'question', 'q'])
 
   let i = 0
   while (i < lines.length) {
@@ -187,7 +213,7 @@ export function parseDirectives(md) {
       // 属性可能跨行，使用括号深度找闭合的 }
       while (j < lines.length) {
         const closeIdx = findClosingBrace(attrStr)
-        if (closeIdx < attrStr.length) {
+        if (closeIdx >= 0) {
           // 找到了外层闭合
           attrStr = attrStr.slice(0, closeIdx)
           break
@@ -196,6 +222,19 @@ export function parseDirectives(md) {
         attrStr += '\n' + (lines[j] ?? '')
       }
       const attrs = parseAttrs(attrStr)
+      if (CONTAINER_KINDS.has(kind)) {
+        const end = findBodyEnd(j + 1)
+        if (end >= 0) {
+          const body = lines.slice(j + 1, end).join('\n').trim()
+          blocks.push({ type: 'directive', kind, attrs, body })
+          i = end + 1
+          continue
+        }
+        // 无 body 终止行：退化为属性式（body 为 null），行为同旧
+        blocks.push({ type: 'directive', kind, attrs, body: null })
+        i = j + 1
+        continue
+      }
       // 若下一行是单独的 ::: 结尾，跳过
       if ((lines[j + 1] ?? '').trim() === ':::') j++
       blocks.push({ type: 'directive', kind, attrs })

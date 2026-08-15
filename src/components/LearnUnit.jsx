@@ -1,54 +1,15 @@
 import { useEffect, useState, useRef } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
-import rehypeHighlight from 'rehype-highlight'
 import { getCourse, getUnitContent, getAssessment, getAssessmentStatus, submitAssessment } from '../lib/api'
 import { parseDirectives } from '../lib/mdParser'
 import { updateProgress, getStoredAssessment, saveTime } from '../lib/storage'
 import { logBehavior } from '../lib/behavior'
-import Checkpoint from './Checkpoint'
-import Explore from './Explore'
-import Challenge from './Challenge'
-import Kpi from './Kpi'
-import Funnel from './Funnel'
-import Flow from './Flow'
-import Formula from './Formula'
-import Cards from './Cards'
-import Compare from './Compare'
-import Steps from './Steps'
 import AssessmentModal from './AssessmentModal'
-import Scene from './Scene'
 import CourseShell from './CourseShell'
-import { Reveal, Magnetic, motion, AnimatePresence } from './motion'
+import { renderBlockContent } from './renderBlock'
+import { Magnetic, motion, AnimatePresence } from './motion'
 
-// 正文逐元素逐步浮现：把每个顶层块级元素各自包成独立 Reveal（滚深才浮现），
-// 不切分字符串，因此代码块 / 表格等不会被切断。
-const revealTag = (Tag) =>
-  function RevealTag({ node, ...rest }) {
-    return (
-      <Reveal margin="-18%">
-        <Tag {...rest} />
-      </Reveal>
-    )
-  }
-
-const mdComponents = {
-  p: revealTag('p'),
-  h1: revealTag('h1'),
-  h2: revealTag('h2'),
-  h3: revealTag('h3'),
-  h4: revealTag('h4'),
-  h5: revealTag('h5'),
-  h6: revealTag('h6'),
-  ul: revealTag('ul'),
-  ol: revealTag('ol'),
-  blockquote: revealTag('blockquote'),
-  pre: revealTag('pre'),
-  table: revealTag('table'),
-  img: revealTag('img'),
-  hr: revealTag('hr'),
-}
+// 正文逐元素逐步浮现由 renderBlock.jsx 内的 mdComponents 统一处理。
 
 // 兼容两种测验数据结构：{ items: [...] }（u41）或直接 [... ]（u42~u45）
 function extractItems(block) {
@@ -262,29 +223,7 @@ export default function LearnUnit() {
               {node}
             </div>
           )
-          if (b.type === 'md') {
-            return wrap(
-              <ReactMarkdown
-                remarkPlugins={[remarkGfm]}
-                rehypePlugins={[rehypeHighlight]}
-                components={mdComponents}
-              >
-                {b.content}
-              </ReactMarkdown>
-            )
-          }
-          if (b.kind === 'checkpoint') return wrap(<Checkpoint unitId={unitId} {...b.attrs} />)
-          if (b.kind === 'explore') return wrap(<Explore unitId={unitId} {...b.attrs} />)
-          if (b.kind === 'challenge') return wrap(<Challenge unitId={unitId} {...b.attrs} />)
-          if (b.kind === 'scene') return wrap(<Scene unitId={unitId} {...b.attrs} />)
-          if (b.kind === 'kpi') return wrap(<Kpi unitId={unitId} {...b.attrs} />)
-          if (b.kind === 'funnel') return wrap(<Funnel unitId={unitId} {...b.attrs} />)
-          if (b.kind === 'flow') return wrap(<Flow unitId={unitId} {...b.attrs} />)
-          if (b.kind === 'formula') return wrap(<Formula unitId={unitId} {...b.attrs} />)
-          if (b.kind === 'cards') return wrap(<Cards unitId={unitId} {...b.attrs} />)
-          if (b.kind === 'compare') return wrap(<Compare unitId={unitId} {...b.attrs} />)
-          if (b.kind === 'steps') return wrap(<Steps unitId={unitId} {...b.attrs} />)
-          return null
+          return wrap(renderBlockContent(b, unitId, renderBlockContent))
         })}
       </div>
 

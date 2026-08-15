@@ -1197,4 +1197,51 @@ p { margin: 8px 0; }
   .portrait-grid.two { grid-template-columns: 1fr; }
 }
 
+/* ===== 问题链 / 问题卡（点击揭示 · 顺序引导） ===== */
+.q-chain { margin: 22px 0; }
+.q-chain-title { font-size: 15px; font-weight: 800; color: var(--viz); margin-bottom: 12px; letter-spacing: .3px; }
+.q-chain-list { display: flex; flex-direction: column; gap: 12px; }
+
+.q-block {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  overflow: hidden;
+  transition: border-color .25s var(--ease), box-shadow .25s var(--ease);
+}
+.q-block.is-open { border-color: var(--viz); box-shadow: 0 14px 36px -20px var(--viz-glow); }
+
+.q-head {
+  width: 100%; display: flex; align-items: center; gap: 12px;
+  padding: 16px 18px; background: transparent; border: 0; cursor: pointer;
+  text-align: left; color: var(--text); font: inherit;
+}
+.q-head:hover { background: var(--surface-2); }
+.q-mark {
+  flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%;
+  display: grid; place-items: center; font-weight: 900; font-size: 16px;
+  color: #15101f; background: linear-gradient(135deg, var(--viz), var(--viz-2));
+  box-shadow: 0 6px 16px -8px var(--viz-glow);
+}
+.q-title { flex: 1 1 auto; font-weight: 700; font-size: 15.5px; line-height: 1.5; }
+.q-toggle { flex: 0 0 auto; font-size: 12.5px; color: var(--text-faint); white-space: nowrap; }
+.q-hint { padding: 0 18px 14px; color: var(--text-dim); font-size: 13.5px; }
+
+.q-body { overflow: hidden; }
+.q-body-inner { padding: 4px 18px 18px; border-top: 1px dashed var(--border); margin-top: 2px; }
+.q-body-inner > div + div { margin-top: 14px; }
+
+.q-locked { opacity: .62; }
+.q-locked .q-head { cursor: not-allowed; }
+.q-locked .q-mark { background: var(--text-faint); color: var(--bg); box-shadow: none; }
+
+.q-confirm {
+  margin-top: 18px; width: 100%; padding: 12px 16px; cursor: pointer;
+  border: 1px solid var(--viz); border-radius: var(--radius-sm);
+  background: var(--viz-soft); color: var(--viz);
+  font-weight: 800; font-size: 14px; transition: all .2s var(--ease);
+}
+.q-confirm:hover { background: var(--viz); color: #15101f; }
+.q-done { margin-top: 12px; text-align: center; color: var(--ok); font-weight: 700; font-size: 13.5px; }
+
 

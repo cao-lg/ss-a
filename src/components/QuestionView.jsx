@@ -14,14 +14,18 @@ export default function QuestionView({
   gate = false,
   locked = false,
   onConfirm,
+  index,
+  total,
 }) {
   const [open, setOpen] = useState(false)
   const [done, setDone] = useState(false)
+  const [passed, setPassed] = useState(false)
 
   if (locked) {
     return (
       <div className="q-block q-locked viz" data-theme="coral">
         <div className="q-head">
+          {index != null && <span className="q-num">{index}/{total}</span>}
           <span className="q-mark">🔒</span>
           <span className="q-title">{title}</span>
           <span className="q-toggle">完成上一问后解锁</span>
@@ -31,6 +35,10 @@ export default function QuestionView({
   }
 
   const parsed = body ? parseDirectives(body) : []
+  // 若问题体内嵌有 checkpoint / challenge，则必须答对才能解锁下一问（验证门）。
+  const needsVerify = parsed.some(
+    (b) => b.kind === 'checkpoint' || b.kind === 'challenge'
+  )
 
   return (
     <div className={`q-block viz ${open ? 'is-open' : ''}`} data-theme="coral">
@@ -39,6 +47,7 @@ export default function QuestionView({
         onClick={() => setOpen((o) => !o)}
         aria-expanded={open}
       >
+        {index != null && <span className="q-num">{index}/{total}</span>}
         <span className="q-mark">?</span>
         <span className="q-title">{title}</span>
         <span className="q-toggle">{open ? '收起 ▲' : gate ? '点击回答 ▼' : '点击展开 ▼'}</span>
@@ -58,18 +67,26 @@ export default function QuestionView({
           >
             <div className="q-body-inner">
               {parsed.map((b, i) => (
-                <div key={i}>{bodyRenderer(b, unitId, bodyRenderer)}</div>
+                <div key={i}>
+                  {bodyRenderer(b, unitId, bodyRenderer, {
+                    onCheckpointResult: (c) => { if (c) setPassed(true) },
+                  })}
+                </div>
               ))}
               {gate && !done && (
                 <button
                   className="q-confirm"
+                  disabled={needsVerify && !passed}
                   onClick={() => {
                     setDone(true)
                     onConfirm && onConfirm()
                   }}
                 >
-                  ✓ 我明白了，继续
+                  {needsVerify && !passed ? '先答对上方的自测，再继续 →' : '✓ 我明白了，继续'}
                 </button>
+              )}
+              {gate && needsVerify && !passed && (
+                <div className="q-verify-hint">答对上方自测才能解锁下一问，可多次尝试。</div>
               )}
               {gate && done && <div className="q-done">已完成 ✓</div>}
             </div>

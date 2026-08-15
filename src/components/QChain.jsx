@@ -15,12 +15,22 @@ export default function QChain({ title, body, unitId, bodyRenderer }) {
     (b) => b.kind === 'question' || b.kind === 'q'
   )
   const [unlocked, setUnlocked] = useState(1) // 已解锁到第几个（1-based）
+  const answered = Math.min(Math.max(unlocked - 1, 0), questions.length)
 
   const confirm = (idx) => setUnlocked((u) => Math.max(u, idx + 2))
 
   return (
     <div className="q-chain viz" data-theme="coral">
       {title && <div className="q-chain-title">{title}</div>}
+      <div className="q-progress">
+        <div className="q-progress-bar">
+          <div
+            className="q-progress-fill"
+            style={{ width: `${questions.length ? (answered / questions.length) * 100 : 0}%` }}
+          />
+        </div>
+        <span className="q-progress-label">已闯关 {answered}/{questions.length}</span>
+      </div>
       <div className="q-chain-list">
         {childBlocks.map((b, i) => {
           if (b.kind === 'question' || b.kind === 'q') {
@@ -28,6 +38,8 @@ export default function QChain({ title, body, unitId, bodyRenderer }) {
             return (
               <QuestionView
                 key={i}
+                index={qi + 1}
+                total={questions.length}
                 title={b.attrs?.title}
                 hint={b.attrs?.hint}
                 body={b.body}

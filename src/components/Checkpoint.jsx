@@ -5,7 +5,7 @@ import { Stagger, StaggerItem } from './motion'
 
 // 阅读中检查点：情境 → 预测/尝试 → 线索反馈 → 解锁拓学。
 // 支持：scenario(情境)、hints(渐进提示数组)、feedback(最终解释)、unlock(答对后拓展)。
-export default function Checkpoint({ unitId, type = 'multiple_choice', question, scenario, options = [], answer, hints = [], feedback, unlock }) {
+export default function Checkpoint({ unitId, type = 'multiple_choice', question, scenario, options = [], answer, hints = [], feedback, unlock, onResult }) {
   const isChoice = Array.isArray(options) && options.length > 0
   const [val, setVal] = useState(isChoice ? null : '')
   const [state, setState] = useState('idle') // idle | correct | wrong
@@ -24,6 +24,7 @@ export default function Checkpoint({ unitId, type = 'multiple_choice', question,
     if (ok) {
       setState('correct')
       saveCheckpoint(unitId, question, 'checkpoint', true, nextAttempts)
+      if (onResult) onResult(true)
     } else {
       setState('wrong')
       // 渐进释放提示：第1错给 hint0，第2错给 hint1...

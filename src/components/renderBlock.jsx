@@ -45,7 +45,7 @@ const mdComponents = {
 
 // 统一的「块 → JSX」映射，LearnUnit 与 Question/QChain 的嵌套体共用，避免重复。
 // bodyRenderer 参数用于在嵌套体里继续渲染（如 question 体内再含 :::cards）。
-export function renderBlockContent(b, unitId, bodyRenderer) {
+export function renderBlockContent(b, unitId, bodyRenderer, extra = {}) {
   if (b.type === 'md') {
     return (
       <ReactMarkdown
@@ -59,11 +59,11 @@ export function renderBlockContent(b, unitId, bodyRenderer) {
   }
   switch (b.kind) {
     case 'checkpoint':
-      return <Checkpoint unitId={unitId} {...b.attrs} />
+      return <Checkpoint unitId={unitId} {...b.attrs} onResult={extra.onCheckpointResult} />
     case 'explore':
       return <Explore unitId={unitId} {...b.attrs} />
     case 'challenge':
-      return <Challenge unitId={unitId} {...b.attrs} />
+      return <Challenge unitId={unitId} {...b.attrs} onResult={extra.onCheckpointResult} />
     case 'scene':
       return <Scene unitId={unitId} {...b.attrs} />
     case 'kpi':

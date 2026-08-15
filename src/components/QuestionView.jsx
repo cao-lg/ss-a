@@ -20,6 +20,14 @@ export default function QuestionView({
   const [open, setOpen] = useState(false)
   const [done, setDone] = useState(false)
   const [passed, setPassed] = useState(false)
+  const parsed = body ? parseDirectives(body) : []
+  // 若问题体内嵌 checkpoint / challenge，则需答对才能解锁下一问（验证门）。
+  const needsVerify = parsed.some(
+    (b) => b.kind === 'checkpoint' || b.kind === 'challenge'
+  )
+  // 若问题含「看解析」折叠块，则 checkpoint 须等学生看完解析才放行（先想后看）。
+  const hasReveal = parsed.some((b) => b.kind === 'reveal')
+  const [seenReveal, setSeenReveal] = useState(!hasReveal)
 
   if (locked) {
     return (
@@ -33,12 +41,6 @@ export default function QuestionView({
       </div>
     )
   }
-
-  const parsed = body ? parseDirectives(body) : []
-  // 若问题体内嵌有 checkpoint / challenge，则必须答对才能解锁下一问（验证门）。
-  const needsVerify = parsed.some(
-    (b) => b.kind === 'checkpoint' || b.kind === 'challenge'
-  )
 
   return (
     <div className={`q-block viz ${open ? 'is-open' : ''}`} data-theme="coral">
@@ -66,13 +68,22 @@ export default function QuestionView({
             transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="q-body-inner">
-              {parsed.map((b, i) => (
-                <div key={i}>
-                  {bodyRenderer(b, unitId, bodyRenderer, {
-                    onCheckpointResult: (c) => { if (c) setPassed(true) },
-                  })}
-                </div>
-              ))}
+              {parsed.map((b, i) => {
+                const isVerify = b.kind === 'checkpoint' || b.kind === 'challenge'
+                // 验证门：学生先看解析（seenReveal）才出现，避免「没看懂就答题」。
+                if (isVerify && !seenReveal) return null
+                return (
+                  <div key={i}>
+                    {bodyRenderer(b, unitId, bodyRenderer, {
+                      onRevealOpen: () => setSeenReveal(true),
+                      onCheckpointResult: (c) => { if (c) setPassed(true) },
+                    })}
+                  </div>
+                )
+              })}
+              {gate && needsVerify && !seenReveal && (
+                <div className="q-need-reveal-hint">先打开上方「解析」看懂正确答案，再答题确认你理解了 →</div>
+              )}
               {gate && !done && (
                 <button
                   className="q-confirm"
@@ -82,10 +93,16 @@ export default function QuestionView({
                     onConfirm && onConfirm()
                   }}
                 >
-                  {needsVerify && !passed ? '先答对上方的自测，再继续 →' : '✓ 我明白了，继续'}
+                  {!needsVerify
+                    ? '✓ 我明白了，继续'
+                    : !seenReveal
+                      ? '先看解析并答题，才能继续 →'
+                      : !passed
+                        ? '先答对上方的自测，再继续 →'
+                        : '✓ 我明白了，继续'}
                 </button>
               )}
-              {gate && needsVerify && !passed && (
+              {gate && needsVerify && seenReveal && !passed && (
                 <div className="q-verify-hint">答对上方自测才能解锁下一问，可多次尝试。</div>
               )}
               {gate && done && <div className="q-done">已完成 ✓</div>}

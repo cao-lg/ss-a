@@ -1254,4 +1254,23 @@ p { margin: 8px 0; }
 .q-confirm:disabled:hover { background: var(--surface-2); color: var(--text-faint); }
 .q-done { margin-top: 12px; text-align: center; color: var(--ok); font-weight: 700; font-size: 13.5px; }
 
+/* ---------- 看解析折叠块（问题链验证门前置：先想后看） ---------- */
+.reveal { margin: 16px 0; border: 1px solid rgba(127,225,196,.35); border-radius: var(--radius-sm); background: rgba(127,225,196,.06); overflow: hidden; }
+.reveal-toggle {
+  width: 100%; display: flex; align-items: center; gap: 10px;
+  padding: 13px 16px; background: transparent; border: 0; cursor: pointer;
+  text-align: left; color: var(--viz); font: inherit; font-weight: 700; font-size: 14.5px;
+}
+.reveal-toggle:hover { background: rgba(127,225,196,.1); }
+.reveal-caret { font-size: 12px; line-height: 1; }
+.reveal-body { padding: 2px 16px 16px; }
+.reveal-body > div + div { margin-top: 14px; }
+
+/* 先看解析提示（验证门前置） */
+.q-need-reveal-hint {
+  margin: 10px 0 0; padding: 11px 14px; border-radius: var(--radius-sm);
+  background: rgba(255,138,91,.1); border: 1px solid rgba(255,138,91,.25);
+  color: var(--accent); font-size: 13px; font-weight: 600;
+}
+
 

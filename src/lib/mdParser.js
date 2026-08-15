@@ -189,7 +189,7 @@ export function parseDirectives(md) {
       if (/^\s*:::\s*$/.test(ln)) {
         if (depth === 0) return m
         depth--
-      } else if (/^:::(qchain|question|q)\{/.test(ln)) {
+      } else if (/^:::(qchain|question|q|reveal)\{/.test(ln)) {
         depth++
       }
       m++
@@ -199,7 +199,7 @@ export function parseDirectives(md) {
 
   // 容器类指令：既接受属性，也接受「体」（直到独立 ::: 前的内容）。
   // 这些指令的体内可含任意 Markdown 与其它可视化块，由对应组件递归渲染。
-  const CONTAINER_KINDS = new Set(['qchain', 'question', 'q'])
+  const CONTAINER_KINDS = new Set(['qchain', 'question', 'q', 'reveal'])
 
   let i = 0
   while (i < lines.length) {

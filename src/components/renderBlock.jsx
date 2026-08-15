@@ -15,6 +15,7 @@ import Steps from './Steps'
 import Scene from './Scene'
 import QuestionView from './QuestionView'
 import QChain from './QChain'
+import Explain from './Explain'
 
 // 正文逐元素逐步浮现：把每个顶层块级元素各自包成独立 Reveal（滚深才浮现）。
 const revealTag = (Tag) =>
@@ -101,6 +102,12 @@ export function renderBlockContent(b, unitId, bodyRenderer, extra = {}) {
           unitId={unitId}
           bodyRenderer={bodyRenderer}
         />
+      )
+    case 'reveal':
+      return (
+        <Explain title={b.attrs.title} onOpen={extra.onRevealOpen}>
+          {bodyRenderer(b, unitId, bodyRenderer, extra)}
+        </Explain>
       )
     default:
       return null

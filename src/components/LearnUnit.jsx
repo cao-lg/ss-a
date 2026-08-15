@@ -14,6 +14,9 @@ import Kpi from './Kpi'
 import Funnel from './Funnel'
 import Flow from './Flow'
 import Formula from './Formula'
+import Cards from './Cards'
+import Compare from './Compare'
+import Steps from './Steps'
 import AssessmentModal from './AssessmentModal'
 import Scene from './Scene'
 import CourseShell from './CourseShell'
@@ -278,6 +281,9 @@ export default function LearnUnit() {
           if (b.kind === 'funnel') return wrap(<Funnel unitId={unitId} {...b.attrs} />)
           if (b.kind === 'flow') return wrap(<Flow unitId={unitId} {...b.attrs} />)
           if (b.kind === 'formula') return wrap(<Formula unitId={unitId} {...b.attrs} />)
+          if (b.kind === 'cards') return wrap(<Cards unitId={unitId} {...b.attrs} />)
+          if (b.kind === 'compare') return wrap(<Compare unitId={unitId} {...b.attrs} />)
+          if (b.kind === 'steps') return wrap(<Steps unitId={unitId} {...b.attrs} />)
           return null
         })}
       </div>

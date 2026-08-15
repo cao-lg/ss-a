@@ -1,6 +1,33 @@
 // 解析单元 Markdown 中的自定义指令：:::checkpoint / :::explore / :::challenge
 // 指令属性写在 { } 内，可为单行或多行（属性值可跨行）。所有内容都在属性中，
 // 指令块以开头的 :::type{ 与属性对象的闭括号 } 界定，可不写结尾 :::。
+// 把「对象字面量里用 = 当键值分隔符」的写法（如 {title="x"} 或 points=[...]）
+// 修正为合法 JS（title:"x" / points:[...]）。仅对字符串外、且前导为标识符/闭合括号的 =
+// 做转换；字符串内部的 =（如 desc="a=b"）不受影响。仅在本地可信内容下使用。
+function toObjectLiteral(s) {
+  let out = ''
+  let inStr = false
+  for (let i = 0; i < s.length; i++) {
+    const c = s[i]
+    if (inStr) {
+      out += c
+      if (c === '"' && s[i - 1] !== '\\') inStr = false
+      continue
+    }
+    if (c === '"') { inStr = true; out += c; continue }
+    if (c === '=') {
+      const trimmed = out.replace(/\s+$/, '')
+      const prev = trimmed[trimmed.length - 1]
+      const nxt = s[i + 1]
+      const prevOk = prev !== undefined && /[A-Za-z0-9_)\]}]/.test(prev)
+      const nxtOk = nxt !== '='
+      if (prevOk && nxtOk) { out += ':'; continue }
+    }
+    out += c
+  }
+  return out
+}
+
 export function parseAttrs(str) {
   const attrs = {}
   let i = 0
@@ -64,7 +91,14 @@ export function parseAttrs(str) {
       try {
         return JSON.parse(raw)
       } catch {
-        return raw
+        // 兼容「未加引号键名」的 JS 字面量写法（如 {title:"x", desc:"y"}），
+        // 这种写法不是合法 JSON，但更贴近人类/AI 书写习惯。仅在本地可信内容下使用。
+        try {
+          const fixed = toObjectLiteral(raw)
+          return new Function('return (' + fixed + ')')()
+        } catch {
+          return raw
+        }
       }
     }
     // 数字（整数/小数/负数）

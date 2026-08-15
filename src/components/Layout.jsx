@@ -1,11 +1,19 @@
 import { Link, useLocation } from 'react-router-dom'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import ConsentModal from './ConsentModal'
 import { getConsent, setConsent, needsConsent } from '../lib/consent'
 
 export default function Layout({ children }) {
   const { pathname } = useLocation()
   const [showConsent, setShowConsent] = useState(() => needsConsent())
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark')
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    localStorage.setItem('theme', theme)
+  }, [theme])
+
+  const toggleTheme = () => setTheme((t) => (t === 'light' ? 'dark' : 'light'))
 
   const accept = () => {
     setConsent('1')
@@ -29,6 +37,9 @@ export default function Layout({ children }) {
           <Link to="/profile" className={pathname.startsWith('/profile') ? 'active' : ''}>我的进步</Link>
           <Link to="/admin" className={pathname.startsWith('/admin') ? 'active' : ''}>管理后台</Link>
         </nav>
+        <button className="theme-toggle" onClick={toggleTheme} aria-label="切换明暗主题" title={theme === 'light' ? '切换到暗色' : '切换到亮色'}>
+          {theme === 'light' ? '🌙' : '☀️'}
+        </button>
       </header>
       <main className="content">{children}</main>
       <footer className="site-footer">

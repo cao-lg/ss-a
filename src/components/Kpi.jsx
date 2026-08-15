@@ -3,13 +3,14 @@ import { Stagger, StaggerItem } from './motion'
 // KPI 卡片网格：把「名词 + 长定义 bullet」转换成
 // 指标卡（名称 / 一句话定义 / 核心价值 / 异常解读）。
 // 数据：items = [{ name, def, value(可选), signal(可选) }]
-export default function Kpi({ title, items = [] }) {
+// theme: coral | mint | amber | violet（块级配色，默认跟随站点 accent）
+export default function Kpi({ title, theme, items = [] }) {
   const list = Array.isArray(items) ? items : []
   return (
-    <Stagger className="block kpi" gap={0.1} margin="-12%">
+    <div className="block viz kpi" data-theme={theme}>
       {title && <div className="block-tag">指标卡片</div>}
       {title && <h4 className="kpi-title">{title}</h4>}
-      <div className="kpi-grid">
+      <Stagger className="kpi-grid" gap={0.1} margin="-12%">
         {list.map((it, i) => (
           <StaggerItem key={i}>
             <div className="kpi-card">
@@ -27,7 +28,7 @@ export default function Kpi({ title, items = [] }) {
             </div>
           </StaggerItem>
         ))}
-      </div>
-    </Stagger>
+      </Stagger>
+    </div>
   )
 }

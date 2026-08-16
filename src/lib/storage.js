@@ -18,6 +18,7 @@ const CP_KEY = 'lp:checkpoint:v4' // { [`${unitId}:${itemId}`]: { kind, correct,
 const PROGRESS_KEY = 'lp:progress:v4'
 const TIME_KEY = 'lp:time:v4' // { units: { [unitId]: ms }, days: { [YYYY-MM-DD]: ms } }
 const EXAM_KEY = 'lp:exam:v4' // { [chapterId]: { attempts, bestScore, passed, lastTaken } }
+const UNITTEST_KEY = 'lp:unittest:v4' // { [unitId]: { attempts, bestScore, passed, lastTaken } }
 const BEHAVIOR_KEY = 'lp:behavior:v4' // 行为事件日志 [{ ts, type, ...payload }]
 
 export async function getOrCreateUser() {
@@ -160,21 +161,43 @@ export async function getAllExams() {
   return (await get(EXAM_KEY)) || {}
 }
 
+// 单元测试记录：按 unitId -> { attempts, bestScore, passed, lastTaken }
+export async function saveUnitTest(unitId, record) {
+  const all = (await get(UNITTEST_KEY)) || {}
+  const u = all[unitId] || { attempts: [] }
+  u.attempts = [...(u.attempts || []), record].slice(-10)
+  u.bestScore = Math.max(u.bestScore ?? 0, record.pct)
+  u.passed = u.passed || record.passed
+  u.lastTaken = record.taken_at
+  all[unitId] = u
+  await guardedSet(UNITTEST_KEY, all)
+}
+
+export async function getUnitTestRecord(unitId) {
+  const all = (await get(UNITTEST_KEY)) || {}
+  return all[unitId] || {}
+}
+
+export async function getAllUnitTests() {
+  return (await get(UNITTEST_KEY)) || {}
+}
+
 // 管理后台：导出 / 清空全部学习者数据（不含课程内容静态资源）
 export async function exportLearnerData() {
-  const [user, assess, checkpoints, progress, time, exams, behaviors] = await Promise.all([
+  const [user, assess, checkpoints, progress, time, exams, unitTests, behaviors] = await Promise.all([
     get(USER_KEY),
     get(ASSESS_KEY),
     get(CP_KEY),
     get(PROGRESS_KEY),
     get(TIME_KEY),
     get(EXAM_KEY),
+    get(UNITTEST_KEY),
     get(BEHAVIOR_KEY)
   ])
-  return { exportedAt: Date.now(), user, assess, checkpoints, progress, time, exams, behaviors }
+  return { exportedAt: Date.now(), user, assess, checkpoints, progress, time, exams, unitTests, behaviors }
 }
 
-const ALL_KEYS = [USER_KEY, ASSESS_KEY, CP_KEY, PROGRESS_KEY, TIME_KEY, EXAM_KEY, BEHAVIOR_KEY]
+const ALL_KEYS = [USER_KEY, ASSESS_KEY, CP_KEY, PROGRESS_KEY, TIME_KEY, EXAM_KEY, UNITTEST_KEY, BEHAVIOR_KEY]
 export async function clearAllLearnerData() {
   for (const k of ALL_KEYS) await del(k)
 }

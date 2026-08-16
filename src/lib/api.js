@@ -1,6 +1,6 @@
 // 模拟后端 API：前端直接读 public/data 静态内容 + IndexedDB 持久化，
 // 等价实现《需求补充规格 v0.2》中的 /api/assessment、/api/assessment/status 等端点。
-import { getStoredAssessment, saveAssessment, getOrCreateUser, saveExam, getExamRecord, getAllExams } from './storage'
+import { getStoredAssessment, saveAssessment, getOrCreateUser, saveExam, getExamRecord, getAllExams, getUnitTestRecord, saveUnitTest, getAllUnitTests } from './storage'
 import { judgeItem } from './judge'
 import { buildExamVariant, makeSeed } from './exam'
 
@@ -132,4 +132,66 @@ export async function submitExam(chapterId, answers, variantId) {
   }
   await saveExam(chapterId, record)
   return record
+}
+
+// ===== 单元测试（单任务专项测验）=====
+// 直接复用该任务 assessment.json 的课后测(post)题目作为题库；选项乱序 + 抽卷走同一套 buildExamVariant。
+
+export async function getUnitTest(unitId) {
+  const data = await getAssessment(unitId)
+  const pool = (data.post?.items || []).map((it) => ({ ...it, unitId }))
+  return {
+    unitId,
+    title: data.post?.title || '单元测试',
+    description: data.post?.description || '本任务专项测验：检验你是否真正掌握关键概念。',
+    passScore: 60,
+    pool
+  }
+}
+
+export async function getUnitTestResult(unitId) {
+  return getUnitTestRecord(unitId)
+}
+
+// 开卷：生成一份随机试卷变体
+export async function startUnitTest(unitId) {
+  const t = await getUnitTest(unitId)
+  if (!t.pool || !t.pool.length) return null
+  const seed = makeSeed()
+  return buildExamVariant(t, seed)
+}
+
+// 提交单元测试：评分并落库
+export async function submitUnitTest(unitId, answers, variantId) {
+  const user = await getOrCreateUser()
+  const t = await getUnitTest(unitId)
+  const seed = parseInt(variantId, 36) >>> 0
+  const variant = buildExamVariant(t, seed) // 同一 seed 重建一致试卷
+  let score = 0
+  const graded = variant.items.map((it) => {
+    const correct = judgeItem(it, answers[it.id])
+    if (correct) score++
+    return { id: it.id, correct, unitId: it.unitId }
+  })
+  const total = variant.items.length
+  const pct = total ? Math.round((score / total) * 100) : 0
+  const passed = pct >= (t.passScore ?? 60)
+  const record = {
+    unitId,
+    userId: user.id,
+    score,
+    total,
+    pct,
+    passed,
+    variantId,
+    answers,
+    graded,
+    taken_at: Date.now()
+  }
+  await saveUnitTest(unitId, record)
+  return record
+}
+
+export async function getAllUnitTestResults() {
+  return getAllUnitTests()
 }

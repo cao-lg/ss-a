@@ -930,6 +930,29 @@ p { margin: 8px 0; }
 }
 .exam-card.final.done { box-shadow: 0 10px 30px -16px var(--ok-glow, rgba(95, 214, 160, 0.5)); }
 
+/* ---------- 测试中心 / 单元测试 ---------- */
+.course-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+.test-hub { max-width: 1080px; }
+.test-hub > .Reveal h1 { font-size: 28px; margin: 10px 0 6px; }
+.hub-section { margin-top: 34px; }
+.hub-head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 14px; gap: 12px; }
+.hub-head h2 { font-size: 19px; margin: 0; }
+.hub-count { font-size: 13px; color: var(--text-dim); }
+.ut-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; }
+.ut-card { display: flex; flex-direction: column; gap: 6px; padding: 16px 18px; cursor: pointer; text-decoration: none; border-style: solid; border-color: var(--border); transition: .2s; }
+.ut-card:hover { transform: translateY(-3px); border-color: var(--border-strong); box-shadow: var(--shadow-soft); }
+.ut-card.done { border-color: rgba(127, 225, 196, 0.4); }
+.ut-card.final { border-color: var(--mint); background: linear-gradient(135deg, var(--mint-soft), transparent); }
+.ut-card .meta { font-size: 12.5px; color: var(--text-faint); }
+
+/* 课程详情里的单元卡：学习入口 + 单元测试入口 */
+.unit-card { display: flex; flex-direction: column; }
+.unit-main { display: block; text-decoration: none; color: inherit; padding: 14px 18px 10px; }
+.unit-test-link { display: inline-flex; align-items: center; gap: 4px; margin: 0 18px 14px; align-self: flex-start; font-size: 13px; font-weight: 700; color: var(--accent); background: var(--accent-soft); border: 1px solid rgba(255, 138, 91, 0.3); padding: 5px 12px; border-radius: 999px; text-decoration: none; transition: .2s; }
+.unit-test-link:hover { background: var(--accent); color: #fff; }
+.unit-test-link.done { color: var(--mint); background: var(--mint-soft); border-color: rgba(127, 225, 196, 0.35); }
+.unit-test-link.done:hover { background: var(--mint); color: #06281f; }
+
 /* tag.bad（画像诊断标签补齐） */
 .tag.bad { background: rgba(255, 107, 107, 0.12); color: #ff8b8b; border-color: rgba(255, 107, 107, 0.3); }
 

@@ -1,42 +1,97 @@
 {
   "unitId": "u43-compare",
   "pre": {
+    "title": "课前测：先想想再开课",
+    "description": "不用背，凭直觉和常识选。目的是引出兴趣、激活你已有的认知。",
     "items": [
       {
-        "id": "u43-compare_p1",
+        "id": "u43-compare_pre1",
         "type": "multiple_choice",
-        "question": "课前小测：对比分析",
-        "options": [
-          "时间维度（同比）",
-          "空间维度",
-          "类别维度",
-          "竞争维度"
-        ],
-        "answer": "时间维度（同比）",
+        "question": "同样一组数『涨了 10%』，如果跟去年比、跟竞品比、跟目标比，讲出来的故事会一样吗？",
+        "options": ["完全一样，没区别", "可能完全不同，取决于跟谁比", "必须一样，数字不会变", "毫无意义，不该比"],
+        "answer": "可能完全不同，取决于跟谁比",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_pre2",
+        "type": "multiple_choice",
+        "question": "老板问『这个月 KPI 达标没？』，这其实是想在跟什么做对比？",
+        "options": ["跟去年同期", "跟自己定的目标 / KPI", "跟竞品", "跟行业均值"],
+        "answer": "跟自己定的目标 / KPI",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_pre3",
+        "type": "multiple_choice",
+        "question": "周报里写『本品类增长 100%！』，你觉得光看这个数字够不够？",
+        "options": ["够，翻倍就是强", "不够，还要看基数到底有多大", "毫无意义，别写", "必须拿去和竞品比才算数"],
+        "answer": "不够，还要看基数到底有多大",
         "points": 10
       }
     ]
   },
   "post": {
+    "title": "课后测：巩固本任务要点",
+    "description": "检验你是否真正掌握本任务的核心内容。",
     "items": [
       {
-        "id": "u43-compare_q1",
+        "id": "u43-compare_post1",
         "type": "fill",
-        "question": "课后测：核心概念",
+        "question": "补全：和『去年同期』比，属于___维度对比（时间 / 空间 / 类别）。",
         "answer": "时间",
         "points": 10
       },
       {
-        "id": "u43-compare_q2",
+        "id": "u43-compare_post2",
         "type": "multiple_choice",
-        "question": "课后测：图表选择",
-        "options": [
-          "柱状图（比大小最直观）",
-          "折线图（看趋势）",
-          "饼图（看占比）",
-          "雷达图（看多维）"
-        ],
+        "question": "小北说『我们比较一下华东区和华南区的销售额』，这句话属于哪个对比维度？",
+        "options": ["时间", "空间", "类别", "竞争"],
+        "answer": "空间",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post3",
+        "type": "multiple_choice",
+        "question": "小北说『我们跟行业头部竞品比一下客单价』，这句话属于哪个对比维度？",
+        "options": ["目标", "竞争", "空间", "时间"],
+        "answer": "竞争",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post4",
+        "type": "multiple_choice",
+        "question": "要比较各区域（华东 / 华南 / 华北）销售额谁大谁小，最适合的图表是？",
+        "options": ["柱状图（比大小最直观）", "折线图（看趋势）", "饼图（看占比）", "雷达图（看多维）"],
         "answer": "柱状图（比大小最直观）",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post5",
+        "type": "multiple_choice",
+        "question": "想看『时间维度上销售额的变化趋势』，最适合的图表是？",
+        "options": ["柱状图", "折线图", "饼图", "子弹图"],
+        "answer": "折线图",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post6",
+        "type": "multiple_choice",
+        "question": "周报写『增长 100%』，其实只是从 1 件涨到 2 件，这最可能踩了哪个陷阱？",
+        "options": ["基期陷阱", "百分比陷阱", "幸存者偏差", "没有陷阱，确实翻倍了"],
+        "answer": "百分比陷阱",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post7",
+        "type": "multiple_choice",
+        "question": "同一组月度销售额，小北分别『和自身目标比』与『和主要竞品比』，下列说法正确的是？",
+        "options": [
+          "同一组数据，因对比维度（目标 vs 竞争）不同，讲出的结论可能完全不同，须先定维度再下结论",
+          "和竞品比就是时间维度，和目标比就是空间维度",
+          "区域销售额大小比较最适合用折线图",
+          "百分比增长无需看绝对量，100% 一定代表大幅增长"
+        ],
+        "answer": "同一组数据，因对比维度（目标 vs 竞争）不同，讲出的结论可能完全不同，须先定维度再下结论",
         "points": 10
       }
     ]

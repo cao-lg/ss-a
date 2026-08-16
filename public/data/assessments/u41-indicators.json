@@ -1,68 +1,95 @@
 {
   "unitId": "u41-indicators",
   "pre": {
-    "title": "课前测：你现在的分析直觉",
-    "description": "不用背公式，凭直觉选。测测你对业务数据的敏感度。",
+    "title": "课前测：先想想再开课",
+    "description": "不用背，凭直觉和常识选。目的是引出兴趣、激活你已有的认知。",
     "items": [
       {
-        "id": "u41_pre1",
+        "id": "u41-indicators_pre1",
         "type": "multiple_choice",
-        "question": "如果老板问你'本周生意怎么样'，你第一反应应该汇报什么？",
+        "question": "如果老板问你『本周生意怎么样』，你第一反应最该汇报哪个数字？",
         "options": ["客户总数", "销售额", "退货率", "库存量"],
         "answer": "销售额",
         "points": 10
       },
       {
-        "id": "u41_pre2",
+        "id": "u41-indicators_pre2",
         "type": "multiple_choice",
-        "question": "销售额 100 万，成本 70 万，毛利率约多少？",
-        "options": ["30%", "70%", "170%", "无法判断"],
-        "answer": "30%",
+        "question": "一款商品卖得很火，但进货很便宜，你想判断它到底『赚不赚钱』，最该看哪个量？",
+        "options": ["销售额", "毛利", "访问量", "库存量"],
+        "answer": "毛利",
         "points": 10
       },
       {
-        "id": "u41_pre3",
+        "id": "u41-indicators_pre3",
         "type": "multiple_choice",
-        "question": "一款商品访问的人很多但买的人很少，首先该看哪个指标？",
-        "options": ["动销率", "转化率", "客单价", "连带率"],
+        "question": "一款商品进来浏览的人很多，但真正下单的人很少，你直觉上最该先查哪个指标？",
+        "options": ["转化率", "客单价", "动销率", "滞销率"],
         "answer": "转化率",
         "points": 10
       }
     ]
   },
   "post": {
-    "title": "课后测：你能拆解一笔生意了",
-    "description": "学完本单元后，看看能不能把五层指标串起来用。",
+    "title": "课后测：巩固本任务要点",
+    "description": "检验你是否真正掌握本任务的核心内容。",
     "items": [
       {
-        "id": "u41_post1",
+        "id": "u41-indicators_post1",
         "type": "multiple_choice",
-        "question": "销售额 = 销售量 × ?",
-        "options": ["客户数", "产品价格", "毛利率", "转化率"],
-        "answer": "产品价格",
+        "question": "五层指标体系中，『规模体量层』回答的核心问题是？",
+        "options": ["卖了多少", "赚了多少", "库存合不合理", "客户值不值"],
+        "answer": "卖了多少",
         "points": 10
       },
       {
-        "id": "u41_post2",
-        "type": "multiple_choice",
-        "question": "销售额涨了但毛利下降，最可能说明？",
-        "options": ["客户变少了", "打折促销", "库存积压", "退货变少"],
-        "answer": "打折促销",
-        "points": 10
-      },
-      {
-        "id": "u41_post3",
+        "id": "u41-indicators_post2",
         "type": "fill",
-        "question": "某商品销售额 12 万，成交客户 400 人，客单价是 _____ 元。",
+        "question": "销售额 = 销售量 × 产品价格。本周卖了 2,300 台空气炸锅、累计销售额 46 万元，每台单价是___元。",
+        "answer": "200",
+        "points": 10
+      },
+      {
+        "id": "u41-indicators_post3",
+        "type": "fill",
+        "question": "某款破壁机销售额 10 万元、进货成本 6 万元，它的销售毛利率是___%（只写数字，不要百分号）。",
+        "answer": "40",
+        "points": 10
+      },
+      {
+        "id": "u41-indicators_post4",
+        "type": "multiple_choice",
+        "question": "详情页来了 10,000 人，最后下单 200 人，订单转化率是多少？",
+        "options": ["0.2%", "2%", "20%", "200%"],
+        "answer": "2%",
+        "points": 10
+      },
+      {
+        "id": "u41-indicators_post5",
+        "type": "multiple_choice",
+        "question": "仓库里一款商品长时间完全卖不动，最可能先亮红灯的是哪个指标？",
+        "options": ["转化率", "滞销率", "客单价", "订单有效率"],
+        "answer": "滞销率",
+        "points": 10
+      },
+      {
+        "id": "u41-indicators_post6",
+        "type": "fill",
+        "question": "本周有 1,500 位客户下单，总销售额 45 万元，客单价是___元。",
         "answer": "300",
         "points": 10
       },
       {
-        "id": "u41_post4",
+        "id": "u41-indicators_post7",
         "type": "multiple_choice",
-        "question": "判断库存是否积压，优先看哪个指标？",
-        "options": ["转化率", "滞销率", "客单价", "订单有效率"],
-        "answer": "滞销率",
+        "question": "老板说『本周销售额涨了，但毛利下降了』，最可能说明什么？",
+        "options": [
+          "打折促销拉高了销量但拉低了毛利",
+          "员工偷懒导致业绩虚高",
+          "客户变少了所以销售额才涨",
+          "库存增加直接抬高了毛利率"
+        ],
+        "answer": "打折促销拉高了销量但拉低了毛利",
         "points": 10
       }
     ]

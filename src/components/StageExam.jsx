@@ -22,13 +22,14 @@ export default function StageExam() {
     ;(async () => {
       const c = await getCourse(courseId)
       const ch = c.chapters.find((x) => x.id === chapterId)
-      if (!ch) { setPhase('noexam'); return }
       setCourse(c)
-      setChapter(ch)
+      setChapter(ch || null)
       let allDone = true
-      for (const u of ch.units) {
-        const rec = await getStoredAssessment(u.id)
-        if (!(rec.pre && rec.post)) allDone = false
+      if (ch) {
+        for (const u of ch.units) {
+          const rec = await getStoredAssessment(u.id)
+          if (!(rec.pre && rec.post)) allDone = false
+        }
       }
       setChapterDone(allDone)
       const exam = await getExam(chapterId)
@@ -89,7 +90,7 @@ export default function StageExam() {
   }
 
   const unitTitleMap = {}
-  chapter?.units?.forEach((u) => { unitTitleMap[u.id] = u.title })
+  course?.chapters?.forEach((chp) => chp.units.forEach((u) => { unitTitleMap[u.id] = u.title }))
 
   // ===== intro =====
   if (phase === 'intro') {
@@ -110,7 +111,7 @@ export default function StageExam() {
           {passed && (
             <div className="exam-badge passed">✓ 已通关 · 最佳 {best}%</div>
           )}
-          {!chapterDone && (
+          {!chapterDone && ch && (
             <div className="exam-warn">
               ⚠️ 你尚未完成本章全部任务的前/后测，建议先学完再考，效果更佳。
             </div>
@@ -159,7 +160,7 @@ export default function StageExam() {
               <div key={i.id} className={`rv ${i.correct ? 'ok' : 'no'}`}>
                 <div className="rv-title">
                   <span className="rv-idx">{idx + 1}</span>
-                  <span>{i.it.question}</span>
+                  <span>{i.it.question ?? i.it.stem}</span>
                   <span className="rv-tag">{i.correct ? '✓ 正确' : '✗ 需加强'}</span>
                 </div>
                 <div className="rv-detail">
@@ -213,7 +214,7 @@ export default function StageExam() {
               const opts = it.options ?? []
               return (
                 <div key={it.id} className="q">
-                  <div className="q-title">{idx + 1}. {it.question}</div>
+                  <div className="q-title">{idx + 1}. {it.question ?? it.stem}</div>
                   {it.type === 'fill' ? (
                     <input
                       className="inp"

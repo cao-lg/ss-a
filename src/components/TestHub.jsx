@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { getCourse, getAllExamResults, getAllUnitTestResults } from '../lib/api'
+import { getCourse, getExam, getAllExamResults, getAllUnitTestResults } from '../lib/api'
 import { Reveal, Stagger, StaggerItem } from './motion'
 
 // 测试中心：单元测试（每任务一张卷） + 每个项目综合测试（章节阶段考） + 所有项目综合测试（结业大考）
@@ -9,6 +9,7 @@ export default function TestHub() {
   const [course, setCourse] = useState(null)
   const [exams, setExams] = useState({})
   const [unitTests, setUnitTests] = useState({})
+  const [comps, setComps] = useState([])
 
   useEffect(() => {
     ;(async () => {
@@ -16,6 +17,9 @@ export default function TestHub() {
       setCourse(c)
       setExams(await getAllExamResults())
       setUnitTests(await getAllUnitTestResults())
+      const compIds = ['final', 'final-2', 'final-3']
+      const compsRaw = await Promise.all(compIds.map((id) => getExam(id)))
+      setComps(compIds.map((id, i) => (compsRaw[i] ? { id, title: compsRaw[i].title, description: compsRaw[i].description } : null)).filter(Boolean))
     })()
   }, [courseId])
 
@@ -99,24 +103,29 @@ export default function TestHub() {
       <section className="hub-section">
         <div className="hub-head">
           <h2>③ 所有项目综合测试</h2>
-          <span className="hub-count">结业大考</span>
+          <span className="hub-count">结业大考 · {comps.length} 套可选</span>
         </div>
         <Stagger className="ut-grid">
-          <StaggerItem>
-            <Link to={`/exam/${courseId}/final`} className={`card ut-card final ${exams['final']?.passed ? 'done' : ''}`}>
-              <div className="unit-head">
-                <span>🎓 全课程综合测验</span>
-                {exams['final']?.passed ? (
-                  <span className="badge done">✓ {exams['final'].bestScore}%</span>
-                ) : exams['final']?.bestScore != null ? (
-                  <span className="badge">最佳 {exams['final'].bestScore}%</span>
-                ) : (
-                  <span className="badge">未考</span>
-                )}
-              </div>
-              <div className="meta">跨所有项目的结业大考</div>
-            </Link>
-          </StaggerItem>
+          {comps.map((c) => {
+            const rec = exams[c.id] || {}
+            return (
+              <StaggerItem key={c.id}>
+                <Link to={`/exam/${courseId}/${c.id}`} className={`card ut-card final ${rec.passed ? 'done' : ''}`}>
+                  <div className="unit-head">
+                    <span>🎓 {c.title}</span>
+                    {rec.passed ? (
+                      <span className="badge done">✓ {rec.bestScore}%</span>
+                    ) : rec.bestScore != null ? (
+                      <span className="badge">最佳 {rec.bestScore}%</span>
+                    ) : (
+                      <span className="badge">未考</span>
+                    )}
+                  </div>
+                  <div className="meta">{c.description}</div>
+                </Link>
+              </StaggerItem>
+            )
+          })}
         </Stagger>
       </section>
     </div>

@@ -55,7 +55,7 @@ export default function TestHub() {
 
   const showSwitcher = allCourses.length > 1
 
-  const flatUnits = course.chapters.flatMap((ch) => ch.units)
+  const flatUnits = course ? course.chapters.flatMap((ch) => ch.units) : []
   const finishedUnits = flatUnits.filter((u) => unitTests[u.id]?.passed).length
 
   return (

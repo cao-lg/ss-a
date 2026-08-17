@@ -2,7 +2,9 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getAllAssessments, getProgress, getUser, setUserName, getTimes, getWrongBook } from '../lib/storage'
 import { getAssessment } from '../lib/api'
+import { MICROCOPY } from '../lib/copy'
 import { Reveal, Stagger, StaggerItem } from './motion'
+import { levelInfo, BADGES, XP_PER_LEVEL } from '../lib/gamify'
 import LearnerProfile from './LearnerProfile'
 
 // 兼容两种题库结构：{ items: [...] } 或直接 [...]
@@ -70,9 +72,12 @@ export default function Profile() {
     })()
   }, [])
 
-  if (!progress) return <div className="state">加载中…</div>
+  if (!progress) return <div className="state">{MICROCOPY.loading.profile}</div>
 
   const units = Object.entries(assess)
+  const lvl = levelInfo(progress.xp)
+  const allBadges = Object.values(BADGES)
+  const unlockedBadges = allBadges.filter((b) => progress.badges.includes(b.id))
 
   return (
     <div className="profile">
@@ -93,10 +98,41 @@ export default function Profile() {
               }}
             />
           </div>
+          <div className="level-badge">
+            <span className="lv-tag">Lv.{lvl.level}</span>
+            <span className="lv-title">{lvl.title}</span>
+            <div className="xp-bar" role="progressbar" aria-valuenow={Math.round(lvl.pct * 100)} aria-valuemin={0} aria-valuemax={100} aria-label="距下一级经验进度">
+              <div className="xp-fill" style={{ width: `${Math.round(lvl.pct * 100)}%` }} />
+            </div>
+            <span className="xp-text">{lvl.maxed ? '已满级 🏆' : `${lvl.xpInto}/${XP_PER_LEVEL} XP`}</span>
+          </div>
           <Stagger className="stats">
             <StaggerItem><div className="stat"><b>{progress.xp}</b><span>经验 XP</span></div></StaggerItem>
-            <StaggerItem><div className="stat"><b>{progress.streak}</b><span>连续完成</span></div></StaggerItem>
+            <StaggerItem><div className="stat"><b>{progress.streakDays}</b><span>连续学习(天)</span></div></StaggerItem>
             <StaggerItem><div className="stat"><b>{progress.badges.length}</b><span>徽章</span></div></StaggerItem>
+          </Stagger>
+        </div>
+      </Reveal>
+
+      <Reveal>
+        <div className="card badge-card">
+          <div className="row">
+            <span>成就徽章</span>
+            <span className="badge-count">{unlockedBadges.length}/{allBadges.length}</span>
+          </div>
+          <Stagger className="badge-grid">
+            {allBadges.map((b) => {
+              const got = progress.badges.includes(b.id)
+              return (
+                <StaggerItem key={b.id}>
+                  <div className={`badge ${got ? 'got' : 'locked'}`} title={got ? b.desc : `未解锁：${b.desc}`}>
+                    <span className="badge-icon" aria-hidden="true">{got ? b.icon : '🔒'}</span>
+                    <span className="badge-title">{b.title}</span>
+                    <span className="badge-desc">{b.desc}</span>
+                  </div>
+                </StaggerItem>
+              )
+            })}
           </Stagger>
         </div>
       </Reveal>
@@ -145,7 +181,7 @@ export default function Profile() {
       <h2>任务掌握度</h2>
       {units.length === 0 && (
         <div className="state">
-          还没有完成任何任务，<Link to="/">去学习 →</Link>
+          {MICROCOPY.empty.mastery}<Link to="/">去学习 →</Link>
         </div>
       )}
       <Reveal>
@@ -185,7 +221,7 @@ export default function Profile() {
 
       <h2>错题本</h2>
       {wrongBook.length === 0 && (
-        <div className="state">还没有错题，继续保持 👍</div>
+        <div className="state">{MICROCOPY.empty.wrongbook}</div>
       )}
       <Reveal>
         <div className="wrongbook">

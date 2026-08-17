@@ -2,10 +2,12 @@ import { useEffect, useState, useRef } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { getCourse, getUnitContent, getAssessment, getAssessmentStatus, submitAssessment } from '../lib/api'
 import { parseDirectives } from '../lib/mdParser'
-import { updateProgress, getStoredAssessment, saveTime } from '../lib/storage'
+import { updateProgress, getProgress, getAllAssessments, getStoredAssessment, saveTime } from '../lib/storage'
+import { streakBump, evaluateBadges, celebrationFor } from '../lib/gamify'
 import { logBehavior } from '../lib/behavior'
 import AssessmentModal from './AssessmentModal'
 import CourseShell from './CourseShell'
+import Celebration from './Celebration'
 import { renderBlockContent } from './renderBlock'
 import { Magnetic, motion, AnimatePresence } from './motion'
 
@@ -32,6 +34,7 @@ export default function LearnUnit() {
   const [showPre, setShowPre] = useState(false)
   const [showPost, setShowPost] = useState(false)
   const [summary, setSummary] = useState(null)
+  const [celebration, setCelebration] = useState(null)
 
   // 行为埋点所需的引用
   const blockRefs = useRef({})
@@ -156,19 +159,37 @@ export default function LearnUnit() {
     const st = await getAssessmentStatus(unitId)
     setStatus(st)
     const gain = st.gain ?? 0
-    await updateProgress((p) => ({
-      ...p,
-      xp: p.xp + 20 + Math.max(0, gain),
-      streak: p.streak + 1,
-      badges: p.badges.includes('unit-done') ? p.badges : [...p.badges, 'unit-done']
-    }))
+    const prev = await getProgress()
+    // 写入：XP + 任务计数 + 真实连续学习天数（streakBump 同一天不重复计数）
+    let next = await updateProgress((p) => {
+      const bumped = streakBump(p)
+      return {
+        ...bumped,
+        xp: bumped.xp + 20 + Math.max(0, gain),
+        streak: bumped.streak + 1,
+        badges: p.badges.includes('unit-done') ? p.badges : [...p.badges, 'unit-done']
+      }
+    })
+    // 里程碑徽章：完成后测满分 / 连续天数 / 完成过半 / 全部结业
+    const all = await getAllAssessments()
+    const unitsDone = Object.values(all).filter((r) => r.post).length
+    const totalUnits = flatUnits.length
+    const perfectPost = st.postTotal > 0 && st.postScore === st.postTotal
+    const newIds = evaluateBadges(next, { perfectPost, unitsDone, totalUnits })
+    if (newIds.length) {
+      next = await updateProgress((p) => ({ ...p, badges: [...new Set([...p.badges, ...newIds])] }))
+    }
+    // 升级 / 成就演出
+    const delta = celebrationFor(prev, next, newIds)
+    if (delta.leveledUp || delta.badges.length) setCelebration(delta)
     setSummary({
       gain,
       preMastered: st.preMastered,
       pre: st.preScore,
       post: st.postScore,
       preTotal: st.preTotal,
-      postTotal: st.postTotal
+      postTotal: st.postTotal,
+      perfectPost
     })
   }
 
@@ -291,6 +312,9 @@ export default function LearnUnit() {
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
             >
             <h2>本任务学习增益</h2>
+            {summary.perfectPost && (
+              <div className="gain-perfect">💎 满分过关！这一关被你拿下了</div>
+            )}
             {summary.preMastered ? (
               <>
                 <div className="gain-num mastered">✓ 已掌握</div>
@@ -358,6 +382,9 @@ export default function LearnUnit() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      <Celebration data={celebration} onDone={() => setCelebration(null)} />
+
       </div>
     </CourseShell>
   )

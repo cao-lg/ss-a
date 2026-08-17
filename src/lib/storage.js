@@ -19,7 +19,7 @@ const PROGRESS_KEY = 'lp:progress:v4'
 const TIME_KEY = 'lp:time:v4' // { units: { [unitId]: ms }, days: { [YYYY-MM-DD]: ms } }
 const EXAM_KEY = 'lp:exam:v4' // { [chapterId]: { attempts, bestScore, passed, lastTaken } }
 const UNITTEST_KEY = 'lp:unittest:v4' // { [unitId]: { attempts, bestScore, passed, lastTaken } }
-const BEHAVIOR_KEY = 'lp:behavior:v4' // 行为事件日志 [{ ts, type, ...payload }]
+const BEHAVIOR_KEY = 'lp:behavior:v4' // 行为事件日志 { [ts,type,...payload] }
 
 export async function getOrCreateUser() {
   let u = await get(USER_KEY)
@@ -85,6 +85,8 @@ export async function getProgress() {
     (await get(PROGRESS_KEY)) || {
       xp: 0,
       streak: 0,
+      streakDays: 0,
+      lastDay: null,
       badges: [],
       updated_at: Date.now()
     }

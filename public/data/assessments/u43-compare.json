@@ -93,6 +93,154 @@
         ],
         "answer": "同一组数据，因对比维度（目标 vs 竞争）不同，讲出的结论可能完全不同，须先定维度再下结论",
         "points": 10
+      },
+      {
+        "id": "u43-compare_post8",
+        "type": "multiple_choice",
+        "question": "小北说『我们比较一下品类 A 和品类 B 的销售额』，这句话属于哪个对比维度？",
+        "options": ["类别", "时间", "空间", "竞争"],
+        "answer": "类别",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post9",
+        "type": "multiple_choice",
+        "question": "『这个月实际销售额和我们定的 KPI 目标比，达标没？』属于哪个对比维度？",
+        "options": ["目标", "竞争", "空间", "时间"],
+        "answer": "目标",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post10",
+        "type": "multiple_choice",
+        "question": "『今年 vs 去年』称为同比（YoY），那么『本月 vs 上月』称为？",
+        "options": ["环比（MoM）", "同比（YoY）", "类别比", "竞争比"],
+        "answer": "环比（MoM）",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post11",
+        "type": "multiple_choice",
+        "question": "『类别』维度（品类、客群之间对比）主要回答下面哪类业务问题？",
+        "options": [
+          "钱主要花在哪种商品 / 人群上（结构差异）",
+          "哪里卖得好、哪里拖后腿（强弱）",
+          "比过去变了多少（变化）",
+          "在行业中排第几"
+        ],
+        "answer": "钱主要花在哪种商品 / 人群上（结构差异）",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post12",
+        "type": "multiple_choice",
+        "question": "『空间』维度（区域、渠道之间对比）主要回答下面哪类业务问题？",
+        "options": [
+          "哪里卖得好、哪里拖后腿（强弱）",
+          "比过去变了多少（变化）",
+          "钱主要花在哪种商品 / 人群上（结构）",
+          "排第几"
+        ],
+        "answer": "哪里卖得好、哪里拖后腿（强弱）",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post13",
+        "type": "multiple_choice",
+        "question": "『竞争』维度（自家 vs 竞品、vs 行业均值）主要回答下面哪类业务问题？",
+        "options": [
+          "在牌桌上排第几",
+          "承诺的 KPI 达标没",
+          "比过去变了多少",
+          "钱主要花在哪种商品上"
+        ],
+        "answer": "在牌桌上排第几",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post14",
+        "type": "multiple_choice",
+        "question": "想突出『各品类销售额占总销售额的份额 / 构成占比』，最适合的图表是？",
+        "options": ["饼图 / 堆叠柱", "折线图", "柱状图", "子弹图"],
+        "answer": "饼图 / 堆叠柱",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post15",
+        "type": "multiple_choice",
+        "question": "想突出『距目标还差多远』（实际 vs 目标 / KPI），最适合的图表是？",
+        "options": ["子弹图 / 仪表盘", "饼图", "折线图", "雷达图"],
+        "answer": "子弹图 / 仪表盘",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post16",
+        "type": "multiple_choice",
+        "question": "想突出『和竞品对标时的相对位置』，最适合的图表是？",
+        "options": ["分组柱 / 雷达图", "饼图", "子弹图", "堆叠柱"],
+        "answer": "分组柱 / 雷达图",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post17",
+        "type": "multiple_choice",
+        "question": "选图口诀中，『看份额』（构成占比）最适合用哪类图？",
+        "options": ["饼图 / 堆叠柱", "柱状图", "折线图", "子弹图"],
+        "answer": "饼图 / 堆叠柱",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post18",
+        "type": "multiple_choice",
+        "question": "『同比时去年是否含大促，口径不一致，比了也白比』，这最可能踩了哪个陷阱？",
+        "options": ["基期陷阱", "百分比陷阱", "幸存者偏差", "没有陷阱"],
+        "answer": "基期陷阱",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post19",
+        "type": "multiple_choice",
+        "question": "『只比留下来的客户，忽略了已经流失的客户』，这最可能踩了哪个陷阱？",
+        "options": ["幸存者偏差", "基期陷阱", "百分比陷阱", "没有陷阱"],
+        "answer": "幸存者偏差",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post20",
+        "type": "multiple_choice",
+        "question": "做同比对比时，『基期陷阱』提醒我们最该注意什么？",
+        "options": [
+          "口径要一致（去年是否含大促等）",
+          "只看百分比不用看绝对量",
+          "只看留下来的客户",
+          "只用折线图不用柱状图"
+        ],
+        "answer": "口径要一致（去年是否含大促等）",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post21",
+        "type": "multiple_choice",
+        "question": "对比分析的『时间』维度（同比 / 环比）主要回答下面哪类业务问题？",
+        "options": ["比过去变了多少（变化）", "哪里卖得好、哪里拖后腿（强弱）", "钱主要花在哪种商品 / 人群上（结构）", "在行业中排第几"],
+        "answer": "比过去变了多少（变化）",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post22",
+        "type": "multiple_choice",
+        "question": "对比分析的『目标』维度（实际 vs 目标 / KPI）主要回答下面哪类业务问题？",
+        "options": ["承诺完成了没（达标没）", "比过去变了多少（变化）", "哪里卖得好（强弱）", "排第几"],
+        "answer": "承诺完成了没（达标没）",
+        "points": 10
+      },
+      {
+        "id": "u43-compare_post23",
+        "type": "multiple_choice",
+        "question": "『今年 vs 去年』在对比分析中称为同比（YoY）。下列说法正确的是？",
+        "options": ["同比是今年与去年同期比，看长期变化", "同比是本月与上月比", "同比是不同区域比", "同比是自家与竞品比"],
+        "answer": "同比是今年与去年同期比，看长期变化",
+        "points": 10
       }
     ]
   }

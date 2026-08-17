@@ -110,6 +110,160 @@
         ],
         "answer": "256岁=不合理、销量0却9999=矛盾、订单号重复=违规；顺序：先去重→查不合理→查矛盾违规",
         "points": 10
+      },
+      {
+        "id": "u42-clean_post8",
+        "type": "multiple_choice",
+        "question": "课程口诀：『单看离谱叫不合理，互相打架叫矛盾，违了规矩叫违规』。一条记录『转化率 = 350%』属于哪一类？",
+        "options": ["不合理", "矛盾", "违规", "正常"],
+        "answer": "不合理",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_post9",
+        "type": "multiple_choice",
+        "question": "一条记录『年龄为 256 岁』，单看这一字段就超出人类年龄上限，它属于哪类错误？",
+        "options": ["不合理", "矛盾", "违规", "正常"],
+        "answer": "不合理",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_post10",
+        "type": "multiple_choice",
+        "question": "『超出物理 / 业务上限』（如年龄、转化率、概率这类有天然上限的量一旦超界）是识别哪类错误的信号？",
+        "options": ["不合理", "矛盾", "违规", "去重"],
+        "answer": "不合理",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_post11",
+        "type": "multiple_choice",
+        "question": "『库存减少，却无对应的出库记录』（账实不符），这一类跨字段冲突属于哪种错误？",
+        "options": ["矛盾", "不合理", "违规", "正常"],
+        "answer": "矛盾",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_post12",
+        "type": "multiple_choice",
+        "question": "一条记录『金额为负，却成交量 > 0』（卖了东西钱却变负），属于哪一类错误？",
+        "options": ["矛盾", "不合理", "违规", "正常"],
+        "answer": "矛盾",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_post13",
+        "type": "multiple_choice",
+        "question": "一条记录『必填的客户姓名列为空』，数字本身没离谱，但违背了业务约束，它属于哪类错误？",
+        "options": ["违规", "不合理", "矛盾", "正常"],
+        "answer": "违规",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_post14",
+        "type": "multiple_choice",
+        "question": "一条记录引用的『商品 ID 不在主数据中』（引用了不存在的商品），属于哪类错误？",
+        "options": ["违规", "不合理", "矛盾", "正常"],
+        "answer": "违规",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_post15",
+        "type": "multiple_choice",
+        "question": "一条记录的日期写成『2024/13/40』，格式非法，属于哪类错误？",
+        "options": ["违规", "不合理", "矛盾", "正常"],
+        "answer": "违规",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_post16",
+        "type": "multiple_choice",
+        "question": "清洗方法中的『标注』是给行打错误类型标签、先不删除，它适用于哪一类错误？",
+        "options": ["全部三类", "仅不合理", "仅矛盾", "仅违规"],
+        "answer": "全部三类",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_post17",
+        "type": "multiple_choice",
+        "question": "清洗方法『范围校验』（设 min / max，超界即标）主要用于识别哪类错误？",
+        "options": ["不合理", "矛盾", "违规", "去重"],
+        "answer": "不合理",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_post18",
+        "type": "multiple_choice",
+        "question": "清洗方法『去重』是按什么来删除重复记录的？",
+        "options": ["主键", "随机", "按金额大小", "按销量大小"],
+        "answer": "主键",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_post19",
+        "type": "multiple_choice",
+        "question": "清洗方法『修正 / 剔除』中，能修则修（如负号反转），不能修时应如何处理？",
+        "options": ["置空或删除", "直接保留", "复制一行", "改为最大值"],
+        "answer": "置空或删除",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_post20",
+        "type": "multiple_choice",
+        "question": "为什么黄金顺序要把『去重』放在最前面？",
+        "options": [
+          "重复行会放大后续所有统计误差",
+          "重复行不影响任何统计",
+          "去重最耗时所以先做",
+          "去重最简单所以先做"
+        ],
+        "answer": "重复行会放大后续所有统计误差",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_post21",
+        "type": "multiple_choice",
+        "question": "给订单表『体检三看』指看范围、看自洽、看唯一 / 合规。其中『看自洽』（销量 × 单价是否约等于金额）主要用来识别哪类错误？",
+        "options": ["矛盾", "不合理", "违规", "正常"],
+        "answer": "矛盾",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_post22",
+        "type": "multiple_choice",
+        "question": "订单表 A003 行『销量 = 5、销售额 = -250』，课程给出的诊断最接近？",
+        "options": [
+          "矛盾 / 不合理（金额为负）",
+          "正常",
+          "仅违规",
+          "仅不合理且必须立即删除"
+        ],
+        "answer": "矛盾 / 不合理（金额为负）",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_post23",
+        "type": "multiple_choice",
+        "question": "给订单表『体检三看』中，『看范围』（检查金额、年龄等是否落入不合理区间）主要用来识别哪类错误？",
+        "options": ["不合理", "矛盾", "违规", "正常"],
+        "answer": "不合理",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_post24",
+        "type": "multiple_choice",
+        "question": "给订单表『体检三看』中，『看唯一 / 合规』（检查订单号是否重复、必填与 ID 是否合法）主要用来识别哪类错误？",
+        "options": ["违规", "不合理", "矛盾", "正常"],
+        "answer": "违规",
+        "points": 10
+      },
+      {
+        "id": "u42-clean_post25",
+        "type": "multiple_choice",
+        "question": "课程列出的五种清洗方法（清洗五法）是以下哪一组？",
+        "options": ["标注、去重、范围校验、一致性校验、修正 / 剔除", "删除、合并、排序、筛选、求和", "预测、外推、回归、聚类、分类", "描点、连线、填色、加标签、导出"],
+        "answer": "标注、去重、范围校验、一致性校验、修正 / 剔除",
+        "points": 10
       }
     ]
   }

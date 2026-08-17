@@ -64,6 +64,134 @@
         "question": "R² 的取值在 0 到 ____ 之间，越接近 ____（填同一个数）说明趋势线拟合越好、越可信。",
         "answer": "1",
         "points": 10
+      },
+      {
+        "id": "u44-trend_post6",
+        "type": "multiple_choice",
+        "question": "课程把趋势线分为线性、多项式、指数三类，是按什么来选的？",
+        "options": ["弯曲程度", "数据点的颜色", "样本数量多少", "老板的个人喜好"],
+        "answer": "弯曲程度",
+        "points": 10
+      },
+      {
+        "id": "u44-trend_post7",
+        "type": "multiple_choice",
+        "question": "线性趋势线 y = a + b·x 描述的是哪种增长形态？",
+        "options": ["匀速增长", "加速增长", "带拐弯的曲线", "完全水平无变化"],
+        "answer": "匀速增长",
+        "points": 10
+      },
+      {
+        "id": "u44-trend_post8",
+        "type": "multiple_choice",
+        "question": "指数趋势线 y = a·e^(b·x) 描述的是哪种增长形态？",
+        "options": ["加速增长", "匀速增长", "带拐弯的二次曲线", "水平波动"],
+        "answer": "加速增长",
+        "points": 10
+      },
+      {
+        "id": "u44-trend_post9",
+        "type": "multiple_choice",
+        "question": "多项式趋势线（二次 / 三次）的主要外形特征是？",
+        "options": ["带拐弯的曲线", "匀速直线", "加速的指数曲线", "完全水平线"],
+        "answer": "带拐弯的曲线",
+        "points": 10
+      },
+      {
+        "id": "u44-trend_post10",
+        "type": "multiple_choice",
+        "question": "在 R² = 1 − SS_res/SS_tot 中，SS_res 表示？",
+        "options": ["残差平方和（实际值与预测值之差的平方和）", "总平方和", "截距", "斜率"],
+        "answer": "残差平方和（实际值与预测值之差的平方和）",
+        "points": 10
+      },
+      {
+        "id": "u44-trend_post11",
+        "type": "multiple_choice",
+        "question": "在 R² = 1 − SS_res/SS_tot 中，SS_tot 表示？",
+        "options": ["总平方和（实际值与均值之差的平方和）", "残差平方和", "斜率", "截距"],
+        "answer": "总平方和（实际值与均值之差的平方和）",
+        "points": 10
+      },
+      {
+        "id": "u44-trend_post12",
+        "type": "multiple_choice",
+        "question": "若 R² 偏低，说明趋势线只是『勉强穿过』散点，此时应当？",
+        "options": ["外推风险大，不可盲信", "外推最准确", "线完全贴合可无限推", "立刻提高斜率"],
+        "answer": "外推风险大，不可盲信",
+        "points": 10
+      },
+      {
+        "id": "u44-trend_post13",
+        "type": "multiple_choice",
+        "question": "线性最小二乘得到的 b 是趋势线的什么，反映什么？",
+        "options": ["斜率，反映线的陡缓", "截距，x=0 时的起点", "残差平方和", "总平方和"],
+        "answer": "斜率，反映线的陡缓",
+        "points": 10
+      },
+      {
+        "id": "u44-trend_post14",
+        "type": "multiple_choice",
+        "question": "线性最小二乘得到的 a 是趋势线在什么时候的取值？",
+        "options": ["x=0 时的起点（截距）", "斜率（陡缓）", "协方差", "方差"],
+        "answer": "x=0 时的起点（截距）",
+        "points": 10
+      },
+      {
+        "id": "u44-trend_post15",
+        "type": "multiple_choice",
+        "question": "斜率 b = 协方差 / x 的方差，它本质上反映？",
+        "options": ["x 每变动一点，y 会变动多少", "线是否穿过原点", "数据的颜色", "样本点的个数"],
+        "answer": "x 每变动一点，y 会变动多少",
+        "points": 10
+      },
+      {
+        "id": "u44-trend_post16",
+        "type": "multiple_choice",
+        "question": "外推三诫中『别超范围太远』是因为？",
+        "options": ["趋势会拐点，推太远可能失效", "历史永远有效", "可无限外推无风险", "拐点根本不存在"],
+        "answer": "趋势会拐点，推太远可能失效",
+        "points": 10
+      },
+      {
+        "id": "u44-trend_post17",
+        "type": "multiple_choice",
+        "question": "外推三诫中『警惕黑天鹅』指的是哪些事件会让历史规律作废？",
+        "options": ["疫情、政策等突发事件", "数据的颜色变化", "样本量太小", "R² 太高"],
+        "answer": "疫情、政策等突发事件",
+        "points": 10
+      },
+      {
+        "id": "u44-trend_post18",
+        "type": "multiple_choice",
+        "question": "外推三诫中『配合其他模型』是因为纯趋势线会怎样？",
+        "options": ["忽略波动，应配合季节/水平模型", "只信趋势即可", "完全不用其他模型", "可无限外推"],
+        "answer": "忽略波动，应配合季节/水平模型",
+        "points": 10
+      },
+      {
+        "id": "u44-trend_post19",
+        "type": "multiple_choice",
+        "question": "关于 R² 对是否适合外推的判断，下列说法正确的是？",
+        "options": ["R²=0.95 远比 R²=0.40 更适合外推", "R²=0.40 比 0.95 更适合外推", "两者一样适合", "R² 越高越不适合外推"],
+        "answer": "R²=0.95 远比 R²=0.40 更适合外推",
+        "points": 10
+      },
+      {
+        "id": "u44-trend_post20",
+        "type": "multiple_choice",
+        "question": "线性最小二乘中，截距 a = ȳ − b·x̄ 的作用是？",
+        "options": ["保证趋势线穿过数据中心（x̄, ȳ）", "让斜率 b 变得更大", "让 R² 一定等于 1", "消除所有的残差"],
+        "answer": "保证趋势线穿过数据中心（x̄, ȳ）",
+        "points": 10
+      },
+      {
+        "id": "u44-trend_post21",
+        "type": "multiple_choice",
+        "question": "线性最小二乘中，斜率 b = 协方差 ÷ x 的方差，它衡量的是？",
+        "options": ["x 与 y 的协方差除以 x 的方差，即 x 每变动一点 y 的平均变动量", "y 的方差除以 x 的协方差", "截距 a 的大小", "R² 的具体取值"],
+        "answer": "x 与 y 的协方差除以 x 的方差，即 x 每变动一点 y 的平均变动量",
+        "points": 10
       }
     ]
   }

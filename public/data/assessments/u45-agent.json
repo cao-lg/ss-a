@@ -64,6 +64,134 @@
         "question": "智能体让你签字前，必须____（填四字：先亮依据），再给数，你才敢采纳它的建议。",
         "answer": "先亮依据",
         "points": 10
+      },
+      {
+        "id": "u45-agent_post6",
+        "type": "multiple_choice",
+        "question": "智能体做预测，正确的第一步应该是？",
+        "options": ["先判断序列属于哪类，再匹配模型", "直接给一个大数", "先画所有图表", "先清洗一遍数据"],
+        "answer": "先判断序列属于哪类，再匹配模型",
+        "points": 10
+      },
+      {
+        "id": "u45-agent_post7",
+        "type": "multiple_choice",
+        "question": "序列『长期单调上升 / 下降』（如逐年增长），智能体应匹配哪类模型？",
+        "options": ["趋势模型（趋势线 + R²），对应 u44-trend", "水平模型（移动平均 / 指数平滑）", "季节模型（季节指数）", "直接给一个大数"],
+        "answer": "趋势模型（趋势线 + R²），对应 u44-trend",
+        "points": 10
+      },
+      {
+        "id": "u45-agent_post8",
+        "type": "multiple_choice",
+        "question": "课程提出的智能体『第一性原则』包含哪三件事？",
+        "options": ["先分类、再选模型、先亮依据", "先给数、再分类、最后画图", "只选模型不看依据", "分类无所谓，直接预测"],
+        "answer": "先分类、再选模型、先亮依据",
+        "points": 10
+      },
+      {
+        "id": "u45-agent_post9",
+        "type": "multiple_choice",
+        "question": "如果智能体把序列分类错了，但预测算法很花哨，结论会怎样？",
+        "options": ["预测再花哨也不可信", "反而更准", "没有任何影响", "会自动纠正为正确"],
+        "answer": "预测再花哨也不可信",
+        "points": 10
+      },
+      {
+        "id": "u45-agent_post10",
+        "type": "multiple_choice",
+        "question": "关于『逐年平稳』这个易错点，下列说法正确的是？",
+        "options": ["逐年平稳指年与年之间稳，但年内夏高冬低仍是强季节信号，仍归季节类", "逐年平稳就一定是水平序列", "逐年平稳一定是趋势序列", "逐年平稳无需分类直接给数"],
+        "answer": "逐年平稳指年与年之间稳，但年内夏高冬低仍是强季节信号，仍归季节类",
+        "points": 10
+      },
+      {
+        "id": "u45-agent_post11",
+        "type": "multiple_choice",
+        "question": "预测值出来后，要落地成业务动作，课程强调应产出哪两个具体动作？",
+        "options": ["备货建议与渠道倾斜", "只给一个数字", "只画趋势线", "只做数据清洗"],
+        "answer": "备货建议与渠道倾斜",
+        "points": 10
+      },
+      {
+        "id": "u45-agent_post12",
+        "type": "multiple_choice",
+        "question": "预测落地为『渠道倾斜』时，课程建议怎么做？",
+        "options": ["把预算压向边际 ROI 高的渠道，用对比 / 交叉分析定位", "随机分配预算", "只压向低 ROI 渠道", "完全不看 ROI"],
+        "answer": "把预算压向边际 ROI 高的渠道，用对比 / 交叉分析定位",
+        "points": 10
+      },
+      {
+        "id": "u45-agent_post13",
+        "type": "multiple_choice",
+        "question": "备货建议的完整链路，课程给出的顺序是？",
+        "options": ["需求预测 → 安全库存 → 再订货点", "历史销售额 → 直接订货", "只看趋势线 → 订货", "随机订货"],
+        "answer": "需求预测 → 安全库存 → 再订货点",
+        "points": 10
+      },
+      {
+        "id": "u45-agent_post14",
+        "type": "multiple_choice",
+        "question": "可信建议的『四段依据』中，『数据』段应当写清什么？",
+        "options": ["用了哪段、多少样本", "只给最终数字", "只说渠道方向", "只列模型名称"],
+        "answer": "用了哪段、多少样本",
+        "points": 10
+      },
+      {
+        "id": "u45-agent_post15",
+        "type": "multiple_choice",
+        "question": "可信建议的『四段依据』中，『假设』段应当写清什么？",
+        "options": ["大促 / 节假日如何处理", "只给最终数字", "只说渠道方向", "只列模型名称"],
+        "answer": "大促 / 节假日如何处理",
+        "points": 10
+      },
+      {
+        "id": "u45-agent_post16",
+        "type": "multiple_choice",
+        "question": "可信建议的『四段依据』中，『动作』段应当写清什么？",
+        "options": ["备多少、往哪倾及风险边界", "只给最终数字", "只说数据来源", "只列模型名称"],
+        "answer": "备多少、往哪倾及风险边界",
+        "points": 10
+      },
+      {
+        "id": "u45-agent_post17",
+        "type": "multiple_choice",
+        "question": "动作段里的『风险边界』，课程给出的示例是？",
+        "options": ["若需求超预测 20%，将断货", "完全不会断货", "风险不用写", "只给一个数字就行"],
+        "answer": "若需求超预测 20%，将断货",
+        "points": 10
+      },
+      {
+        "id": "u45-agent_post18",
+        "type": "multiple_choice",
+        "question": "智能体同时给出『备货量』和『渠道倾斜』时，你作为签字人要求它先输出什么？",
+        "options": ["先说清序列类型，再交代模型与假设，最后给动作 + 风险边界", "直接给数字即可", "只给渠道建议", "只给历史数据"],
+        "answer": "先说清序列类型，再交代模型与假设，最后给动作 + 风险边界",
+        "points": 10
+      },
+      {
+        "id": "u45-agent_post19",
+        "type": "multiple_choice",
+        "question": "可信建议『四段依据』中，『模型』段应当写清什么？",
+        "options": ["选了哪类模型、为什么", "只给最终数字", "只说渠道方向", "只列数据来源"],
+        "answer": "选了哪类模型、为什么",
+        "points": 10
+      },
+      {
+        "id": "u45-agent_post20",
+        "type": "multiple_choice",
+        "question": "智能体按序列特征匹配模型，对应关系正确的是？",
+        "options": ["水平序列 → u44-level；季节序列 → u44-season；趋势序列 → u44-trend", "水平序列 → u44-trend；季节序列 → u44-level；趋势序列 → u44-season", "水平序列 → u44-season；季节序列 → u44-trend；趋势序列 → u44-level", "三类序列都对应同一个单元"],
+        "answer": "水平序列 → u44-level；季节序列 → u44-season；趋势序列 → u44-trend",
+        "points": 10
+      },
+      {
+        "id": "u45-agent_post21",
+        "type": "multiple_choice",
+        "question": "智能体给出『渠道倾斜』建议时，课程建议借助什么方法来定位边际 ROI 高的渠道？",
+        "options": ["对比 / 交叉分析", "只看历史最大值", "随机平均分配", "完全凭直觉"],
+        "answer": "对比 / 交叉分析",
+        "points": 10
       }
     ]
   }

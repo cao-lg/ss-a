@@ -64,6 +64,125 @@
         "question": "季节指数 = 该期平均 ÷ ____；判读口诀：指数 > 1 表示____（填'旺季'或'淡季'）。",
         "answer": "总平均",
         "points": 10
+      },
+      {
+        "id": "u44-season_post6",
+        "type": "multiple_choice",
+        "question": "月饼中秋旺、空调夏天旺，销量随季节/周期规律起伏——这种数据波动在课程里称为？",
+        "options": ["季节波动", "水平波动（绕稳定均值）", "长期趋势波动", "随机噪音"],
+        "answer": "季节波动",
+        "points": 10
+      },
+      {
+        "id": "u44-season_post7",
+        "type": "multiple_choice",
+        "question": "课程用『季节指数』把旺季/淡季的相对高低变成数值，主要目的是？",
+        "options": ["指导备货", "计算毛利率", "衡量客户价值", "清洗异常数据"],
+        "answer": "指导备货",
+        "points": 10
+      },
+      {
+        "id": "u44-season_post8",
+        "type": "multiple_choice",
+        "question": "按季节指数的判读，指数 < 1 表示该期？",
+        "options": ["低于常年水平，是淡季，需控制备货", "高于常年水平，是旺季", "完全平稳", "是异常值"],
+        "answer": "低于常年水平，是淡季，需控制备货",
+        "points": 10
+      },
+      {
+        "id": "u44-season_post9",
+        "type": "multiple_choice",
+        "question": "四步算出季节指数，第一步是？",
+        "options": ["算同季平均（把每年同一季求平均）", "算总平均", "直接求季节指数", "做预测"],
+        "answer": "算同季平均（把每年同一季求平均）",
+        "points": 10
+      },
+      {
+        "id": "u44-season_post10",
+        "type": "multiple_choice",
+        "question": "四步法中最后一步『预测』的计算方式是？",
+        "options": ["趋势值（或总平均）× 季节指数", "该期平均 ÷ 总平均", "总平均 − 该期平均", "仅取同季平均"],
+        "answer": "趋势值（或总平均）× 季节指数",
+        "points": 10
+      },
+      {
+        "id": "u44-season_post11",
+        "type": "multiple_choice",
+        "question": "三年各季销量中，Q1 同季平均 11.0、总平均 19.0，则 Q1 季节指数约为？",
+        "options": ["0.58（11÷19，淡季）", "1.74（旺季）", "19.0", "11.0"],
+        "answer": "0.58（11÷19，淡季）",
+        "points": 10
+      },
+      {
+        "id": "u44-season_post12",
+        "type": "multiple_choice",
+        "question": "用季节指数前，课程要求数据年限至少达到多少才稳？",
+        "options": ["≥3 年", "1 年", "2 年", "越多越差，不用管年限"],
+        "answer": "≥3 年",
+        "points": 10
+      },
+      {
+        "id": "u44-season_post13",
+        "type": "multiple_choice",
+        "question": "遇到闰年、节假日挪动时，用季节指数前必须做什么？",
+        "options": ["做日历调整，避免错位", "完全忽略即可", "只调价格", "直接删除这些数据"],
+        "answer": "做日历调整，避免错位",
+        "points": 10
+      },
+      {
+        "id": "u44-season_post14",
+        "type": "multiple_choice",
+        "question": "用季节指数指导备货时，实际备货量应该是？",
+        "options": ["预测需求 × 安全系数", "预测需求 ÷ 安全系数", "仅等于预测需求，不需安全系数", "预测需求 + 季节指数"],
+        "answer": "预测需求 × 安全系数",
+        "points": 10
+      },
+      {
+        "id": "u44-season_post15",
+        "type": "multiple_choice",
+        "question": "备货时乘以『安全系数』，主要是为了？",
+        "options": ["防断货与积压", "让季节指数变大", "减少所需数据年限", "替代日历调整"],
+        "answer": "防断货与积压",
+        "points": 10
+      },
+      {
+        "id": "u44-season_post16",
+        "type": "multiple_choice",
+        "question": "中秋月饼全年销量集中在几周，季节指数会极端偏高——这提示我们？",
+        "options": ["需特别留意备货节奏与库存风险", "季节指数失效不可用", "应只用 1 年数据", "无需安全系数"],
+        "answer": "需特别留意备货节奏与库存风险",
+        "points": 10
+      },
+      {
+        "id": "u44-season_post17",
+        "type": "fill",
+        "question": "某季销量占全年 30%，而均匀分布时均季占 25%，则该季季节指数 ≈ ___（写 1.2 或 1.20 均可）。",
+        "answer": "1.2",
+        "points": 10
+      },
+      {
+        "id": "u44-season_post18",
+        "type": "multiple_choice",
+        "question": "四步算出季节指数，第二步是？",
+        "options": ["算总平均（全部期数的总平均）", "算同季平均", "直接求季节指数", "做预测"],
+        "answer": "算总平均（全部期数的总平均）",
+        "points": 10
+      },
+      {
+        "id": "u44-season_post19",
+        "type": "multiple_choice",
+        "question": "四步算出季节指数，第三步是？",
+        "options": ["求季节指数（= 同季平均 ÷ 总平均）", "算同季平均", "算总平均", "做预测"],
+        "answer": "求季节指数（= 同季平均 ÷ 总平均）",
+        "points": 10
+      },
+      {
+        "id": "u44-season_post20",
+        "type": "multiple_choice",
+        "question": "季节指数用『总平均』作基准，主要目的是？",
+        "options": ["才能看出某期相对常年水平是高是低", "让季节指数恒等于 1", "消除所有的季节波动", "只比较单季的绝对销量"],
+        "answer": "才能看出某期相对常年水平是高是低",
+        "points": 10
       }
     ]
   }

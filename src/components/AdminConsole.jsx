@@ -330,29 +330,73 @@ function IdentityPanel() {
   )
 }
 
+const TEACHER_EMAIL_KEY = 'lp:teacherEmail'
+
 function DataMgmt() {
   const [msg, setMsg] = useState('')
-  const doExport = async () => {
+  const [teacherEmail, setTeacherEmail] = useState(() => {
+    try { return localStorage.getItem(TEACHER_EMAIL_KEY) || '' } catch { return '' }
+  })
+  const saveEmail = (v) => {
+    setTeacherEmail(v)
+    try { localStorage.setItem(TEACHER_EMAIL_KEY, v) } catch {}
+  }
+
+  const runExport = async () => {
     const data = await exportLearnerData()
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
     a.href = url
-    a.download = `learner-data-${new Date().toISOString().slice(0, 10)}.json`
+    const today = new Date().toISOString().slice(0, 10)
+    const sid = data.identity?.sid || 'unknown'
+    const name = data.identity?.name || 'unknown'
+    a.download = `learner-data-${sid}-${today}.json`
     a.click()
     URL.revokeObjectURL(url)
+    return { data, today, sid, name }
+  }
+
+  const doExport = async () => {
+    await runExport()
     setMsg('已导出本机学习数据 JSON')
   }
+
+  const sendToTeacher = async () => {
+    if (!teacherEmail.trim()) {
+      setMsg('请先填写老师邮箱')
+      return
+    }
+    const { data, today, sid, name } = await runExport()
+    const subject = `[学练测平台] 学习数据提交 - 学号${sid} ${name} - ${today}`
+    const body = `老师您好，\n\n附件是我的学习数据文件，请查收。\n\n- 学号：${sid}\n- 姓名：${name}\n- 提交日期：${today}\n\n该文件已绑定本人身份并带防篡改校验，可在老师控制台核验。\n\n（此邮件由「学练测平台」学生端自动生成）`
+    window.location.href = `mailto:${encodeURIComponent(teacherEmail)}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+    setMsg('已唤起邮件客户端并导出数据文件，请手动附加 JSON 附件后发送给老师')
+  }
+
   const doReset = async () => {
     if (!window.confirm('确定清空本机全部学习记录（用户/评测/检查点/进度/时长/考试）？此操作不可撤销。')) return
     await clearAllLearnerData()
     setMsg('已清空本机全部学习数据，刷新页面后生效')
   }
+
   return (
     <section className="admin-sec">
       <h2>🧰 数据管理</h2>
+      <p className="hint">设置老师邮箱后，可一键导出并通过邮件客户端发送；邮件主题已固定格式，方便老师分类归档。</p>
+      <div className="admin-email-row">
+        <label>老师邮箱</label>
+        <input
+          type="email"
+          className="inp email-inp"
+          placeholder="teacher@school.edu.cn"
+          value={teacherEmail}
+          onChange={(e) => saveEmail(e.target.value)}
+        />
+      </div>
       <div className="admin-mgmt">
         <button className="btn" onClick={doExport}>导出本机学习数据</button>
+        <button className="btn" onClick={sendToTeacher}>📧 导出并发送给老师</button>
         <button className="btn danger" onClick={doReset}>清空本机全部学习数据</button>
       </div>
       {msg && <div className="admin-msg">{msg}</div>}

@@ -39,9 +39,10 @@ export async function signCert(privJwk, sid, name, code) {
 }
 
 // 验证证书：cert = { sid, name, code, sig }
-export async function verifyCert(pubJwk, cert) {
+// pub 可为 JWK 或已导入的 CryptoKey（兼容 student 站传 JWK、老师工具传 CryptoKey 两种写法）。
+export async function verifyCert(pub, cert) {
   try {
-    const key = await importPublicKey(pubJwk)
+    const key = (pub && pub instanceof CryptoKey) ? pub : await importPublicKey(pub)
     const msg = enc.encode(`${cert.sid}|${cert.name}|${cert.code}`)
     return await subtle().verify({ name: 'Ed25519' }, key, b64ToBuf(cert.sig), msg)
   } catch {

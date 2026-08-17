@@ -6,15 +6,30 @@ import { buildExamVariant, makeSeed } from './exam'
 
 const DATA = import.meta.env.BASE_URL + 'data'
 
+// 带重试的 JSON 拉取：冷启动/弱网下并行请求偶发被中断（abort/reset）时，
+// 单次失败不应让整个测试中心陷入"暂未上线"。最多重试 3 次，间隔退避。
+async function fetchJSON(url, tries = 3) {
+  let lastErr
+  for (let i = 0; i < tries; i++) {
+    try {
+      const r = await fetch(url)
+      if (!r.ok) throw new Error('HTTP ' + r.status + ' ' + url)
+      return await r.json()
+    } catch (e) {
+      lastErr = e
+      if (i < tries - 1) await new Promise((res) => setTimeout(res, 120 * (i + 1)))
+    }
+  }
+  throw lastErr
+}
+
 export async function listCourses() {
-  const r = await fetch(`${DATA}/courses/manifest.json`)
-  const j = await r.json()
+  const j = await fetchJSON(`${DATA}/courses/manifest.json`)
   return j.courses
 }
 
 export async function getCourse(id) {
-  const r = await fetch(`${DATA}/courses/${id}.json`)
-  return r.json()
+  return fetchJSON(`${DATA}/courses/${id}.json`)
 }
 
 // 记忆化：返回 manifest 中第一个课程 id，供顶栏/画像页拼 /tests/:courseId 入口。
@@ -37,9 +52,11 @@ export async function getUnitContent(path) {
 }
 
 export async function getAssessment(unitId) {
-  const r = await fetch(`${DATA}/assessments/${unitId}.json`)
-  if (!r.ok) return { unitId, pre: { items: [] }, post: { items: [] } }
-  return r.json()
+  try {
+    return await fetchJSON(`${DATA}/assessments/${unitId}.json`)
+  } catch {
+    return { unitId, pre: { items: [] }, post: { items: [] } }
+  }
 }
 
 // POST /api/assessment —— 提交 pre/post
@@ -95,9 +112,12 @@ export async function getAssessmentStatus(unitId) {
 // ===== 阶段考试（章节综合测验）=====
 
 export async function getExam(chapterId) {
-  const r = await fetch(`${DATA}/exams/${chapterId}.json`)
-  if (!r.ok) return null
-  return r.json()
+  try {
+    return await fetchJSON(`${DATA}/exams/${chapterId}.json`)
+  } catch {
+    // 卷文件不存在（如某项目未配置结业考）→ 视为无此卷，不抛错阻断测试中心
+    return null
+  }
 }
 
 export async function getExamResult(chapterId) {

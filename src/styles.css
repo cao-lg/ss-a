@@ -1508,4 +1508,91 @@ p { margin: 8px 0; }
   .wb-item:hover { transform: none; }
 }
 
+/* ===== 身份激活 / 核验面板 ===== */
+.modal-backdrop {
+  position: fixed; inset: 0; z-index: 1000;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(10, 6, 20, 0.62); backdrop-filter: blur(3px);
+  padding: 20px;
+}
+.modal {
+  position: relative; width: min(460px, 94vw);
+  background: var(--card, #1f1830); border: 1px solid var(--border, rgba(255,255,255,.12));
+  border-radius: 16px; padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,.45);
+}
+.modal-x {
+  position: absolute; top: 12px; right: 14px; border: none; background: none;
+  color: var(--text-dim); font-size: 22px; line-height: 1; cursor: pointer;
+}
+.identity-gate h2 { margin: 0 0 8px; color: var(--text); }
+.identity-hint { color: var(--text-dim); font-size: 13px; line-height: 1.6; margin: 0 0 14px; }
+.identity-gate label { display: block; margin: 10px 0 4px; font-size: 13px; color: var(--text); }
+.identity-gate input {
+  width: 100%; box-sizing: border-box; padding: 10px 12px; border-radius: 10px;
+  border: 1px solid var(--border, rgba(255,255,255,.14)); background: rgba(255,255,255,.04);
+  color: var(--text); font-size: 14px;
+}
+.identity-err { margin-top: 12px; color: #ff9a8b; font-size: 13px; }
+.modal-actions { margin-top: 16px; display: flex; justify-content: flex-end; gap: 10px; }
+
+.identity-status { padding: 10px 12px; border-radius: 10px; font-size: 13px; margin-bottom: 12px; }
+.identity-status.ok { background: rgba(127,225,196,.12); color: var(--mint); border: 1px solid rgba(127,225,196,.3); }
+.identity-status.warn { background: rgba(255,138,91,.12); color: var(--accent); border: 1px solid rgba(255,138,91,.3); }
+.file-btn { display: inline-flex; align-items: center; cursor: pointer; }
+.foreign-note {
+  margin-top: 12px; padding: 10px 12px; border-radius: 10px; font-size: 12.5px; line-height: 1.5;
+  background: rgba(255,200,80,.1); color: #ffd479; border: 1px solid rgba(255,200,80,.3);
+}
+
+.verify-panel .verify-hint { color: var(--text-dim); font-size: 13px; margin: 0 0 12px; }
+.verify-row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+.verify-code {
+  flex: 1; min-width: 200px; padding: 9px 12px; border-radius: 10px;
+  border: 1px solid var(--border, rgba(255,255,255,.14)); background: rgba(255,255,255,.04);
+  color: var(--text); font-size: 13px;
+}
+.verify-report { margin-top: 14px; display: grid; gap: 8px; }
+.vr-line {
+  display: flex; justify-content: space-between; font-size: 13px; color: var(--text-dim);
+  border-bottom: 1px dashed var(--border, rgba(255,255,255,.1)); padding-bottom: 6px;
+}
+.vr-line b { color: var(--text); }
+.vr-line .ok { color: var(--mint); }
+.vr-line .bad { color: #ff9a8b; }
+.vr-line .muted { color: var(--text-dim); }
+.vr-ok { margin-top: 6px; padding: 10px 12px; border-radius: 10px; background: rgba(127,225,196,.14); color: var(--mint); font-size: 13px; }
+.vr-bad { margin-top: 6px; padding: 10px 12px; border-radius: 10px; background: rgba(255,138,91,.14); color: var(--accent); font-size: 13px; }
+
+/* 测试中心 · 项目切换条 */
+.project-switch {
+  display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px;
+  padding: 6px; border-radius: 14px;
+  background: rgba(255,255,255,.04); border: 1px solid var(--border, rgba(255,255,255,.1));
+}
+.project-switch .pill {
+  flex: 0 0 auto; padding: 8px 14px; border-radius: 10px;
+  font-size: 13.5px; font-weight: 600; text-decoration: none;
+  color: var(--text-dim); background: transparent;
+  border: 1px solid transparent; transition: color .18s ease, background .18s ease, box-shadow .18s ease;
+}
+.project-switch .pill:hover { color: var(--text); background: rgba(255,255,255,.06); }
+.project-switch .pill.active {
+  color: #1a1326;
+  background: linear-gradient(120deg, var(--accent) 0%, var(--mint) 100%);
+  box-shadow: 0 4px 14px rgba(255,138,91,.28);
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-switch .pill { transition: none; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .modal-backdrop { animation: lpFadeIn .18s ease; }
+  .modal { animation: lpModalPop .2s cubic-bezier(.23,1,.32,1); }
+}
+@keyframes lpFadeIn { from { opacity: 0 } to { opacity: 1 } }
+@keyframes lpModalPop { from { opacity: 0; transform: translateY(8px) scale(.98) } to { opacity: 1; transform: none } }
+@media (prefers-reduced-motion: reduce) {
+  .modal-backdrop, .modal { animation: none; }
+}
+
 

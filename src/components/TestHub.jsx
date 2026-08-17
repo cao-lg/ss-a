@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { getCourse, getExam, getAllExamResults, getAllUnitTestResults } from '../lib/api'
+import { getCourse, getExam, getAllExamResults, getAllUnitTestResults, listCourses } from '../lib/api'
 import { Reveal, Stagger, StaggerItem } from './motion'
 
 // 测试中心：单元测试（每任务一张卷） + 每个项目综合测试（章节阶段考） + 所有项目综合测试（结业大考）
@@ -10,6 +10,25 @@ export default function TestHub() {
   const [exams, setExams] = useState({})
   const [unitTests, setUnitTests] = useState({})
   const [comps, setComps] = useState([])
+  const [allCourses, setAllCourses] = useState([])
+
+  // 项目切换条：并行拉取 manifest 全部课程标题，让所有项目从一个页面可达。
+  useEffect(() => {
+    ;(async () => {
+      try {
+        const ids = await listCourses()
+        const courses = await Promise.all(
+          ids.map(async (id) => {
+            const c = await getCourse(id)
+            return { id, title: c?.title || id }
+          })
+        )
+        setAllCourses(courses)
+      } catch {
+        setAllCourses([])
+      }
+    })()
+  }, [])
 
   useEffect(() => {
     ;(async () => {
@@ -30,6 +49,19 @@ export default function TestHub() {
 
   return (
     <div className="stage test-hub">
+      {allCourses.length > 1 && (
+        <nav className="project-switch" aria-label="项目切换">
+          {allCourses.map((c) => (
+            <Link
+              key={c.id}
+              to={`/tests/${c.id}`}
+              className={`pill ${c.id === courseId ? 'active' : ''}`}
+            >
+              {c.title}
+            </Link>
+          ))}
+        </nav>
+      )}
       <Reveal>
         <Link to={`/course/${courseId}`} className="back">← 返回课程</Link>
         <h1>🧪 测试中心</h1>

@@ -8,6 +8,7 @@ import UnitTest from './components/UnitTest'
 import TestHub from './components/TestHub'
 import Profile from './components/Profile'
 import AdminConsole from './components/AdminConsole'
+import IdentityGate from './components/IdentityGate'
 
 export default function App() {
   return (
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/admin" element={<AdminConsole />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
+      <IdentityGate />
     </Layout>
   )
 }

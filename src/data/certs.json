@@ -1,0 +1,22 @@
+[
+  {
+    "sid": "S2024001",
+    "name": "赵销售",
+    "sig": "Yob6AZFROumFlRsjnpSwk+D9m/lijjLhZrvZqm8dTIiYSbfH5QqJFa8zykrB66VP3OhoAb3e+caKiv3qXffHCw=="
+  },
+  {
+    "sid": "S2024002",
+    "name": "钱客户",
+    "sig": "aaAmn+75CFmrnYISuTUIlPuhhNZJulS1ss2ylPDLS48PRXdSS9tAyBCVNIV5hYu3SLp1WiiAFaaf/A1rGYlWAg=="
+  },
+  {
+    "sid": "S2024003",
+    "name": "孙订单",
+    "sig": "ZtEq8tpNZzJc2BftmympngfPjRyNCHFCu22dr0fo51kKfvV/9I0Ti5NKjruhCGoJJluQuWamP4QHX4euanz0Ag=="
+  },
+  {
+    "sid": "S2024004",
+    "name": "李成交",
+    "sig": "bbGLVr/OYGQpGI9SDSs/HfPZWZbXqv6REZYrKNq9jIkcNZo7/z4+NF88dtSoMK30fTlZJuAAFnoymftsau7NBA=="
+  }
+]

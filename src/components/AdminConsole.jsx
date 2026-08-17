@@ -11,10 +11,14 @@ import {
   getTimes,
   getAllExams,
   exportLearnerData,
-  clearAllLearnerData
+  clearAllLearnerData,
+  importLearnerData,
+  getIdentity,
+  getForeignImport
 } from '../lib/storage'
 import { parseDirectives } from '../lib/mdParser'
 import { Reveal, Stagger, StaggerItem } from './motion'
+import VerifyPanel from './VerifyPanel'
 
 const ADMIN_PASS = 'admin123'
 const EXAM_IDS = ['ch1', 'ch2', 'ch3', 'ch4', 'ch5', 'ch6', 'ch7', 'final']
@@ -71,7 +75,9 @@ export default function AdminConsole() {
       <Overview />
       <ContentCheck />
       <LearningData />
+      <IdentityPanel />
       <DataMgmt />
+      <VerifyPanel />
     </div>
   )
 }
@@ -271,6 +277,55 @@ function LearningData() {
           </div>
         ))}
       </div>
+    </section>
+  )
+}
+
+function IdentityPanel() {
+  const [id, setId] = useState(null)
+  const [foreign, setForeign] = useState(null)
+  const [msg, setMsg] = useState('')
+  const refresh = () => { getIdentity().then(setId); getForeignImport().then(setForeign) }
+  useEffect(refresh, [])
+  const activate = () => window.dispatchEvent(new Event('lp:open-identity'))
+  const onPick = async (e) => {
+    const f = e.target.files?.[0]
+    if (!f) return
+    setMsg('')
+    try {
+      const res = await importLearnerData(await f.text())
+      if (res.foreign) {
+        setMsg(`已识别为「${res.owner?.name}（学号 ${res.owner?.sid}）」的数据，归属他人，不会并入你的记录。`)
+      } else if (res.ok && res.merged) {
+        setMsg('已恢复你自己的学习数据。')
+      } else if (!res.ok && res.reason === 'tampered') {
+        setMsg(`文件疑似被篡改（归属 ${res.owner?.name}），已拒绝导入。`)
+      }
+      refresh()
+    } catch (err) {
+      setMsg('导入失败：' + err.message)
+    }
+  }
+  return (
+    <section className="admin-sec identity-panel">
+      <h2>🪪 数据归属与身份</h2>
+      {id ? (
+        <div className="identity-status ok">当前身份：<b>{id.name}</b>（学号 {id.sid}）· 数据已绑定，导出可被老师验证</div>
+      ) : (
+        <div className="identity-status warn">尚未激活身份：导出数据无归属证明，老师无法核验。请点击下方激活。</div>
+      )}
+      <div className="admin-mgmt">
+        <button className="btn" onClick={activate}>{id ? '更换 / 重新激活身份' : '激活身份'}</button>
+        <label className="btn ghost file-btn">导入导出文件
+          <input type="file" accept="application/json,.json" onChange={onPick} hidden />
+        </label>
+      </div>
+      {foreign && (
+        <div className="foreign-note">
+          ⚠ 你导入过一份归属他人的数据：<b>{foreign.identity?.name}</b>（学号 {foreign.identity?.sid}）。该数据保留原主标记、未并入你的记录。
+        </div>
+      )}
+      {msg && <div className="admin-msg">{msg}</div>}
     </section>
   )
 }

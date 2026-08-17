@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { judgeAnswer } from '../lib/judge'
 import { saveCheckpoint } from '../lib/storage'
 import { Stagger, StaggerItem } from './motion'
+import { GainFloat, SparkleBurst, SuccessPulse } from './FeedbackEffects'
 
 // 阅读中检查点：情境 → 预测/尝试 → 线索反馈 → 解锁拓学。
 // 支持：scenario(情境)、hints(渐进提示数组)、feedback(最终解释)、unlock(答对后拓展)。
@@ -47,6 +48,7 @@ export default function Checkpoint({ unitId, type = 'multiple_choice', question,
   }
 
   const currentHint = hintIndex >= 0 ? usableHints[hintIndex] : null
+  const isCorrect = state === 'correct'
 
   return (
     <Stagger className={`block checkpoint ${state}`} gap={0.12} margin="-12%">
@@ -100,10 +102,14 @@ export default function Checkpoint({ unitId, type = 'multiple_choice', question,
             </button>
           )}
           {state === 'correct' && (
-            <div className="cp-ok">
-              <span className="cp-ok-icon">✓</span>
-              <span>答对了！解锁一个小发现</span>
-            </div>
+            <SuccessPulse active={isCorrect}>
+              <div className="cp-ok">
+                <SparkleBurst active={isCorrect} count={16} />
+                <GainFloat active={isCorrect}>+XP</GainFloat>
+                <span className="cp-ok-icon">✓</span>
+                <span>答对了！解锁一个小发现</span>
+              </div>
+            </SuccessPulse>
           )}
         </div>
       </StaggerItem>

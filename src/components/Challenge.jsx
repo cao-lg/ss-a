@@ -4,6 +4,7 @@ import { saveCheckpoint } from '../lib/storage'
 import { runPython } from '../lib/codeRunner'
 import { logBehavior } from '../lib/behavior'
 import { Stagger, StaggerItem } from './motion'
+import { GainFloat, SparkleBurst, SuccessPulse } from './FeedbackEffects'
 
 // 进阶挑战：更难、可选；编程课可用 type="output" 代码题（可插拔 Pyodide 执行）。对应需求 C。
 export default function Challenge({ unitId, id, type = 'fill', title = '进阶挑战', scenario, instruction, options, answer, hints = [], feedback, unlock, onResult }) {
@@ -38,10 +39,10 @@ export default function Challenge({ unitId, id, type = 'fill', title = '进阶�
         setHintIndex(Math.min(hintIndex + 1, usableHints.length - 1))
       }
       if (ok && onResult) onResult(true)
-    saveCheckpoint(unitId, id, 'challenge', ok, attempts + 1)
-    logBehavior('challenge_attempt', { unitId, id, correct: ok, attempts: attempts + 1 })
-    return
-  }
+      saveCheckpoint(unitId, id, 'challenge', ok, attempts + 1)
+      logBehavior('challenge_attempt', { unitId, id, correct: ok, attempts: attempts + 1 })
+      return
+    }
     const ok = isChoice ? judgeAnswer(type, options, answer, val) : judgeAnswer('fill', null, answer, val)
     setState(ok ? 'correct' : 'wrong')
     if (!ok && usableHints.length > 0 && hintIndex + 1 < usableHints.length) {
@@ -66,6 +67,7 @@ export default function Challenge({ unitId, id, type = 'fill', title = '进阶�
   }
 
   const currentHint = hintIndex >= 0 ? usableHints[hintIndex] : null
+  const isCorrect = state === 'correct'
 
   return (
     <Stagger className={`block challenge ${state}`} gap={0.12} margin="-12%">
@@ -117,10 +119,14 @@ export default function Challenge({ unitId, id, type = 'fill', title = '进阶�
             </button>
           )}
           {state === 'correct' && (
-            <div className="cp-ok">
-              <span className="cp-ok-icon">✓</span>
-              <span>挑战成功 +XP</span>
-            </div>
+            <SuccessPulse active={isCorrect}>
+              <div className="cp-ok">
+                <SparkleBurst active={isCorrect} count={18} />
+                <GainFloat active={isCorrect}>+XP</GainFloat>
+                <span className="cp-ok-icon">✓</span>
+                <span>挑战成功 +XP</span>
+              </div>
+            </SuccessPulse>
           )}
         </div>
       </StaggerItem>

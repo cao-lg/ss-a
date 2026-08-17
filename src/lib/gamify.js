@@ -83,16 +83,18 @@ export function evaluateBadges(progress, ctx = {}) {
 }
 
 // 计算升级与成就演出数据：供 Celebration 组件渲染
-// 返回 { leveledUp, fromLevel, toLevel, tierTitle, badges:[徽章定义] }
+// 返回 { leveledUp, fromLevel, toLevel, tierTitle, badges:[徽章定义], xpGain }
 export function celebrationFor(prevProgress, nextProgress, newBadgeIds = []) {
   const a = levelInfo(prevProgress.xp || 0)
   const b = levelInfo(nextProgress.xp || 0)
   const badgeDefs = newBadgeIds.map((id) => BADGES[id]).filter(Boolean)
+  const xpGain = Math.max(0, (nextProgress.xp || 0) - (prevProgress.xp || 0))
   return {
     leveledUp: b.level > a.level,
     fromLevel: a.level,
     toLevel: b.level,
     tierTitle: b.title,
-    badges: badgeDefs
+    badges: badgeDefs,
+    xpGain
   }
 }

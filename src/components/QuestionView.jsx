@@ -1,6 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { parseDirectives } from '../lib/mdParser'
 import { motion, AnimatePresence } from './motion'
+import { GainFloat, SparkleBurst } from './FeedbackEffects'
+
+const reduce =
+  typeof window !== 'undefined' &&
+  window.matchMedia &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
 // 单个「问题卡」：先抛问题，学生点击后才揭示课程内容（点击展开）。
 // 在问题链(qchain)内以 gate 模式使用：需先「确认已懂」才会解锁下一问（onConfirm）。
@@ -20,7 +26,11 @@ export default function QuestionView({
   const [open, setOpen] = useState(false)
   const [done, setDone] = useState(false)
   const [passed, setPassed] = useState(false)
+  const [confirmBurst, setConfirmBurst] = useState(false)
+  const [unlockPop, setUnlockPop] = useState(false)
+  const wasLocked = useRef(false)
   const parsed = body ? parseDirectives(body) : []
+
   // 若问题体内嵌 checkpoint / challenge，则需答对才能解锁下一问（验证门）。
   const needsVerify = parsed.some(
     (b) => b.kind === 'checkpoint' || b.kind === 'challenge'
@@ -29,7 +39,18 @@ export default function QuestionView({
   const hasReveal = parsed.some((b) => b.kind === 'reveal')
   const [seenReveal, setSeenReveal] = useState(!hasReveal)
 
+  // 下一问解锁时播放一次 pop 高亮
+  useEffect(() => {
+    if (wasLocked.current && !locked) {
+      setUnlockPop(true)
+      const t = setTimeout(() => setUnlockPop(false), reduce ? 0 : 820)
+      return () => clearTimeout(t)
+    }
+    wasLocked.current = locked
+  }, [locked])
+
   if (locked) {
+    wasLocked.current = true
     return (
       <div className="q-block q-locked viz" data-theme="coral">
         <div className="q-head">
@@ -42,8 +63,18 @@ export default function QuestionView({
     )
   }
 
+  function handleConfirm() {
+    setConfirmBurst(true)
+    setDone(true)
+    onConfirm && onConfirm()
+    setTimeout(() => setConfirmBurst(false), reduce ? 0 : 1100)
+  }
+
   return (
-    <div className={`q-block viz ${open ? 'is-open' : ''}`} data-theme="coral">
+    <div
+      className={`q-block viz ${open ? 'is-open' : ''} ${unlockPop ? 'is-unlocked' : ''}`}
+      data-theme="coral"
+    >
       <button
         className="q-head"
         onClick={() => setOpen((o) => !o)}
@@ -88,24 +119,30 @@ export default function QuestionView({
                 <button
                   className="q-confirm"
                   disabled={needsVerify && !passed}
-                  onClick={() => {
-                    setDone(true)
-                    onConfirm && onConfirm()
-                  }}
+                  onClick={handleConfirm}
                 >
-                  {!needsVerify
-                    ? '✓ 我明白了，继续'
-                    : !seenReveal
-                      ? '先看解析并答题，才能继续 →'
-                      : !passed
-                        ? '先答对上方的自测，再继续 →'
-                        : '✓ 我明白了，继续'}
+                  <SparkleBurst active={confirmBurst} count={16} />
+                  <GainFloat active={confirmBurst}>+1 闯关</GainFloat>
+                  <span className="q-confirm-text">
+                    {!needsVerify
+                      ? '✓ 我明白了，继续'
+                      : !seenReveal
+                        ? '先看解析并答题，才能继续 →'
+                        : !passed
+                          ? '先答对上方的自测，再继续 →'
+                          : '✓ 我明白了，继续'}
+                  </span>
                 </button>
               )}
               {gate && needsVerify && seenReveal && !passed && (
                 <div className="q-verify-hint">答对上方自测才能解锁下一问，可多次尝试。</div>
               )}
-              {gate && done && <div className="q-done">已完成 ✓</div>}
+              {gate && done && (
+                <div className="q-done">
+                  <span className="q-done-icon">✓</span>
+                  <span>已完成</span>
+                </div>
+              )}
             </div>
           </motion.div>
         )}

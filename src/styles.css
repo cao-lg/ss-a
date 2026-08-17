@@ -1369,11 +1369,90 @@ p { margin: 8px 0; }
 .cb-desc { font-size: 12px; color: var(--text-dim); }
 .celebrate-close { margin-top: 4px; }
 
+/* 多步演出：步骤点 + 单步内容容器 */
+.celebrate-step { min-height: 220px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.celebrate-sub { margin: 4px 0 0; font-size: 13.5px; color: var(--text-dim); line-height: 1.55; }
+.celebrate-dots {
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  margin-bottom: 14px;
+}
+.celebrate-dot {
+  width: 7px; height: 7px; border-radius: 999px;
+  background: rgba(244,236,224,.18); transition: background .25s var(--ease), transform .25s var(--ease);
+}
+.celebrate-dot.active { background: var(--accent); transform: scale(1.35); }
+.celebrate-dot.done { background: var(--mint); }
+.celebrate-xp {
+  margin-top: 8px; padding: 7px 16px; border-radius: 999px;
+  font-weight: 900; font-size: 18px; color: #15101f;
+  background: linear-gradient(135deg, var(--accent), var(--mint));
+  box-shadow: 0 8px 24px rgba(255,138,91,.35);
+}
+
+/* 问题链：确认动效 + 解锁 pop */
+.q-confirm { position: relative; }
+.q-confirm-text { position: relative; z-index: 1; }
+.q-block.is-unlocked { animation: qUnlockPop .75s cubic-bezier(.16,1,.3,1); }
+@keyframes qUnlockPop {
+  0% { transform: scale(.96); opacity: .85; box-shadow: 0 0 0 0 rgba(255,138,91,.35); }
+  50% { transform: scale(1.015); opacity: 1; box-shadow: 0 0 0 8px rgba(255,138,91,0); }
+  100% { transform: scale(1); opacity: 1; box-shadow: 0 0 0 0 rgba(255,138,91,0); }
+}
+.q-done {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  margin-top: 12px; text-align: center; color: var(--ok); font-weight: 700; font-size: 13.5px;
+  animation: qDonePop .55s cubic-bezier(.16,1,.3,1);
+}
+.q-done-icon {
+  width: 20px; height: 20px; border-radius: 50%;
+  display: grid; place-items: center; font-size: 12px;
+  background: var(--ok); color: var(--bg);
+}
+@keyframes qDonePop {
+  0% { transform: scale(.7); opacity: 0; }
+  60% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+/* 检查点 / 挑战：成功脉冲 + 粒子 + 浮出 XP */
+.cp-ok { position: relative; }
+.success-pulse {
+  position: relative; display: inline-flex; align-items: center;
+}
+.success-pulse.is-active::after {
+  content: ''; position: absolute; inset: -8px -12px;
+  border-radius: 999px; border: 2px solid var(--ok);
+  animation: successPulse .7s cubic-bezier(.16,1,.3,1);
+  pointer-events: none;
+}
+@keyframes successPulse {
+  0% { transform: scale(.9); opacity: .7; }
+  100% { transform: scale(1.35); opacity: 0; }
+}
+
+.gain-float {
+  position: absolute; z-index: 2; top: -28px; left: 50%;
+  font-weight: 900; font-size: 15px; color: var(--accent);
+  text-shadow: 0 2px 10px rgba(0,0,0,.35); pointer-events: none; white-space: nowrap;
+}
+.sparkle-burst {
+  position: absolute; z-index: 1; top: 50%; left: 50%;
+  width: 0; height: 0; pointer-events: none;
+}
+.sparkle-piece {
+  position: absolute; top: 0; left: 0; border-radius: 50%;
+  box-shadow: 0 0 6px currentColor;
+}
+
 /* 降级：尊重 reduced-motion，关闭所有装饰性动画 */
 @media (prefers-reduced-motion: reduce) {
   .xp-fill { animation: none; }
   .celebrate-emoji { animation: none; }
   .confetti-piece { display: none; }
+  .q-block.is-unlocked { animation: none; }
+  .q-done { animation: none; }
+  .success-pulse.is-active::after { animation: none; opacity: 0; }
+  .sparkle-burst { display: none; }
 }
 
 

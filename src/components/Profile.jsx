@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { getAllAssessments, getProgress, getUser, setUserName, getTimes, getWrongBook } from '../lib/storage'
-import { getAssessment } from '../lib/api'
+import { getAssessment, defaultCourseId } from '../lib/api'
 import { MICROCOPY } from '../lib/copy'
 import { Reveal, Stagger, StaggerItem } from './motion'
-import { levelInfo, BADGES, XP_PER_LEVEL } from '../lib/gamify'
+import { levelInfo, BADGES, XP_PER_LEVEL, celebrationFor } from '../lib/gamify'
+import Celebration from './Celebration'
 import LearnerProfile from './LearnerProfile'
 
 // 兼容两种题库结构：{ items: [...] } 或直接 [...]
@@ -32,6 +33,37 @@ function fmtAnswer(val, opts) {
   return String(val)
 }
 
+// 尊重 reduced-motion：数字 count-up 直接给终值，不跑动画
+const REDUCE =
+  typeof window !== 'undefined' &&
+  window.matchMedia &&
+  window.matchMedia('(prefers-reduced-motion: reduce)').matches
+
+function useCountUp(target, reduce, duration = 900) {
+  const [val, setVal] = useState(reduce ? target : 0)
+  useEffect(() => {
+    if (reduce) {
+      setVal(target)
+      return
+    }
+    let raf
+    let start = null
+    const tick = (t) => {
+      if (start == null) start = t
+      const p = Math.min(1, (t - start) / duration)
+      const eased = 1 - Math.pow(1 - p, 3)
+      setVal(Math.round(target * eased))
+      if (p < 1) raf = requestAnimationFrame(tick)
+    }
+    raf = requestAnimationFrame(tick)
+    return () => cancelAnimationFrame(raf)
+  }, [target, reduce, duration])
+  return val
+}
+
+// 画像页"上次已见"快照：用于检测升级 / 新徽章，触发多步庆祝
+const SEEN_KEY = 'profile:seen:v1'
+
 export default function Profile() {
   const [progress, setProgress] = useState(null)
   const [assess, setAssess] = useState({})
@@ -39,6 +71,15 @@ export default function Profile() {
   const [name, setName] = useState('')
   const [times, setTimes] = useState({ units: {}, days: {} })
   const [wrongBook, setWrongBook] = useState([])
+  const [celebrate, setCelebrate] = useState(null)
+  const [newBadges, setNewBadges] = useState([])
+  const [xpWidth, setXpWidth] = useState(0)
+  const [testsPath, setTestsPath] = useState('#')
+
+  // lvl / count-up 必须在 early-return 之前计算，保证 hooks 顺序稳定
+  const lvl = levelInfo(progress?.xp || 0)
+  const xpShown = useCountUp(progress?.xp || 0, REDUCE)
+  const xpIntoShown = useCountUp(lvl.xpInto, REDUCE)
 
   useEffect(() => {
     ;(async () => {
@@ -69,13 +110,48 @@ export default function Profile() {
         }
       }
       setWrongBook(resolved)
+
+      // 升级 / 新徽章检测：与 localStorage 中上次已见快照比对
+      const seen = JSON.parse(localStorage.getItem(SEEN_KEY) || 'null')
+      const curLevel = levelInfo(p.xp).level
+      const curBadges = p.badges || []
+      const seenBadges = seen?.badgeIds || []
+      const newBadgeIds = seen ? curBadges.filter((id) => !seenBadges.includes(id)) : []
+      const leveledUp = seen ? curLevel > (seen?.level || 1) : false
+      const xpGain = seen ? Math.max(0, p.xp - (seen?.xp || 0)) : 0
+      if (leveledUp || newBadgeIds.length > 0) {
+        setCelebrate(
+          celebrationFor(seen ? { xp: seen.xp } : { xp: 0 }, p, newBadgeIds)
+        )
+        setNewBadges(newBadgeIds)
+      }
+      localStorage.setItem(
+        SEEN_KEY,
+        JSON.stringify({ level: curLevel, xp: p.xp, badgeIds: curBadges })
+      )
     })()
+  }, [])
+
+  // XP 进度条：从 0 填充到目标（reduced-motion 直接定值）
+  useEffect(() => {
+    if (!progress) return
+    const target = Math.round(lvl.pct * 100)
+    if (REDUCE) {
+      setXpWidth(target)
+      return
+    }
+    const id = setTimeout(() => setXpWidth(target), 120)
+    return () => clearTimeout(id)
+  }, [progress, lvl.pct])
+
+  // 测试中心入口：取首个课程 id 拼 /tests/:courseId
+  useEffect(() => {
+    defaultCourseId().then((id) => id && setTestsPath(`/tests/${id}`))
   }, [])
 
   if (!progress) return <div className="state">{MICROCOPY.loading.profile}</div>
 
   const units = Object.entries(assess)
-  const lvl = levelInfo(progress.xp)
   const allBadges = Object.values(BADGES)
   const unlockedBadges = allBadges.filter((b) => progress.badges.includes(b.id))
 
@@ -84,6 +160,20 @@ export default function Profile() {
       <Reveal>
         <h1>我的进步</h1>
       </Reveal>
+
+      {/* 去测验中心：一键直达综合测试入口 */}
+      {testsPath !== '#' && (
+        <Reveal>
+          <Link to={testsPath} className="card go-test">
+            <span className="go-test-icon" aria-hidden="true">🧪</span>
+            <span className="go-test-body">
+              <span className="go-test-title">去测验中心</span>
+              <span className="go-test-sub">单元测试 · 项目阶段考 · 结业大考，随时检验掌握度</span>
+            </span>
+            <span className="go-test-arrow" aria-hidden="true">→</span>
+          </Link>
+        </Reveal>
+      )}
 
       <Reveal>
         <div className="card">
@@ -102,12 +192,12 @@ export default function Profile() {
             <span className="lv-tag">Lv.{lvl.level}</span>
             <span className="lv-title">{lvl.title}</span>
             <div className="xp-bar" role="progressbar" aria-valuenow={Math.round(lvl.pct * 100)} aria-valuemin={0} aria-valuemax={100} aria-label="距下一级经验进度">
-              <div className="xp-fill" style={{ width: `${Math.round(lvl.pct * 100)}%` }} />
+              <div className="xp-fill" style={{ width: `${xpWidth}%` }} />
             </div>
-            <span className="xp-text">{lvl.maxed ? '已满级 🏆' : `${lvl.xpInto}/${XP_PER_LEVEL} XP`}</span>
+            <span className="xp-text">{lvl.maxed ? '已满级 🏆' : `${xpIntoShown}/${XP_PER_LEVEL} XP`}</span>
           </div>
           <Stagger className="stats">
-            <StaggerItem><div className="stat"><b>{progress.xp}</b><span>经验 XP</span></div></StaggerItem>
+            <StaggerItem><div className="stat"><b>{xpShown}</b><span>经验 XP</span></div></StaggerItem>
             <StaggerItem><div className="stat"><b>{progress.streakDays}</b><span>连续学习(天)</span></div></StaggerItem>
             <StaggerItem><div className="stat"><b>{progress.badges.length}</b><span>徽章</span></div></StaggerItem>
           </Stagger>
@@ -123,9 +213,13 @@ export default function Profile() {
           <Stagger className="badge-grid">
             {allBadges.map((b) => {
               const got = progress.badges.includes(b.id)
+              const isNew = newBadges.includes(b.id)
               return (
                 <StaggerItem key={b.id}>
-                  <div className={`badge ${got ? 'got' : 'locked'}`} title={got ? b.desc : `未解锁：${b.desc}`}>
+                  <div
+                    className={`badge ${got ? 'got' : 'locked'}${isNew ? ' is-new' : ''}`}
+                    title={got ? b.desc : `未解锁：${b.desc}`}
+                  >
                     <span className="badge-icon" aria-hidden="true">{got ? b.icon : '🔒'}</span>
                     <span className="badge-title">{b.title}</span>
                     <span className="badge-desc">{b.desc}</span>
@@ -246,6 +340,10 @@ export default function Profile() {
           ))}
         </div>
       </Reveal>
+
+      {celebrate && (
+        <Celebration data={celebrate} onDone={() => setCelebrate(null)} />
+      )}
     </div>
   )
 }

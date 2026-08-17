@@ -2,16 +2,22 @@ import { Link, useLocation } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import ConsentModal from './ConsentModal'
 import { getConsent, setConsent, needsConsent } from '../lib/consent'
+import { defaultCourseId } from '../lib/api'
 
 export default function Layout({ children }) {
   const { pathname } = useLocation()
   const [showConsent, setShowConsent] = useState(() => needsConsent())
   const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'dark')
+  const [testsPath, setTestsPath] = useState('/tests')
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme
     localStorage.setItem('theme', theme)
   }, [theme])
+
+  useEffect(() => {
+    defaultCourseId().then((id) => id && setTestsPath(`/tests/${id}`))
+  }, [])
 
   const toggleTheme = () => setTheme((t) => (t === 'light' ? 'dark' : 'light'))
 
@@ -34,6 +40,7 @@ export default function Layout({ children }) {
         </Link>
         <nav className="nav">
           <Link to="/" className={pathname === '/' ? 'active' : ''}>课程</Link>
+          <Link to={testsPath} className={pathname.startsWith('/tests') ? 'active' : ''}>测试中心</Link>
           <Link to="/profile" className={pathname.startsWith('/profile') ? 'active' : ''}>我的进步</Link>
           <Link to="/admin" className={pathname.startsWith('/admin') ? 'active' : ''}>管理后台</Link>
         </nav>

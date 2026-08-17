@@ -1312,6 +1312,7 @@ p { margin: 8px 0; }
   height: 100%; border-radius: 999px;
   background: linear-gradient(90deg, var(--accent), var(--mint));
   background-size: 200% 100%; animation: xpShimmer 2.4s linear infinite;
+  transition: width .9s cubic-bezier(.16,1,.3,1);
 }
 .xp-text { font-size: 12.5px; color: var(--text-dim); min-width: 86px; text-align: right; }
 @keyframes xpShimmer { 0% { background-position: 0 0; } 100% { background-position: 200% 0; } }
@@ -1331,6 +1332,54 @@ p { margin: 8px 0; }
 .badge-icon { font-size: 26px; line-height: 1; }
 .badge-title { font-weight: 700; font-size: 13.5px; color: var(--text); }
 .badge-desc { font-size: 11.5px; color: var(--text-dim); line-height: 1.35; }
+/* 本次新解锁徽章：弹出 + 薄荷光晕扫光 */
+.badge.is-new {
+  border-color: var(--mint);
+  box-shadow: 0 8px 28px rgba(127,225,196,.3);
+  animation: badgePop .8s cubic-bezier(.16,1,.3,1);
+  position: relative; overflow: hidden;
+}
+.badge.is-new::after {
+  content: ''; position: absolute; top: 0; left: -60%;
+  width: 50%; height: 100%;
+  background: linear-gradient(100deg, transparent, rgba(255,255,255,.45), transparent);
+  animation: badgeShine 1.1s ease-out .25s 1;
+}
+@keyframes badgePop {
+  0% { transform: scale(.8); opacity: .6; }
+  55% { transform: scale(1.08); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes badgeShine { to { left: 130%; } }
+
+/* 去测验中心入口卡：一键直达综合测试 */
+.go-test {
+  display: flex; align-items: center; gap: 14px; text-decoration: none;
+  padding: 16px 18px; cursor: pointer;
+  background: linear-gradient(120deg, rgba(255,138,91,.14), rgba(127,225,196,.1));
+  border: 1px solid rgba(255,138,91,.3);
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), border-color .25s var(--ease);
+}
+.go-test:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px rgba(255,138,91,.22);
+  border-color: rgba(255,138,91,.55);
+}
+.go-test-icon { font-size: 30px; line-height: 1; }
+.go-test-body { display: flex; flex-direction: column; gap: 3px; flex: 1; }
+.go-test-title { font-weight: 800; font-size: 15.5px; color: var(--text); }
+.go-test-sub { font-size: 12.5px; color: var(--text-dim); line-height: 1.4; }
+.go-test-arrow { font-size: 20px; color: var(--accent); font-weight: 800; }
+
+/* 错题本：item 微交互 + 去重做按钮上浮 */
+.wb-item { transition: border-color .25s var(--ease), box-shadow .25s var(--ease), transform .25s var(--ease); }
+.wb-item:hover {
+  border-color: rgba(255,138,91,.4);
+  box-shadow: 0 8px 24px rgba(0,0,0,.28);
+  transform: translateY(-2px);
+}
+.wb-redo { transition: transform .2s var(--ease), color .2s var(--ease); }
+.wb-redo:hover { transform: translateX(3px); color: var(--mint); }
 
 /* 增益弹窗：满分过关高亮 */
 .gain-perfect {
@@ -1446,13 +1495,17 @@ p { margin: 8px 0; }
 
 /* 降级：尊重 reduced-motion，关闭所有装饰性动画 */
 @media (prefers-reduced-motion: reduce) {
-  .xp-fill { animation: none; }
+  .xp-fill { animation: none; transition: none; }
   .celebrate-emoji { animation: none; }
   .confetti-piece { display: none; }
   .q-block.is-unlocked { animation: none; }
   .q-done { animation: none; }
   .success-pulse.is-active::after { animation: none; opacity: 0; }
   .sparkle-burst { display: none; }
+  .badge.is-new { animation: none; }
+  .badge.is-new::after { animation: none; display: none; }
+  .go-test:hover { transform: none; }
+  .wb-item:hover { transform: none; }
 }
 
 

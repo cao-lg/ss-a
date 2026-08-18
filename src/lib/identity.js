@@ -153,7 +153,7 @@ export function findTeacherKey(pub, knownOldXs = []) {
 // 并非密码学保证；真正的密码学保证仍是「激活码保密」（verifyCert / bundleMac 最终都依赖 code）。
 // 匹配规则：sid 严格相等（唯一主键），name 做归一化（去空格 + 忽略大小写）避免「张三」/「张 三」误拒。
 export function assertIdentityMatch(local, importedSid, importedName) {
-  const norm = (s) => String(s == null ? '' : s).trim().toLowerCase()
+  const norm = (s) => String(s == null ? '' : s).replace(/\s+/g, '').toLowerCase()
   if (!local || !local.sid) {
     throw new Error('本机尚未激活，请先完成身份激活再导入数据。')
   }

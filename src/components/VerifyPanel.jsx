@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import publicKey from '../data/public.json'
-import { verifyCert, deriveMacKey, verifyBundle } from '../lib/identity'
+import { verifyCert, deriveMacKey, verifyBundle, asKeyArray } from '../lib/identity'
 
 // 老师核验面板：拖入学生发来的导出 JSON，用内置公钥验证证书（确认真实归属），
 // 若再粘贴该生激活码，可进一步用 bundleMac 复核数据是否被篡改。
@@ -26,10 +26,14 @@ export default function VerifyPanel() {
       setErr('该文件不含身份证书，可能不是本系统导出')
       return
     }
-    // 证书签名包含激活码，核验需提供该生激活码（老师从名册获取）
-    const certOk = code.trim() ? await verifyCert(publicKey, { ...cert, code: code.trim() }) : null
+    // 证书签名包含激活码，核验需提供该生激活码（老师从名册获取）。
+    // public.json 为多密钥数组（旧随机密钥 + 密码派生密钥），须逐个试签，与 storage.js 的 importLearnerData 保持一致。
+    let certOk = code.trim() ? false : null
     let macOk = null
     if (code.trim()) {
+      for (const pk of asKeyArray(publicKey)) {
+        if (await verifyCert(pk, { ...cert, code: code.trim() })) { certOk = true; break }
+      }
       const k = await deriveMacKey(code.trim())
       macOk = await verifyBundle(k, { sid: cert.sid, name: cert.name, records: data.records }, data.mac)
     }

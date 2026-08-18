@@ -291,12 +291,8 @@ function IdentityPanel() {
     if (!f) return
     setMsg('')
     try {
-      const res = await importLearnerData(await f.text())
-      if (res.ok && res.merged) {
-        setMsg('已恢复你自己的学习数据。')
-      } else if (!res.ok && res.reason === 'tampered') {
-        setMsg(`文件疑似被篡改（归属 ${res.owner?.name}），已拒绝导入。`)
-      }
+      await importLearnerData(await f.text())
+      setMsg('已恢复你自己的学习数据。')
       refresh()
     } catch (err) {
       setMsg('导入失败：' + err.message)

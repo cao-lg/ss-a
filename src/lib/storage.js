@@ -2,7 +2,8 @@
 // 对应《需求补充规格 v0.2》新增表：assessment_records / checkpoint_records / progress
 import { get, set, del } from 'idb-keyval'
 import { isConsented } from './consent'
-import { deriveMacKey, bundleMac, verifyBundle, assertIdentityMatch } from './identity'
+import { deriveMacKey, bundleMac, verifyBundle, verifyCert, asKeyArray, assertIdentityMatch } from './identity'
+import publicKey from '../data/public.json'
 
 // 行为事件日志的读取入口（实现位于 behavior.js），在此再导出便于画像统一读取。
 export { getBehaviors } from './behavior'
@@ -217,25 +218,47 @@ export async function clearAllLearnerData() {
   for (const k of ALL_KEYS) await del(k)
 }
 
-// 导入导出文件：仅当「文件身份 == 本机锁定身份」时，恢复数据并用 bundleMac 校验是否被篡改；
-// 否则硬拒绝（不写任何数据），防止跨用户数据劫持（A 的导出被 B 在本机导入）。
+// 导入导出文件：仅当「文件身份 == 本机锁定身份」时，恢复数据；否则硬拒绝（不写任何数据），
+// 防止跨用户数据劫持（A 的导出被 B 在本机导入）。
+// 校验顺序（安全关键）：先验 MAC（无 MAC / MAC 不符 → 拒绝，绝不信任明文身份字段），
+// 再比对本地身份锁，最后用导出证书复核 Ed25519 签名（纵深）。
 // 教师端核验走 VerifyPanel（独立逻辑），不受此约束。
 export async function importLearnerData(json) {
   const data = typeof json === 'string' ? JSON.parse(json) : json
   if (!data || typeof data !== 'object' || !data.records) throw new Error('文件格式不正确')
-  const fileId = data.identity || null
-  if (!fileId || !fileId.sid) {
-    throw new Error('文件不包含身份信息，无法核验归属，已拒绝导入。')
-  }
-  // 导入门禁：未激活 / 身份不符 → 直接拒绝，不写任何数据
+
+  // ① 本机必须先激活（身份锁为空直接拒绝，防止清缓存后绕过导入门禁）
   const me = await getIdentity()
+  if (!me || !me.sid) throw new Error('本机尚未激活，请先完成身份激活再导入数据。')
+
+  // ② 先验 MAC：文件必须带校验码且通过（激活码不符 / 被篡改 / 缺校验码 → 拒绝）
+  if (!data.mac) throw new Error('文件缺少校验码（MAC），无法确认归属，已拒绝导入。')
+  const k = await deriveMacKey(me.code)
+  const macOk = await verifyBundle(
+    k,
+    { sid: data.identity?.sid, name: data.identity?.name, records: data.records },
+    data.mac
+  )
+  if (!macOk) throw new Error('文件校验失败：激活码不符或文件已被篡改，已拒绝导入。')
+
+  // ③ MAC 通过后 data.identity 才可信：与本地身份锁比对，不符 → 硬拒绝
+  const fileId = data.identity || null
+  if (!fileId || !fileId.sid) throw new Error('文件不包含身份信息，已拒绝导入。')
   assertIdentityMatch(me, fileId.sid, fileId.name)
-  // 防篡改：用本机激活码派生 HMAC 密钥，校验文件未被篡改且确属本身份
-  if (data.mac) {
-    const k = await deriveMacKey(me.code)
-    const ok = await verifyBundle(k, { sid: fileId.sid, name: fileId.name, records: data.records }, data.mac)
-    if (!ok) return { ok: false, reason: 'tampered', owner: fileId }
+
+  // ④ 纵深：用导出证书复核 Ed25519 签名（证书缺失时跳过；验不过则拒绝）
+  if (fileId.sig) {
+    let certOk = false
+    for (const pk of asKeyArray(publicKey)) {
+      if (await verifyCert(pk, { sid: fileId.sid, name: fileId.name, code: me.code, sig: fileId.sig })) {
+        certOk = true
+        break
+      }
+    }
+    if (!certOk) throw new Error('证书验签失败，文件来源不可信，已拒绝导入。')
   }
+
+  // ⑤ 全部通过：覆盖恢复本人数据
   const { user, assess, checkpoints, progress, time, exams, unitTests, behaviors } = data.records
   if (user !== undefined) await guardedSet(USER_KEY, user)
   if (assess !== undefined) await guardedSet(ASSESS_KEY, assess)

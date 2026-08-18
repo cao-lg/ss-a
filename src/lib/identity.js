@@ -146,3 +146,21 @@ export function findTeacherKey(pub, knownOldXs = []) {
   const found = arr.find((k) => k && k.x && !knownOldXs.includes(k.x))
   return found || null
 }
+
+// 导入门禁：校验「导入文件的身份」是否与「本机锁定的身份」一致。
+// 用途：放在导入逻辑开头，防 A 的导出文件被 B 在本机导入（跨用户数据劫持）。
+// 注意：本机身份存于 IndexedDB（可被本机用户自行改写），此检查是 UX / 防御纵深加固，
+// 并非密码学保证；真正的密码学保证仍是「激活码保密」（verifyCert / bundleMac 最终都依赖 code）。
+// 匹配规则：sid 严格相等（唯一主键），name 做归一化（去空格 + 忽略大小写）避免「张三」/「张 三」误拒。
+export function assertIdentityMatch(local, importedSid, importedName) {
+  const norm = (s) => String(s == null ? '' : s).trim().toLowerCase()
+  if (!local || !local.sid) {
+    throw new Error('本机尚未激活，请先完成身份激活再导入数据。')
+  }
+  if (norm(local.sid) !== norm(importedSid) || norm(local.name) !== norm(importedName)) {
+    throw new Error(
+      `拒绝导入：当前设备身份为 [${local.sid} ${local.name}]，而导入文件属于 [${importedSid} ${importedName}]，二者不符。`
+    )
+  }
+  return true
+}

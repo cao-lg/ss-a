@@ -13,8 +13,7 @@ import {
   exportLearnerData,
   clearAllLearnerData,
   importLearnerData,
-  getIdentity,
-  getForeignImport
+  getIdentity
 } from '../lib/storage'
 import { parseDirectives } from '../lib/mdParser'
 import { Reveal, Stagger, StaggerItem } from './motion'
@@ -283,9 +282,8 @@ function LearningData() {
 
 function IdentityPanel() {
   const [id, setId] = useState(null)
-  const [foreign, setForeign] = useState(null)
   const [msg, setMsg] = useState('')
-  const refresh = () => { getIdentity().then(setId); getForeignImport().then(setForeign) }
+  const refresh = () => { getIdentity().then(setId) }
   useEffect(refresh, [])
   const activate = () => window.dispatchEvent(new Event('lp:open-identity'))
   const onPick = async (e) => {
@@ -294,9 +292,7 @@ function IdentityPanel() {
     setMsg('')
     try {
       const res = await importLearnerData(await f.text())
-      if (res.foreign) {
-        setMsg(`已识别为「${res.owner?.name}（学号 ${res.owner?.sid}）」的数据，归属他人，不会并入你的记录。`)
-      } else if (res.ok && res.merged) {
+      if (res.ok && res.merged) {
         setMsg('已恢复你自己的学习数据。')
       } else if (!res.ok && res.reason === 'tampered') {
         setMsg(`文件疑似被篡改（归属 ${res.owner?.name}），已拒绝导入。`)
@@ -320,11 +316,6 @@ function IdentityPanel() {
           <input type="file" accept="application/json,.json" onChange={onPick} hidden />
         </label>
       </div>
-      {foreign && (
-        <div className="foreign-note">
-          ⚠ 你导入过一份归属他人的数据：<b>{foreign.identity?.name}</b>（学号 {foreign.identity?.sid}）。该数据保留原主标记、未并入你的记录。
-        </div>
-      )}
       {msg && <div className="admin-msg">{msg}</div>}
     </section>
   )

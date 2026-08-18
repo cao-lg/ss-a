@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import certs from '../data/certs.json'
 import publicKey from '../data/public.json'
-import { verifyCert } from '../lib/identity'
+import { verifyCert, asKeyArray } from '../lib/identity'
 import { getIdentity, setIdentity } from '../lib/storage'
 
 // 身份激活：学生输入老师签发的 学号+姓名+激活码，App 用内置公钥验证证书，
@@ -21,16 +21,45 @@ export default function IdentityGate() {
     return () => window.removeEventListener('lp:open-identity', h)
   }, [])
 
+  // 拉取最新公开名册：远程 KV 优先，合并打包内置的 certs.json（兜底，KV 未配置时也能激活旧学生）。
+  async function loadMergedCerts() {
+    const local = Array.isArray(certs) ? certs : []
+    try {
+      const res = await fetch('/api/certs', { cache: 'no-store' })
+      if (res.ok) {
+        const remote = await res.json()
+        if (Array.isArray(remote) && remote.length) {
+          const map = new Map()
+          // 先 local 后 remote：同名同姓以远程（更新）为准
+          for (const c of [...local, ...remote]) map.set(`${c.sid}|${c.name}`, c)
+          return [...map.values()]
+        }
+      }
+    } catch {
+      // 网络/Function 不可用 → 用打包内置名册兜底
+    }
+    return local
+  }
+
   async function activate() {
     setErr('')
     setBusy(true)
     try {
-      const cert = certs.find((c) => c.sid === sid.trim() && c.name === name.trim())
+      const merged = await loadMergedCerts()
+      const cert = merged.find((c) => c.sid === sid.trim() && c.name === name.trim())
       if (!cert) {
         setErr('名册中找不到该学号+姓名，请确认后联系老师')
         return
       }
-      const ok = await verifyCert(publicKey, { sid: cert.sid, name: cert.name, code: code.trim(), sig: cert.sig })
+      // 多公钥逐把验签（旧随机密钥 + 老师密码派生密钥 均可）
+      const pubKeys = asKeyArray(publicKey)
+      let ok = false
+      for (const pk of pubKeys) {
+        if (await verifyCert(pk, { sid: cert.sid, name: cert.name, code: code.trim(), sig: cert.sig })) {
+          ok = true
+          break
+        }
+      }
       if (!ok) {
         setErr('激活码与老师签发的身份不匹配')
         return

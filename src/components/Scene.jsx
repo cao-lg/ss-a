@@ -65,7 +65,7 @@ export default function Scene({
         )}
         {thought && (
           <div className="scene-thought">
-            <span className="scene-tag">💭 小北的内心</span>
+            <span className="scene-tag">💭 小链的内心</span>
             <p>{thought}</p>
           </div>
         )}
@@ -120,7 +120,7 @@ export default function Scene({
       initial: { opacity: 0, x: 30 },
       node: (
         <div className="scene-thought">
-          <span className="scene-tag">💭 小北的内心</span>
+          <span className="scene-tag">💭 小链的内心</span>
           <p>{thought}</p>
         </div>
       ),

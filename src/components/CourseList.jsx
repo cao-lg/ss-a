@@ -73,7 +73,7 @@ export default function CourseList() {
             <span className="grad">把交易变成增长决策</span>
           </h1>
           <p className="lead">
-            跟随新人「小北」在焕新家电电商部的成长，完成六大项目的全部任务：从真实业务问题出发，把数据变成能落地的增长决策。
+            跟随新人「小链」在焕新家电电商部的成长，完成六大项目的全部任务：从真实业务问题出发，把数据变成能落地的增长决策。
           </p>
           <div className="hero-cta">
             {firstUnit && (

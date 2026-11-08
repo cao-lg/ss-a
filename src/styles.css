@@ -259,7 +259,7 @@ p { margin: 8px 0; }
 .unit-head { display: flex; justify-content: space-between; align-items: center; font-weight: 600; gap: 8px; }
 .badge.done { background: var(--ok-soft); color: var(--ok); font-size: 12px; padding: 3px 10px; border-radius: 999px; font-weight: 700; }
 
-/* ---------- 小北成长路线 ---------- */
+/* ---------- 小链成长路线 ---------- */
 .growth { margin: 26px 0 8px; padding: 22px 22px 8px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); }
 .growth-head { margin-bottom: 18px; }
 .growth-kicker { display: inline-block; font-weight: 800; font-size: 17px; color: var(--text); letter-spacing: -.3px; }
